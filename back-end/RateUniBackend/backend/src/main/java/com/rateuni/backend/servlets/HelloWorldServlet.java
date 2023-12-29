@@ -19,8 +19,12 @@ public class HelloWorldServlet extends jakarta.servlet.http.HttpServlet {
 
         response.setContentType("application/json");
         String content = "Hello World from java servlets!";
+        TestHelloWorld testHelloWorld = new TestHelloWorld();
+        testHelloWorld.setData(content);
         Gson gson = new Gson();
-        String json = gson.toJson(content);
+//        String json = gson.toJson(content);
+        //Test serialization of class
+        String json = gson.toJson(testHelloWorld);
         PrintWriter writer = response.getWriter();
         writer.println(json);
     }
