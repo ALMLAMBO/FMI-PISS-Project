@@ -1,12 +1,11 @@
 package com.rateuni.backend;
 
-import com.rateuni.backend.servlets.TestDbConnection;
-import com.rateuni.backend.servlets.HelloWorldServlet;
+import com.rateuni.backend.servlets.test.TestDbConnection;
+import com.rateuni.backend.servlets.test.HelloWorldServlet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
 
