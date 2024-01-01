@@ -1,21 +1,21 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.UniversityFacilities;
+import com.rateuni.backend.models.link_models.UniversityFaculty;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "facilities")
-public class Facility {
+@Table(name = "faculties")
+public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "facility_name")
-    private String facilityName;
+    @Column(name = "faculty_name")
+    private String facultyName;
 
     @Column(name = "address")
     private String address;
@@ -23,15 +23,15 @@ public class Facility {
     @Column(name = "dean")
     private String dean;
 
-    @OneToMany(mappedBy = "facility")
-    private Set<UniversityFacilities> universityFacilities;
+    @OneToMany(mappedBy = "faculty")
+    private Set<UniversityFaculty> universityFacilities;
 
-    public Facility() {
+    public Faculty() {
     }
 
-    public Facility(int id, String facilityName, String address, String dean) {
+    public Faculty(int id, String facultyName, String address, String dean) {
         this.id = id;
-        this.facilityName = facilityName;
+        this.facultyName = facultyName;
         this.address = address;
         this.dean = dean;
     }
@@ -44,12 +44,12 @@ public class Facility {
         this.id = id;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public String getfacultyName() {
+        return facultyName;
     }
 
-    public void setFacilityName(String facilityName) {
-        this.facilityName = facilityName;
+    public void setfacultyName(String facultyName) {
+        this.facultyName = facultyName;
     }
 
     public String getAddress() {
@@ -68,11 +68,11 @@ public class Facility {
         this.dean = dean;
     }
 
-    public Set<UniversityFacilities> getUniversityFacilities() {
+    public Set<UniversityFaculty> getUniversityFacilities() {
         return universityFacilities;
     }
 
-    public void setUniversityFacilities(Set<UniversityFacilities> universityFacilities) {
+    public void setUniversityFacilities(Set<UniversityFaculty> universityFacilities) {
         this.universityFacilities = universityFacilities;
     }
 
@@ -80,15 +80,15 @@ public class Facility {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Facility facility = (Facility) o;
+        Faculty facility = (Faculty) o;
         return id == facility.id
-                && Objects.equals(facilityName, facility.facilityName)
+                && Objects.equals(facultyName, facility.facultyName)
                 && Objects.equals(address, facility.address)
                 && Objects.equals(dean, facility.dean);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, facilityName, address, dean);
+        return Objects.hash(id, facultyName, address, dean);
     }
 }

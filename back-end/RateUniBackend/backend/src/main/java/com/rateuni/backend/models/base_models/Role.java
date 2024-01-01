@@ -1,6 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.UserRoles;
+import com.rateuni.backend.models.link_models.UserRole;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class Role {
     private String role;
 
     @OneToMany(mappedBy = "role")
-    private Set<UserRoles> userRoles;
+    private Set<UserRole> userRoles;
 
     public Role() {
     }

@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_roles")
-public class UserRoles {
+@Table(name = "users_roles")
+public class UserRole {
     @EmbeddedId
     private UserRoleKey id;
 
@@ -21,10 +21,10 @@ public class UserRoles {
     @MapsId("role_id")
     private Role role;
 
-    public UserRoles() {
+    public UserRole() {
     }
 
-    public UserRoles(UniUser user, Role role) {
+    public UserRole(UniUser user, Role role) {
         this.user = user;
         this.role = role;
     }
@@ -49,7 +49,7 @@ public class UserRoles {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserRoles userRoles = (UserRoles) o;
+        UserRole userRoles = (UserRole) o;
         return Objects.equals(id, userRoles.id) && Objects.equals(user, userRoles.user) && Objects.equals(role, userRoles.role);
     }
 

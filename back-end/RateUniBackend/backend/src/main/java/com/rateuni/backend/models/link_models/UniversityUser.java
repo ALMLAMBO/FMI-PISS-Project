@@ -8,8 +8,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "university_users")
-public class UniversityUsers {
+@Table(name = "universities_users")
+public class UniversityUser {
     @EmbeddedId
     private UniversityUserKey id;
 
@@ -21,10 +21,10 @@ public class UniversityUsers {
     @MapsId("user_id")
     private UniUser user;
 
-    public UniversityUsers() {
+    public UniversityUser() {
     }
 
-    public UniversityUsers(University university, UniUser user) {
+    public UniversityUser(University university, UniUser user) {
         this.university = university;
         this.user = user;
     }
@@ -49,7 +49,7 @@ public class UniversityUsers {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UniversityUsers that = (UniversityUsers) o;
+        UniversityUser that = (UniversityUser) o;
         return Objects.equals(id, that.id) && Objects.equals(university, that.university) && Objects.equals(user, that.user);
     }
 

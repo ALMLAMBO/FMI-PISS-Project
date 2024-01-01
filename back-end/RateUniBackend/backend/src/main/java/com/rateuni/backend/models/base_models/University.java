@@ -1,6 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.UniversityUsers;
+import com.rateuni.backend.models.link_models.UniversityUser;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class University {
     private String hqAddress;
 
     @OneToMany(mappedBy = "university")
-    Set<UniversityUsers> universityUsers;
+    Set<UniversityUser> universityUsers;
 
 
     public int getId() {
@@ -69,11 +69,11 @@ public class University {
         this.hqAddress = hqAddress;
     }
 
-    public Set<UniversityUsers> getUniversityUsers() {
+    public Set<UniversityUser> getUniversityUsers() {
         return universityUsers;
     }
 
-    public void setUniversityUsers(Set<UniversityUsers> universityUsers) {
+    public void setUniversityUsers(Set<UniversityUser> universityUsers) {
         this.universityUsers = universityUsers;
     }
 

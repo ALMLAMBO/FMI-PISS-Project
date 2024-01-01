@@ -7,19 +7,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class UniversityFacilityKey implements Serializable {
+public class UniversityFacultyKey implements Serializable {
     @Column(name = "university_id")
     int universityId;
 
-    @Column(name = "facility_id")
-    int facilityId;
+    @Column(name = "faculty_id")
+    int facultyId;
 
-    public UniversityFacilityKey() {
+    public UniversityFacultyKey() {
     }
 
-    public UniversityFacilityKey(int universityId, int facilityId) {
+    public UniversityFacultyKey(int universityId, int facultyId) {
         this.universityId = universityId;
-        this.facilityId = facilityId;
+        this.facultyId = facultyId;
     }
 
     public int getUniversityId() {
@@ -30,24 +30,24 @@ public class UniversityFacilityKey implements Serializable {
         this.universityId = universityId;
     }
 
-    public int getFacilityId() {
-        return facilityId;
+    public int getfacultyId() {
+        return facultyId;
     }
 
-    public void setFacilityId(int facilityId) {
-        this.facilityId = facilityId;
+    public void setfacultyId(int facultyId) {
+        this.facultyId = facultyId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UniversityFacilityKey that = (UniversityFacilityKey) o;
-        return universityId == that.universityId && facilityId == that.facilityId;
+        UniversityFacultyKey that = (UniversityFacultyKey) o;
+        return universityId == that.universityId && facultyId == that.facultyId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(universityId, facilityId);
+        return Objects.hash(universityId, facultyId);
     }
 }
