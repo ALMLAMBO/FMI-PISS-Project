@@ -1,9 +1,11 @@
 package com.rateuni.backend.models.base_models;
 
+import com.rateuni.backend.models.link_models.ReviewDiscipline;
 import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "reviews")
@@ -63,6 +65,9 @@ public class Review {
 
     @Column(name = "additional_materials")
     private boolean hasAdditionalMaterials;
+
+    @OneToMany(mappedBy = "review")
+    private Set<ReviewDiscipline> reviewDisciplines;
 
     public Review() {
     }
@@ -236,6 +241,14 @@ public class Review {
 
     public void setHasAdditionalMaterials(boolean hasAdditionalMaterials) {
         this.hasAdditionalMaterials = hasAdditionalMaterials;
+    }
+
+    public Set<ReviewDiscipline> getReviewDisciplines() {
+        return reviewDisciplines;
+    }
+
+    public void setReviewDisciplines(Set<ReviewDiscipline> reviewDisciplines) {
+        this.reviewDisciplines = reviewDisciplines;
     }
 
     @Override
