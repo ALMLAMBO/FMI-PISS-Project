@@ -3,6 +3,7 @@ package com.rateuni.backend.models;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "uni_users")
@@ -24,9 +25,8 @@ public class UniUser {
     @Column(name = "password")
     private String password;
 
-    public int getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "user")
+    private Set<UniversityUsers> universityUsers;
 
     public UniUser() {
     }
@@ -37,6 +37,10 @@ public class UniUser {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
@@ -73,6 +77,14 @@ public class UniUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<UniversityUsers> getUniversityUsers() {
+        return universityUsers;
+    }
+
+    public void setUniversityUsers(Set<UniversityUsers> universityUsers) {
+        this.universityUsers = universityUsers;
     }
 
     @Override
