@@ -1,5 +1,6 @@
-package com.rateuni.backend.models;
+package com.rateuni.backend.models.base_models;
 
+import com.rateuni.backend.models.link_models.UniversityUsers;
 import jakarta.persistence.*;
 
 import java.util.Objects;

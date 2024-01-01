@@ -1,4 +1,4 @@
-package com.rateuni.backend.models;
+package com.rateuni.backend.models.base_models;
 
 import jakarta.persistence.*;
 

@@ -1,5 +1,7 @@
-package com.rateuni.backend.models;
+package com.rateuni.backend.models.link_models;
 
+import com.rateuni.backend.models.base_models.UniUser;
+import com.rateuni.backend.models.base_models.University;
 import com.rateuni.backend.models.composite_keys.UniversityUserKey;
 import jakarta.persistence.*;
 
