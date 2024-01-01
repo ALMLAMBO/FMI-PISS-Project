@@ -1,12 +1,14 @@
 package com.rateuni.backend.models.base_models;
 
+import com.rateuni.backend.models.link_models.UserDiscipline;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "courses")
-public class Course {
+@Table(name = "disciplines")
+public class Discipline {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -30,11 +32,14 @@ public class Course {
     @Column(name = "assistants")
     private String assistants;
 
-    public Course() {
+    @OneToMany(mappedBy = "discipline")
+    private Set<UserDiscipline> userDisciplines;
+
+    public Discipline() {
     }
 
-    public Course(int id, String courseName, String description,
-                  double credits, String type, String lecturer, String assistants) {
+    public Discipline(int id, String courseName, String description,
+                      double credits, String type, String lecturer, String assistants) {
 
         this.id = id;
         this.courseName = courseName;
@@ -101,18 +106,26 @@ public class Course {
         this.assistants = assistants;
     }
 
+    public Set<UserDiscipline> getUserDisciplines() {
+        return userDisciplines;
+    }
+
+    public void setUserDisciplines(Set<UserDiscipline> userDisciplines) {
+        this.userDisciplines = userDisciplines;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return id == course.id
-                && Double.compare(credits, course.credits) == 0
-                && Objects.equals(courseName, course.courseName)
-                && Objects.equals(description, course.description)
-                && Objects.equals(type, course.type)
-                && Objects.equals(lecturer, course.lecturer)
-                && Objects.equals(assistants, course.assistants);
+        Discipline discipline = (Discipline) o;
+        return id == discipline.id
+                && Double.compare(credits, discipline.credits) == 0
+                && Objects.equals(courseName, discipline.courseName)
+                && Objects.equals(description, discipline.description)
+                && Objects.equals(type, discipline.type)
+                && Objects.equals(lecturer, discipline.lecturer)
+                && Objects.equals(assistants, discipline.assistants);
     }
 
     @Override
