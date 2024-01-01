@@ -1,8 +1,10 @@
 package com.rateuni.backend.models.base_models;
 
+import com.rateuni.backend.models.link_models.UniversityFacilities;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "facilities")
@@ -20,6 +22,9 @@ public class Facility {
 
     @Column(name = "dean")
     private String dean;
+
+    @OneToMany(mappedBy = "facility")
+    private Set<UniversityFacilities> universityFacilities;
 
     public Facility() {
     }
@@ -61,6 +66,14 @@ public class Facility {
 
     public void setDean(String dean) {
         this.dean = dean;
+    }
+
+    public Set<UniversityFacilities> getUniversityFacilities() {
+        return universityFacilities;
+    }
+
+    public void setUniversityFacilities(Set<UniversityFacilities> universityFacilities) {
+        this.universityFacilities = universityFacilities;
     }
 
     @Override
