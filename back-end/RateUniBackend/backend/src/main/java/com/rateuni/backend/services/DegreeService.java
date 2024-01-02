@@ -1,4 +1,4 @@
-package com.rateuni.backend.services.base_services;
+package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.Degree;
 import com.rateuni.backend.models.base_models.Discipline;
@@ -75,7 +75,7 @@ public class DegreeService {
                .getfaculty();
 
         if(faculty == null || degree == null) {
-            throw new IllegalArgumentException("Invalid faculty or university id or degree is null");
+            throw new IllegalArgumentException("Degree service - create update: Invalid faculty or university id or degree is null");
         }
 
         boolean degreeExists = degreeRepository
@@ -84,21 +84,16 @@ public class DegreeService {
                 .anyMatch(x -> x.equals(degree));
 
         if(create && degreeExists) {
-            throw new IllegalArgumentException("Degree already exists");
+            throw new IllegalArgumentException("Degree service - create update: Degree already exists");
         }
 
         if(!create && !degreeExists) {
-            throw new IllegalArgumentException("Degree does not exists");
+            throw new IllegalArgumentException("Degree service - create update: Degree does not exists");
         }
 
         degreeRepository.save(degree);
         if(create) {
             facultyDegreeRepository.save(new FacultyDegree(faculty, degree));
         }
-    }
-
-    @Transactional
-    public void deleteDegree(int degreeId) {
-        degreeRepository.deleteById(degreeId);
     }
 }
