@@ -1,14 +1,11 @@
 package com.rateuni.backend.models.link_models;
 
 import com.rateuni.backend.models.base_models.Faculty;
+import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.base_models.University;
 import com.rateuni.backend.models.composite_keys.FacultyUserKey;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.*;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -23,15 +20,15 @@ public class FacultyUser {
 
     @ManyToOne
     @MapsId("university_id")
-    private University university;
+    private UniUser uniUser;
 
     public FacultyUser() {
 
     }
 
-    public FacultyUser(Faculty faculty, University university) {
+    public FacultyUser(Faculty faculty, UniUser uniUser) {
         this.faculty = faculty;
-        this.university = university;
+        this.uniUser = uniUser;
     }
 
     public Faculty getFaculty() {
@@ -42,12 +39,12 @@ public class FacultyUser {
         this.faculty = faculty;
     }
 
-    public University getUniversity() {
-        return university;
+    public UniUser getUniversity() {
+        return uniUser;
     }
 
-    public void setUniversity(University university) {
-        this.university = university;
+    public void setUniversity(UniUser uniUser) {
+        this.uniUser = uniUser;
     }
 
     @Override
@@ -55,11 +52,11 @@ public class FacultyUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FacultyUser that = (FacultyUser) o;
-        return Objects.equals(id, that.id) && Objects.equals(faculty, that.faculty) && Objects.equals(university, that.university);
+        return Objects.equals(id, that.id) && Objects.equals(faculty, that.faculty) && Objects.equals(uniUser, that.uniUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, faculty, university);
+        return Objects.hash(id, faculty, uniUser);
     }
 }

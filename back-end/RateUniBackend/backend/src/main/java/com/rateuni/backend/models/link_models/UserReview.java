@@ -6,10 +6,7 @@ import com.rateuni.backend.models.composite_keys.UserReviewKey;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
