@@ -38,7 +38,7 @@ public class UniUser {
         this.facultyNumber = facultyNumber;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = hashPassword();
     }
 
     public int getId() {

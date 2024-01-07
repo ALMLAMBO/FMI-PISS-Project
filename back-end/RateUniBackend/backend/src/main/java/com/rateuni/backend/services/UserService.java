@@ -2,12 +2,11 @@ package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.*;
 import com.rateuni.backend.models.link_models.*;
-import com.rateuni.backend.repositories.base_repos.DegreeRepository;
-import com.rateuni.backend.repositories.base_repos.FacultyRepository;
-import com.rateuni.backend.repositories.base_repos.UniUserRepository;
-import com.rateuni.backend.repositories.base_repos.UniversityRepository;
+import com.rateuni.backend.repositories.base_repos.*;
 import com.rateuni.backend.repositories.link_repos.*;
 import jakarta.transaction.Transactional;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
+import org.javatuples.Quintet;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +50,11 @@ public class UserService {
     private final UniversityUserRepository universityUserRepository;
 
     @Autowired
+    private final DisciplineRepository disciplineRepository;
+
+
+
+    @Autowired
     private final ReviewService reviewService;
 
     public UserService(UniversityRepository universityRepository,
@@ -64,6 +68,7 @@ public class UserService {
                        FacultyUserRepository facultyUserRepository,
                        UniUserRepository uniUserRepository,
                        UniversityUserRepository universityUserRepository,
+                       DisciplineRepository disciplineRepository,
                        ReviewService reviewService) {
 
         this.universityRepository = universityRepository;
@@ -77,6 +82,7 @@ public class UserService {
         this.facultyUserRepository = facultyUserRepository;
         this.uniUserRepository = uniUserRepository;
         this.universityUserRepository = universityUserRepository;
+        this.disciplineRepository = disciplineRepository;
         this.reviewService = reviewService;
     }
 
@@ -107,7 +113,7 @@ public class UserService {
     @Transactional
     public void registerUser(int universityId, int facultyId, int degreeId, UniUser user) {
         try {
-            Triplet<University, Faculty, Degree> uniData = checkData(universityId, facultyId, degreeId);
+            Triplet<University, Faculty, Degree> uniData = checkUniData(universityId, facultyId, degreeId);
             Role role = new Role();
             role.setRole("student");
 
@@ -132,7 +138,18 @@ public class UserService {
         }
     }
 
-    private Triplet<University, Faculty, Degree> checkData(int universityId, int facultyId, int degreeId) {
+    @Transactional
+    public void createReview(int universityId, int facultyId, int degreeId, int disciplineId, int userId, Review review) {
+        try {
+            UniUser user = checkUserData(universityId, facultyId, degreeId, disciplineId, userId);
+            reviewService.createReview(disciplineId, review);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Triplet<University, Faculty, Degree> checkUniData(int universityId, int facultyId, int degreeId) {
         University university = universityRepository
                 .findById(universityId)
                 .get();
@@ -158,5 +175,70 @@ public class UserService {
         }
 
         return new Triplet<>(university, faculty, degree);
+    }
+
+    private UniUser checkUserData(
+            int universityId, int facultyId, int degreeId, int disciplineId, int userId) {
+
+        Triplet<University, Faculty, Degree> uniData = checkUniData(universityId, facultyId, degreeId);
+        Discipline discipline = disciplineRepository
+                .findById(disciplineId)
+                .get();
+
+        if(discipline == null) {
+            throw new IllegalArgumentException("User Service create review: Invalid discipline id");
+        }
+
+        UniUser user = uniUserRepository
+                .findById(userId)
+                .get();
+
+        if(user == null) {
+            throw new IllegalArgumentException("User Service create review: Invalid user id");
+        }
+
+        int expectedUniId = universityUserRepository
+                .findById(userId)
+                .get()
+                .getUniversity()
+                .getId();
+
+        if(expectedUniId != universityId) {
+            throw new IllegalArgumentException("User Service create review: User is not from this university");
+        }
+
+        int expectedFacultyId = facultyUserRepository
+                .findById(userId)
+                .get()
+                .getFaculty()
+                .getId();
+
+        if(expectedFacultyId != facultyId) {
+            throw new IllegalArgumentException("User Service create review: User is not from this faculty");
+        }
+
+        int expectedDegreeId = userDegreeRepository
+                .findById(userId)
+                .get()
+                .getDegree()
+                .getId();
+
+        if(expectedDegreeId != degreeId) {
+            throw new IllegalArgumentException("User Service create review: User is not from this degree");
+        }
+
+        int expectedDisciplineId = userDisciplineRepository
+                .findAllById(List.of(userId))
+                .stream()
+                .filter(x -> x.getDiscipline().getId() == disciplineId)
+                .map(x -> x.getDiscipline().getId())
+                .toList()
+                .get(0);
+
+        if(expectedDisciplineId != disciplineId) {
+            throw new IllegalArgumentException("User Service create review: User is not from this discipline");
+        }
+
+        return user;
     }
 }
