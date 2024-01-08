@@ -1,5 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.rateuni.backend.models.link_models.UniversityUser;
 import jakarta.persistence.*;
 
@@ -37,7 +38,7 @@ public class UniUser {
         this.facultyNumber = facultyNumber;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = hashPassword();
     }
 
     public int getId() {
@@ -103,5 +104,10 @@ public class UniUser {
     @Override
     public int hashCode() {
         return Objects.hash(id, facultyNumber, email, username, password);
+    }
+
+    private String hashPassword() {
+        return BCrypt.withDefaults()
+                .hashToString(BCrypt.SALT_LENGTH, this.password.toCharArray());
     }
 }
