@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "degrees")
 public class Degree {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
