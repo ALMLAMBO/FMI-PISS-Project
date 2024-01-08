@@ -3,13 +3,7 @@ package com.rateuni.backend.models.link_models;
 import com.rateuni.backend.models.base_models.Review;
 import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.composite_keys.UserReviewKey;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
