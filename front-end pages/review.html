@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <!--<label for="username">Потрбителско име</label><br>-->
+        <input hidden="true" type="text" id="user-id" name="user-id">
+        <input hidden="true" type="date" id="publishedAt" name="publishedAt">
+
+        <!--оценки-->
+        <label for="courseRating">Оценка на курса</label>
+        <input type="number" min="0.0" max="5"  step="0.01" value="0" id="courseRating" name="courseRating"><br>
+        <label for="lecturerRating">Оценка на преподавател</label>
+        <input type="number" min="0.0" max="5" step="0.01" value="0" id="lecturerRating" name="lecturerRating"><br>
+        <!--да се показва само като има асистент на курса-->
+        <label for="assistantsRating">Оценка на асистент</label>
+        <input type="number" min="0.0" max="5" step="0.01" value="0" id="assistantsRating" name="assistantsRating"><br>
+
+        <p>Oценки за:</p>
+        <label for="difficulty">Сложност</label>
+        <input type="number" min="0" step="1" max="5" value="0" id="difficulty" name="difficulty"><br>
+        <label for="work_load">Заетост</label>
+        <input type="number" min="0" step="1" max="5" value="0" id="work_load" name="work_load"><br> 
+        <label for="usefulness">Полезност</label>
+        <input type="number" min="0" step="1" max="5" value="0" id="usefulness" name="usefulness"><br>
+        <!--<label for="lecturerRating">Увлекателност</label>/label>
+        <input type="number" min="0" max="5" value="0" id="lecturerRating" name="lecturerRating"><br>-->
+
+        <!--true or false-->
+        <p>Има:</p>
+        <label for="exam">Изпит</label>
+        <input type="checkbox" value="1" id="exam" name="exam"><br>
+        <label for="project">Проект</label>
+        <input type="checkbox" value="1" id="project" name="project"><br>
+        <label for="mid_checks">Контролно</label>
+        <input type="checkbox" value="1" id="mid_checks" name="mid_checks"><br>
+        <label for="homeworks">Домашни</label>
+        <input type="checkbox" value="1" id="homeworks" name="homeworks"><br>
+        <label for="online_classes">Онлайн часове</label>
+        <input type="checkbox" value="1" id="online_classes" name="online_classes"><br>
+        <label for="books">Учебници</label>
+        <input type="checkbox" value="1" id="books" name="books"><br>
+        <label for="presentations">Презентации</label>
+        <input type="checkbox" value="1" id="presentations" name="presentations"><br>
+        <label for="additional_materials">Допълнителни материали</label>
+        <input type="checkbox" value="1" id="additional_materials" name="exam"><br><br>
+
+        <label for="comment">Коментар</label><br>
+        <textarea id="comment" name="comment" maxlength="250" rows="5" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
