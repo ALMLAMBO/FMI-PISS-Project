@@ -6,34 +6,20 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "disciplines")
 public class Discipline {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "courseName")
     private String courseName;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "credits")
     private double credits;
 
-    @Column(name = "type")
     private String type;
 
-    @Column(name = "lecturer")
     private String lecturer;
 
-    @Column(name = "assistants")
     private String assistants;
-
-    @OneToMany(mappedBy = "discipline")
-    private Set<UserDiscipline> userDisciplines;
 
     public Discipline() {
     }
@@ -104,14 +90,6 @@ public class Discipline {
 
     public void setAssistants(String assistants) {
         this.assistants = assistants;
-    }
-
-    public Set<UserDiscipline> getUserDisciplines() {
-        return userDisciplines;
-    }
-
-    public void setUserDisciplines(Set<UserDiscipline> userDisciplines) {
-        this.userDisciplines = userDisciplines;
     }
 
     @Override

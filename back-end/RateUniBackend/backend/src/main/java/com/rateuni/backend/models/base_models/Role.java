@@ -6,19 +6,10 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "roles")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "role")
     private String role;
-
-    @OneToMany(mappedBy = "role")
-    private Set<UserRole> userRoles;
 
     public Role() {
     }

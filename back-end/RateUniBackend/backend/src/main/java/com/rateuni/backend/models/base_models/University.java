@@ -6,30 +6,14 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@Table(name = "universities")
 public class University {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "uni_name")
     private String name;
 
-    @Column(name = "rector")
     private String rector;
 
-    @Column(name = "hq_address")
     private String hqAddress;
-
-    @OneToMany(mappedBy = "university")
-    Set<UniversityUser> universityUsers;
-
-
-    public int getId() {
-        return id;
-    }
 
     public University() {
     }
@@ -39,6 +23,10 @@ public class University {
         this.name = name;
         this.rector = rector;
         this.hqAddress = hqAddress;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
@@ -67,14 +55,6 @@ public class University {
 
     public void setHqAddress(String hqAddress) {
         this.hqAddress = hqAddress;
-    }
-
-    public Set<UniversityUser> getUniversityUsers() {
-        return universityUsers;
-    }
-
-    public void setUniversityUsers(Set<UniversityUser> universityUsers) {
-        this.universityUsers = universityUsers;
     }
 
     @Override

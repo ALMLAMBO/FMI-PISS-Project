@@ -6,8 +6,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import com.rateuni.backend.models.base_models.UniRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

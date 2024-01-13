@@ -1,6 +1,5 @@
 package com.rateuni.backend.firebase;
 
-import com.rateuni.backend.models.base_models.UniRequest;
 import com.rateuni.backend.services.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

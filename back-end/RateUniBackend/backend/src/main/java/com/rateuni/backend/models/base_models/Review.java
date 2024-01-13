@@ -1,73 +1,46 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.ReviewDiscipline;
-import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name = "reviews")
 public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "comment")
     private String comment;
 
-    @Column(name = "published_at")
     private Date publishedAt;
 
-    @Column(name = "status")
     private String status;
 
-    @Column(name = "course_rating")
     private double courseRating;
 
-    @Column(name = "lecturer_rating")
     private double lecturerRating;
 
-    @Column(name = "assistants_rating")
     private double assistantsRating;
 
-    @Column(name = "difficulty")
     private int difficulty;
 
-    @Column(name = "usefulness")
     private int usefulness;
 
-    @Column(name = "work_load")
     private int workLoad;
 
-    @Column(name = "exam")
     private boolean hasExam;
 
-    @Column(name = "project")
     private boolean hasProject;
 
-    @Column(name = "mid_checks")
     private boolean hasMidChecks;
 
-    @Column(name = "homeworks")
     private boolean hasHomeworks;
 
-    @Column(name = "online_classes")
     private boolean hasOnlineClasses;
 
-    @Column(name = "books")
     private boolean hasBooks;
 
-    @Column(name = "presentations")
     private boolean hasPresentations;
 
-    @Column(name = "additional_materials")
     private boolean hasAdditionalMaterials;
 
-    @OneToMany(mappedBy = "review")
-    private Set<ReviewDiscipline> reviewDisciplines;
+    private boolean visible;
 
     public Review() {
     }
@@ -77,7 +50,7 @@ public class Review {
                   int difficulty, int usefulness, int workLoad, boolean hasExam,
                   boolean hasProject, boolean hasMidChecks, boolean hasHomeworks,
                   boolean hasOnlineClasses, boolean hasBooks, boolean hasPresentations,
-                  boolean hasAdditionalMaterials) {
+                  boolean hasAdditionalMaterials, boolean visible) {
 
         this.id = id;
         this.comment = comment;
@@ -97,6 +70,7 @@ public class Review {
         this.hasBooks = hasBooks;
         this.hasPresentations = hasPresentations;
         this.hasAdditionalMaterials = hasAdditionalMaterials;
+        this.visible = visible;
     }
 
     public int getId() {
@@ -243,12 +217,12 @@ public class Review {
         this.hasAdditionalMaterials = hasAdditionalMaterials;
     }
 
-    public Set<ReviewDiscipline> getReviewDisciplines() {
-        return reviewDisciplines;
+    public boolean isVisible() {
+        return visible;
     }
 
-    public void setReviewDisciplines(Set<ReviewDiscipline> reviewDisciplines) {
-        this.reviewDisciplines = reviewDisciplines;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override

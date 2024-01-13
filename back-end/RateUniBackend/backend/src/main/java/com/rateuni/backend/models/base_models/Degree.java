@@ -1,27 +1,13 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.FacultyDegree;
-import jakarta.persistence.*;
-
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name = "degrees")
 public class Degree {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
     private String description;
-
-    @OneToMany(mappedBy = "degree")
-    private Set<FacultyDegree> facultyDegrees;
 
     public Degree() {
     }
@@ -54,14 +40,6 @@ public class Degree {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<FacultyDegree> getFacultyDegrees() {
-        return facultyDegrees;
-    }
-
-    public void setFacultyDegrees(Set<FacultyDegree> facultyDegrees) {
-        this.facultyDegrees = facultyDegrees;
     }
 
     @Override
