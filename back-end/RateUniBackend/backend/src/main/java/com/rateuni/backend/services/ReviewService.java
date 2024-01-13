@@ -1,74 +1,70 @@
 package com.rateuni.backend.services;
 
-import com.rateuni.backend.models.base_models.Discipline;
 import com.rateuni.backend.models.base_models.Review;
 import com.rateuni.backend.models.link_models.ReviewDiscipline;
-import com.rateuni.backend.repositories.base_repos.DisciplineRepository;
-import com.rateuni.backend.repositories.base_repos.ReviewRepository;
-import com.rateuni.backend.repositories.link_repos.ReviewDisciplineRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutionException;
 
 @Service
-public class ReviewService {
+public class ReviewService extends BaseService {
     @Autowired
-    private final ReviewRepository reviewRepository;
+    private DisciplineService disciplineService;
 
-    @Autowired
-    private final ReviewDisciplineRepository reviewDisciplineRepository;
+    public List<Review> getAllReviewsForDiscipline(int disciplineId) throws ExecutionException, InterruptedException {
+        List<Review> reviews = new ArrayList<>();
 
-    @Autowired
-    private final DisciplineRepository disciplineRepository;
+        List<ReviewDiscipline> reviewDisciplines = firestore
+                .collection(CollectionsNames.REVIEWS_DISCIPLINES_COLLECTION_NAME)
+                .whereEqualTo("disciplineId", disciplineId)
+                .get()
+                .get()
+                .toObjects(ReviewDiscipline.class);
 
+        for (ReviewDiscipline reviewDiscipline : reviewDisciplines) {
+            Review review = getReview(reviewDiscipline.getReviewId());
 
-
-    public ReviewService(ReviewRepository reviewRepository,
-                         ReviewDisciplineRepository reviewDisciplineRepository,
-                         DisciplineRepository disciplineRepository) {
-
-        this.reviewRepository = reviewRepository;
-        this.reviewDisciplineRepository = reviewDisciplineRepository;
-        this.disciplineRepository = disciplineRepository;
-    }
-
-    public List<Review> getAllReviewsForDiscipline(int disciplineId) {
-        Discipline discipline = disciplineRepository
-                .findById(disciplineId)
-                .get();
-
-        if(discipline == null) {
-            throw new IllegalArgumentException("Review service - get all reviews: Invalid discipline id");
+            reviews.add(review);
         }
 
-        return reviewDisciplineRepository
-                .findAllById(List.of(disciplineId))
-                .stream()
-                .map(ReviewDiscipline::getReview)
-                .collect(Collectors.toList());
+        return reviews;
     }
 
-    public Review getReview(int reviewId) {
-        return reviewRepository
-                .findById(reviewId)
-                .get();
+    public Review getReview(int reviewId) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                .whereEqualTo("id", reviewId)
+                .get()
+                .get()
+                .toObjects(Review.class)
+                .get(0);
     }
 
-    @Transactional
-    public void createReview(int disciplineId, Review review) {
-        Discipline discipline = disciplineRepository
-                .findById(disciplineId)
-                .get();
-
-        if(discipline == null) {
-            throw new IllegalArgumentException("Review service - create: Invalid discipline id");
+    public void createReviewForDiscipline(int disciplineId, Review review) {
+        try {
+            disciplineService.getDiscipline(disciplineId);
+        }
+        catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
-        reviewRepository.save(review);
-        reviewDisciplineRepository.save(new ReviewDiscipline(discipline, review));
+        firestore.runAsyncTransaction(x -> {
+            try {
+                int prevId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+                review.setId(prevId + 1);
+                updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+                review.setVisible(false);
+            }
+            catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            return firestore
+                    .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                    .add(review);
+        });
     }
 }
