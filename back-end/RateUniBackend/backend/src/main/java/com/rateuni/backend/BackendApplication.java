@@ -36,14 +36,14 @@ public class BackendApplication {
         return srb;
     }
 
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource ds) {
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/seed_data.sql"));
-        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-        dataSourceInitializer.setDataSource(ds);
-        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-
-        return dataSourceInitializer;
-    }
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer(DataSource ds) {
+//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+//        resourceDatabasePopulator.addScript(new ClassPathResource("/seed_data.sql"));
+//        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//        dataSourceInitializer.setDataSource(ds);
+//        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+//
+//        return dataSourceInitializer;
+//    }
 }
