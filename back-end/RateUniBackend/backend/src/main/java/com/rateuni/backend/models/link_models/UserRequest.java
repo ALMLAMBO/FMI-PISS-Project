@@ -18,12 +18,16 @@ public class UserRequest {
 
     private String facultyNumber;
 
+    private String status;
+
+    private boolean approved;
+
     public UserRequest() {
 
     }
 
     public UserRequest(int requestId, String username, String university,
-                       String faculty, String degree, String facultyNumber) {
+                       String faculty, String degree, String facultyNumber, String status, boolean approved) {
 
         this.requestId = requestId;
         this.username = username;
@@ -31,6 +35,8 @@ public class UserRequest {
         this.faculty = faculty;
         this.degree = degree;
         this.facultyNumber = facultyNumber;
+        this.status = status;
+        this.approved = approved;
     }
 
     public int getRequestId() {
@@ -79,5 +85,21 @@ public class UserRequest {
 
     public void setFacultyNumber(String facultyNumber) {
         this.facultyNumber = facultyNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }
