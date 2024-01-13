@@ -13,87 +13,106 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
-public class DegreeService {
+public class DegreeService extends BaseService {
     @Autowired
-    private final DegreeRepository degreeRepository;
-
-    @Autowired
-    private final FacultyDegreeRepository facultyDegreeRepository;
+    private UniversityService universityService;
 
     @Autowired
-    private final DegreeDisciplineRepository degreeDisciplineRepository;
+    private FacultyService facultyService;
 
-    @Autowired
-    private final UniversityFacultyRepository universityFacultyRepository;
+    public List<Degree> getAllDegreesForFaculty(int facultyId) throws ExecutionException, InterruptedException {
+        List<Degree> degrees = new ArrayList<>();
 
+        List<FacultyDegree> facultyDegrees = firestore
+                .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
+                .whereEqualTo("faculty_id", facultyId)
+                .get()
+                .get()
+                .toObjects(FacultyDegree.class);
 
-    public DegreeService(DegreeRepository degreeRepository,
-                         FacultyDegreeRepository facultyDegreeRepository,
-                         DegreeDisciplineRepository degreeDisciplineRepository,
-                         UniversityFacultyRepository universityFacultyRepository) {
+        for (FacultyDegree facultyDegree : facultyDegrees) {
+            Degree degree = firestore
+                    .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
+                    .whereEqualTo("id", facultyDegree.getDegreeId())
+                    .get()
+                    .get()
+                    .toObjects(Degree.class)
+                    .get(0);
 
-        this.degreeRepository = degreeRepository;
-        this.facultyDegreeRepository = facultyDegreeRepository;
-        this.degreeDisciplineRepository = degreeDisciplineRepository;
-        this.universityFacultyRepository = universityFacultyRepository;
-    }
-
-    public List<Degree> getAllDegreesForFaculty(int facultyId) {
-        return facultyDegreeRepository
-                .findAllById(List.of(facultyId))
-                .stream()
-                .map(FacultyDegree::getDegree)
-                .collect(Collectors.toList());
-    }
-
-    public Degree getDegree(int degreeId) {
-        return degreeRepository
-                .findById(degreeId)
-                .get();
-    }
-
-    public List<Discipline> getAllDisciplinesForDegree(int degreeId) {
-        return degreeDisciplineRepository
-                .findAllById(List.of(degreeId))
-                .stream()
-                .map(DegreeDiscipline::getDiscipline)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public void addUpdateDegree(int universityId, int facultyId, Degree degree, boolean create) {
-       Faculty faculty = universityFacultyRepository
-               .findAllById(List.of(universityId))
-               .stream()
-               .filter(x -> x.getfaculty().getId() == facultyId)
-               .findFirst()
-               .get()
-               .getfaculty();
-
-        if(faculty == null || degree == null) {
-            throw new IllegalArgumentException("Degree service - create update: Invalid faculty or university id or degree is null");
+            degrees.add(degree);
         }
 
-        boolean degreeExists = degreeRepository
-                .findAll()
-                .stream()
-                .anyMatch(x -> x.equals(degree));
+        return degrees;
+    }
 
-        if(create && degreeExists) {
-            throw new IllegalArgumentException("Degree service - create update: Degree already exists");
+    public Degree getDegree(int degreeId) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
+                .whereEqualTo("id", degreeId)
+                .get()
+                .get()
+                .toObjects(Degree.class)
+                .get(0);
+    }
+
+    public List<Discipline> getAllDisciplinesForDegree(int degreeId) throws ExecutionException, InterruptedException {
+        List<Discipline> disciplines = new ArrayList<>();
+
+        List<DegreeDiscipline> degreeDisciplines = firestore
+                .collection(CollectionsNames.DEGREES_DISCIPLINES_COLLECTION_NAME)
+                .whereEqualTo("degreeId", degreeId)
+                .get()
+                .get()
+                .toObjects(DegreeDiscipline.class);
+
+        for (DegreeDiscipline degreeDiscipline : degreeDisciplines) {
+            Discipline discipline = firestore
+                    .collection(CollectionsNames.DISCIPLINES_COLLECTION_NAME)
+                    .whereEqualTo("id", degreeDiscipline.getDisciplineId())
+                    .get()
+                    .get()
+                    .toObjects(Discipline.class)
+                    .get(0);
+
+            disciplines.add(discipline);
         }
 
-        if(!create && !degreeExists) {
-            throw new IllegalArgumentException("Degree service - create update: Degree does not exists");
+        return disciplines;
+    }
+
+    public void addDegree(int universityId, int facultyId, Degree degree) {
+        try {
+            universityService.getUniversity(universityId);
+            facultyService.getFaculty(facultyId);
+        }
+        catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
-        degreeRepository.save(degree);
-        if(create) {
-            facultyDegreeRepository.save(new FacultyDegree(faculty, degree));
-        }
+        firestore.runAsyncTransaction(x -> {
+            try {
+                int prevId = getId(CollectionsNames.DEGREES_COLLECTION_NAME);
+                degree.setId(prevId + 1);
+                updateId(CollectionsNames.DEGREES_COLLECTION_NAME);
+            }
+            catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            firestore
+                    .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
+                    .add(degree);
+
+            return firestore
+                    .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
+                    .add(new FacultyDegree(facultyId, degree.getId()));
+        });
     }
 }
