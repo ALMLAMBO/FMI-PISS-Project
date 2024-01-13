@@ -1,10 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.UserRole;
-import jakarta.persistence.*;
-
 import java.util.Objects;
-import java.util.Set;
 
 public class Role {
     private int id;

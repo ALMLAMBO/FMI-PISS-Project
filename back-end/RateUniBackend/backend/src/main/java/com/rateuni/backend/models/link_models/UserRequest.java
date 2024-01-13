@@ -1,10 +1,5 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.UniUser;
-import jakarta.persistence.*;
-
-import java.util.Objects;
-
 public class UserRequest {
     private int requestId;
 

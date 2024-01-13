@@ -1,19 +1,13 @@
 package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.Faculty;
-import com.rateuni.backend.models.base_models.University;
 import com.rateuni.backend.models.link_models.UniversityFaculty;
-import com.rateuni.backend.repositories.base_repos.FacultyRepository;
-import com.rateuni.backend.repositories.base_repos.UniversityRepository;
-import com.rateuni.backend.repositories.link_repos.UniversityFacultyRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService extends BaseService {

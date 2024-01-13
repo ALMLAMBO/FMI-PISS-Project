@@ -1,10 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.UniversityFaculty;
-import jakarta.persistence.*;
-
 import java.util.Objects;
-import java.util.Set;
 
 public class Faculty {
     private int id;
