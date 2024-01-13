@@ -1,48 +1,35 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Discipline;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.composite_keys.UserDisciplineKey;
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users_disciplines")
-public class UserDiscipline {
-    @EmbeddedId
-    private UserDisciplineKey id;
+public class UserDiscipline implements Serializable {
+    private int userId;
 
-    @ManyToOne
-    @MapsId("user_id")
-    private UniUser user;
-
-    @ManyToOne
-    @MapsId("discipline_id")
-    private Discipline discipline;
+    private int disciplineId;
 
     public UserDiscipline() {
     }
 
-    public UserDiscipline(UniUser user, Discipline discipline) {
-        this.user = user;
-        this.discipline = discipline;
+    public UserDiscipline(int userId, int disciplineId) {
+        this.userId = userId;
+        this.disciplineId = disciplineId;
     }
 
-    public UniUser getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(UniUser user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Discipline getDiscipline() {
-        return discipline;
+    public int getDisciplineId() {
+        return disciplineId;
     }
 
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
+    public void setDisciplineId(int disciplineId) {
+        this.disciplineId = disciplineId;
     }
 
     @Override
@@ -50,11 +37,11 @@ public class UserDiscipline {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDiscipline that = (UserDiscipline) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(discipline, that.discipline);
+        return userId == that.userId && disciplineId == that.disciplineId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, discipline);
+        return Objects.hash(userId, disciplineId);
     }
 }

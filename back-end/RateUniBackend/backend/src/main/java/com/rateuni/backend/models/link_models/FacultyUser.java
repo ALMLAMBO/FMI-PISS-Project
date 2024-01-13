@@ -1,50 +1,36 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Faculty;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.base_models.University;
-import com.rateuni.backend.models.composite_keys.FacultyUserKey;
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "faculties_users")
-public class FacultyUser {
-    @EmbeddedId
-    private FacultyUserKey id;
+public class FacultyUser implements Serializable {
+    private int facultyId;
 
-    @ManyToOne
-    @MapsId("faculty_id")
-    private Faculty faculty;
-
-    @ManyToOne
-    @MapsId("university_id")
-    private UniUser uniUser;
+    private int userId;
 
     public FacultyUser() {
 
     }
 
-    public FacultyUser(Faculty faculty, UniUser uniUser) {
-        this.faculty = faculty;
-        this.uniUser = uniUser;
+    public FacultyUser(int facultyId, int userId) {
+        this.facultyId = facultyId;
+        this.userId = userId;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
+    public int getFacultyId() {
+        return facultyId;
     }
 
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
+    public void setFacultyId(int facultyId) {
+        this.facultyId = facultyId;
     }
 
-    public UniUser getUniversity() {
-        return uniUser;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUniversity(UniUser uniUser) {
-        this.uniUser = uniUser;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -52,11 +38,11 @@ public class FacultyUser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FacultyUser that = (FacultyUser) o;
-        return Objects.equals(id, that.id) && Objects.equals(faculty, that.faculty) && Objects.equals(uniUser, that.uniUser);
+        return facultyId == that.facultyId && userId == that.userId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, faculty, uniUser);
+        return Objects.hash(facultyId, userId);
     }
 }

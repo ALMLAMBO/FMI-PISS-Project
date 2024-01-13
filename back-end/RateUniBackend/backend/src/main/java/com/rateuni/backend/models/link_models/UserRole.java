@@ -1,60 +1,47 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Role;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.composite_keys.UserRoleKey;
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users_roles")
-public class UserRole {
-    @EmbeddedId
-    private UserRoleKey id;
+public class UserRole implements Serializable {
+    int userId;
 
-    @ManyToOne
-    @MapsId("user_id")
-    private UniUser user;
-
-    @ManyToOne
-    @MapsId("role_id")
-    private Role role;
+    int roleId;
 
     public UserRole() {
     }
 
-    public UserRole(UniUser user, Role role) {
-        this.user = user;
-        this.role = role;
+    public UserRole(int userId, int roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
     }
 
-    public UniUser getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(UniUser user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Role getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserRole userRoles = (UserRole) o;
-        return Objects.equals(id, userRoles.id) && Objects.equals(user, userRoles.user) && Objects.equals(role, userRoles.role);
+        UserRole that = (UserRole) o;
+        return userId == that.userId && roleId == that.roleId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, role);
+        return Objects.hash(userId, roleId);
     }
 }

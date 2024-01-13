@@ -1,48 +1,35 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Degree;
-import com.rateuni.backend.models.base_models.Discipline;
-import com.rateuni.backend.models.composite_keys.DegreeDisciplineKey;
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "degrees_disciplines")
-public class DegreeDiscipline {
-    @EmbeddedId
-    private DegreeDisciplineKey id;
+public class DegreeDiscipline implements Serializable {
+    private int degreeId;
 
-    @ManyToOne
-    @MapsId("discipline_id")
-    private Discipline discipline;
-
-    @ManyToOne
-    @MapsId("degree_id")
-    private Degree degree;
+    private int disciplineId;
 
     public DegreeDiscipline() {
     }
 
-    public DegreeDiscipline(Discipline discipline, Degree degree) {
-        this.discipline = discipline;
-        this.degree = degree;
+    public DegreeDiscipline(int degreeId, int disciplineId) {
+        this.degreeId = degreeId;
+        this.disciplineId = disciplineId;
     }
 
-    public Discipline getDiscipline() {
-        return discipline;
+    public int getDegreeId() {
+        return degreeId;
     }
 
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
+    public void setDegreeId(int degreeId) {
+        this.degreeId = degreeId;
     }
 
-    public Degree getDegree() {
-        return degree;
+    public int getDisciplineId() {
+        return disciplineId;
     }
 
-    public void setDegree(Degree degree) {
-        this.degree = degree;
+    public void setDisciplineId(int disciplineId) {
+        this.disciplineId = disciplineId;
     }
 
     @Override
@@ -50,11 +37,11 @@ public class DegreeDiscipline {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DegreeDiscipline that = (DegreeDiscipline) o;
-        return Objects.equals(id, that.id) && Objects.equals(discipline, that.discipline) && Objects.equals(degree, that.degree);
+        return degreeId == that.degreeId && disciplineId == that.disciplineId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discipline, degree);
+        return Objects.hash(degreeId, disciplineId);
     }
 }

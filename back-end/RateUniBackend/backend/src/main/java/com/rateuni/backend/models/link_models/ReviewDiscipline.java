@@ -1,48 +1,38 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Discipline;
-import com.rateuni.backend.models.base_models.Review;
-import com.rateuni.backend.models.composite_keys.ReviewDisciplineKey;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "reviews_disciplines")
-public class ReviewDiscipline {
-    @EmbeddedId
-    private ReviewDisciplineKey id;
+public class ReviewDiscipline implements Serializable {
+    private int reviewId;
 
-    @ManyToOne
-    @MapsId("discipline_id")
-    private Discipline discipline;
-
-    @ManyToOne
-    @MapsId("review_id")
-    private Review review;
+    private int disciplineId;
 
     public ReviewDiscipline() {
     }
 
-    public ReviewDiscipline(Discipline discipline, Review review) {
-        this.discipline = discipline;
-        this.review = review;
+    public ReviewDiscipline(int reviewId, int disciplineId) {
+        this.reviewId = reviewId;
+        this.disciplineId = disciplineId;
     }
 
-    public Discipline getDiscipline() {
-        return discipline;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
-    public Review getReview() {
-        return review;
+    public int getDisciplineId() {
+        return disciplineId;
     }
 
-    public void setReview(Review review) {
-        this.review = review;
+    public void setDisciplineId(int disciplineId) {
+        this.disciplineId = disciplineId;
     }
 
     @Override
@@ -50,11 +40,11 @@ public class ReviewDiscipline {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReviewDiscipline that = (ReviewDiscipline) o;
-        return Objects.equals(id, that.id) && Objects.equals(discipline, that.discipline) && Objects.equals(review, that.review);
+        return reviewId == that.reviewId && disciplineId == that.disciplineId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discipline, review);
+        return Objects.hash(reviewId, disciplineId);
     }
 }

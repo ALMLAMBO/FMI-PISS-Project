@@ -1,48 +1,35 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Degree;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.composite_keys.UserDegreeKey;
-import jakarta.persistence.*;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users_degrees")
-public class UserDegree {
-    @EmbeddedId
-    private UserDegreeKey id;
+public class UserDegree implements Serializable {
+    private int userId;
 
-    @ManyToOne
-    @MapsId("user_id")
-    private UniUser user;
-
-    @ManyToOne
-    @MapsId("degree_id")
-    private Degree degree;
+    private int degreeId;
 
     public UserDegree() {
     }
 
-    public UserDegree(UniUser user, Degree degree) {
-        this.user = user;
-        this.degree = degree;
+    public UserDegree(int userId, int degreeId) {
+        this.userId = userId;
+        this.degreeId = degreeId;
     }
 
-    public UniUser getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(UniUser user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Degree getDegree() {
-        return degree;
+    public int getDegreeId() {
+        return degreeId;
     }
 
-    public void setDegree(Degree degree) {
-        this.degree = degree;
+    public void setDegreeId(int degreeId) {
+        this.degreeId = degreeId;
     }
 
     @Override
@@ -50,11 +37,11 @@ public class UserDegree {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDegree that = (UserDegree) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(degree, that.degree);
+        return userId == that.userId && degreeId == that.degreeId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, degree);
+        return Objects.hash(userId, degreeId);
     }
 }

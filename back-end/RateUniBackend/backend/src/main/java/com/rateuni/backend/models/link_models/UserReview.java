@@ -1,48 +1,36 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Review;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.composite_keys.UserReviewKey;
-import jakarta.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users_reviews")
-public class UserReview {
-    @EmbeddedId
-    private UserReviewKey id;
+public class UserReview implements Serializable {
+    int userId;
 
-    @ManyToOne
-    @MapsId("user_id")
-    private UniUser user;
-
-    @ManyToOne
-    @MapsId("review_id")
-    private Review review;
+    int reviewId;
 
     public UserReview() {
 
     }
 
-    public UserReview(UniUser user, Review review) {
-        this.user = user;
-        this.review = review;
+    public UserReview(int userId, int reviewId) {
+        this.userId = userId;
+        this.reviewId = reviewId;
     }
 
-    public UniUser getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(UniUser user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Review getReview() {
-        return review;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public void setReview(Review review) {
-        this.review = review;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     @Override
@@ -50,11 +38,11 @@ public class UserReview {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserReview that = (UserReview) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(review, that.review);
+        return userId == that.userId && reviewId == that.reviewId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, review);
+        return Objects.hash(userId, reviewId);
     }
 }
