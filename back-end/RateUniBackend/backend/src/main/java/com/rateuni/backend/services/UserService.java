@@ -1,5 +1,6 @@
 package com.rateuni.backend.services;
 
+import com.google.cloud.firestore.DocumentReference;
 import com.rateuni.backend.models.base_models.*;
 import com.rateuni.backend.models.link_models.*;
 import com.rateuni.backend.repositories.base_repos.*;
@@ -11,103 +12,87 @@ import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
-    @Autowired
-    private final UniversityRepository universityRepository;
+public class UserService extends BaseService {
+    public List<Review> getAllReviewForUser(int userId) throws ExecutionException, InterruptedException {
+       List<Review> reviews = new ArrayList<>();
 
-    @Autowired
-    private final FacultyRepository facultyRepository;
+       List<UserReview> documents = firestore
+               .collection(CollectionsNames.USERS_REVIEWS_COLLECTION_NAME)
+               .whereEqualTo("userId", userId)
+               .get()
+               .get()
+               .toObjects(UserReview.class);
 
-    @Autowired
-    private final DegreeRepository degreeRepository;
+        for (UserReview userReview : documents) {
+            Review review = firestore
+                    .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                    .whereEqualTo("id", userReview.getReviewId())
+                    .get()
+                    .get()
+                    .toObjects(Review.class)
+                    .get(0);
 
-    @Autowired
-    private final DegreeDisciplineRepository degreeDisciplineRepository;
-
-    @Autowired
-    private final UserReviewRepository userReviewRepository;
-
-    @Autowired
-    private final UserRoleRepository userRoleRepository;
-
-    @Autowired
-    private final UserDisciplineRepository userDisciplineRepository;
-
-    @Autowired
-    private final UserDegreeRepository userDegreeRepository;
-
-    @Autowired
-    private final FacultyUserRepository facultyUserRepository;
-
-    @Autowired
-    private final UniUserRepository uniUserRepository;
-
-    @Autowired
-    private final UniversityUserRepository universityUserRepository;
-
-    @Autowired
-    private final DisciplineRepository disciplineRepository;
-
-
-
-    @Autowired
-    private final ReviewService reviewService;
-
-    public UserService(UniversityRepository universityRepository,
-                       FacultyRepository facultyRepository,
-                       DegreeRepository degreeRepository,
-                       DegreeDisciplineRepository degreeDisciplineRepository,
-                       UserReviewRepository userReviewRepository,
-                       UserRoleRepository userRoleRepository,
-                       UserDisciplineRepository userDisciplineRepository,
-                       UserDegreeRepository userDegreeRepository,
-                       FacultyUserRepository facultyUserRepository,
-                       UniUserRepository uniUserRepository,
-                       UniversityUserRepository universityUserRepository,
-                       DisciplineRepository disciplineRepository,
-                       ReviewService reviewService) {
-
-        this.universityRepository = universityRepository;
-        this.facultyRepository = facultyRepository;
-        this.degreeRepository = degreeRepository;
-        this.degreeDisciplineRepository = degreeDisciplineRepository;
-        this.userReviewRepository = userReviewRepository;
-        this.userRoleRepository = userRoleRepository;
-        this.userDisciplineRepository = userDisciplineRepository;
-        this.userDegreeRepository = userDegreeRepository;
-        this.facultyUserRepository = facultyUserRepository;
-        this.uniUserRepository = uniUserRepository;
-        this.universityUserRepository = universityUserRepository;
-        this.disciplineRepository = disciplineRepository;
-        this.reviewService = reviewService;
+            reviews.add(review);
+        }
+       
+       return reviews;
     }
 
-    public List<Review> getAllReviewForUser(int userId) {
-        return userReviewRepository
-                .findAllById(List.of(userId))
-                .stream()
-                .map(UserReview::getReview)
-                .collect(Collectors.toList());
+    public List<String> getRolesForUser(int userId) throws ExecutionException, InterruptedException {
+        List<String> roles = new ArrayList<>();
+
+        List<UserRole> documents = firestore
+                .collection(CollectionsNames.USERS_ROLES_COLLECTION_NAME)
+                .whereEqualTo("userId", userId)
+                .get()
+                .get()
+                .toObjects(UserRole.class);
+
+        for (UserRole userRole : documents) {
+            String role = firestore
+                    .collection(CollectionsNames.ROLES_COLLECTION_NAME)
+                    .whereEqualTo("id", userRole.getRoleId())
+                    .get()
+                    .get()
+                    .toObjects(Role.class)
+                    .get(0)
+                    .getRole();
+
+            roles.add(role);
+        }
+
+        return roles;
     }
 
-    public List<String> getRolesForUser(int userId) {
-        return userRoleRepository
-                .findAllById(List.of(userId))
-                .stream()
-                .map(x -> x.getRole().getRole())
-                .collect(Collectors.toList());
-    }
+    public List<Discipline> getAllDisciplinesForUser(int userId) throws ExecutionException, InterruptedException {
+        List<Discipline> disciplines = new ArrayList<>();
 
-    public List<Discipline> getAllDisciplinesForUser(int userId) {
-        return userDisciplineRepository
-                .findAllById(List.of(userId))
-                .stream()
-                .map(UserDiscipline::getDiscipline)
-                .collect(Collectors.toList());
+        List<UserDiscipline> userDisciplines = firestore
+                .collection(CollectionsNames.USERS_DISCIPLINES_COLLECTION_NAME)
+                .whereEqualTo("userId", userId)
+                .get()
+                .get()
+                .toObjects(UserDiscipline.class);
+
+        for (UserDiscipline userDiscipline : userDisciplines) {
+            Discipline discipline = firestore
+                    .collection(CollectionsNames.DISCIPLINES_COLLECTION_NAME)
+                    .whereEqualTo("id", userDiscipline.getDisciplineId())
+                    .get()
+                    .get()
+                    .toObjects(Discipline.class)
+                    .get(0);
+
+            disciplines.add(discipline);
+        }
+
+        return disciplines;
     }
 
     @Transactional
