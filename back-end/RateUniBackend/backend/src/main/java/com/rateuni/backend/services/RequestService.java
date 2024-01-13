@@ -6,44 +6,125 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
+import com.rateuni.backend.models.base_models.Review;
+import com.rateuni.backend.models.link_models.ReviewRequest;
+import com.rateuni.backend.models.link_models.UserRequest;
+import com.rateuni.backend.models.request_response.request.ReviewRequestProcess;
+import com.rateuni.backend.models.request_response.request.UserRequestProcess;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class RequestService {
-    private static final String REQUEST_COLLECTION_NAME = "requests";
-    private static final String USER_REQUEST_COLLECTION_NAME = "users_requests";
+public class RequestService extends BaseService {
+    public void saveUserRequest(UserRequest userRequest) {
+        userRequest.setApproved(false);
 
-    public void saveRequest(int userId, UniRequest request) {
-        Firestore firestore = FirestoreClient.getFirestore();
+        firestore.runAsyncTransaction(x -> {
+            try {
+                updateId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
+                userRequest.setStatus("pending");
+            }
+            catch (ExecutionException | InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
 
-        ApiFuture<WriteResult> apiFuture = firestore
-                .collection(REQUEST_COLLECTION_NAME)
-                .document()
-                .set(request);
+            return firestore
+                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                    .add(userRequest);
+        });
     }
 
-    public List<UniRequest> getAllRequests() throws ExecutionException, InterruptedException {
-        Firestore firestore = FirestoreClient.getFirestore();
-        List<UniRequest> allRequests = new ArrayList<>();
+    public void saveReviewRequest(ReviewRequest reviewRequest) {
+        reviewRequest.setApproved(false);
 
-        Iterable<DocumentReference> requests = firestore
-                .collection(REQUEST_COLLECTION_NAME)
-                .listDocuments();
-
-        for (DocumentReference documentReference : requests) {
-            DocumentSnapshot documentSnapshot = documentReference.get().get();
-
-            UniRequest request = null;
-            if(documentSnapshot.exists()) {
-                request = documentSnapshot.toObject(UniRequest.class);
-                allRequests.add(request);
+        firestore.runAsyncTransaction(x -> {
+            try {
+                updateId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
+                reviewRequest.setStatus("pending");
             }
+            catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            return firestore
+                    .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
+                    .add(reviewRequest);
+        });
+    }
+
+    public void processUserRequests(List<UserRequestProcess> userRequestProcesses) throws ExecutionException, InterruptedException {
+        for (UserRequestProcess userRequestProcess : userRequestProcesses) {
+            UserRequest userRequest = firestore
+                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                    .whereEqualTo("id", userRequestProcess.getRequestId())
+                    .whereEqualTo("user_id", userRequestProcess.getUserId())
+                    .get()
+                    .get()
+                    .toObjects(UserRequest.class)
+                    .get(0);
+
+            if(Objects.equals(userRequestProcess.getStatus(), "approved")) {
+                userRequest.setApproved(true);
+                userRequest.setStatus(userRequestProcess.getStatus());
+            }
+            else if(Objects.equals(userRequestProcess.getStatus(), "rejected")) {
+                userRequest.setApproved(false);
+                userRequest.setStatus(userRequestProcess.getStatus());
+            }
+
+            firestore.runAsyncTransaction(x -> firestore
+                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                    .add(userRequest));
+        }
+    }
+
+    public void processReviewRequests(List<ReviewRequestProcess> reviewRequestProcesses) throws ExecutionException, InterruptedException {
+        for (ReviewRequestProcess reviewRequestProcess : reviewRequestProcesses) {
+            ReviewRequest reviewRequest = firestore
+                    .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
+                    .whereEqualTo("id", reviewRequestProcess.getRequestId())
+                    .whereEqualTo("review_id", reviewRequestProcess.getReviewId())
+                    .get()
+                    .get()
+                    .toObjects(ReviewRequest.class)
+                    .get(0);
+
+            if(Objects.equals(reviewRequestProcess.getStatus(), "approved")) {
+                reviewRequest.setApproved(true);
+                reviewRequest.setStatus(reviewRequestProcess.getStatus());
+            }
+            else if(Objects.equals(reviewRequestProcess.getStatus(), "rejected")) {
+                reviewRequest.setApproved(false);
+                reviewRequest.setStatus(reviewRequestProcess.getStatus());
+            }
+
+            firestore.runAsyncTransaction(x -> firestore
+                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                    .add(reviewRequest));
+    }
         }
 
-        return allRequests;
+    public List<UserRequestProcess> getAllUsersRequests() throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                .whereEqualTo("approved", false)
+                .whereEqualTo("status", "pending")
+                .get()
+                .get()
+                .toObjects(UserRequestProcess.class);
+    }
+
+    public List<ReviewRequestProcess> getAllReviewRequests() throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
+                .whereEqualTo("approved", false)
+                .whereEqualTo("status", "pending")
+                .get()
+                .get()
+                .toObjects(ReviewRequestProcess.class);
     }
 }
