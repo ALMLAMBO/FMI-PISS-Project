@@ -8,16 +8,22 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="">
+<form action="" id="registrationForm">
     <label for="username">Потрбителско име</label><br>
     <input type="text" id="username" name="username"><br>
     <label for="email">Имейл</label><br>
     <input type="email" id="email" name="email"><br>
+    <label for="password">Парола</label><br>
+    <input type="password" id="password" name="password"><br>
+    <label for="confirm-password">Повторете парола</label><br>
+    <input type="password" id="confirm-password" name="confirm-password"><br>
+
+    <br>
     <label for="fn">Факултетен номер</label><br>
     <input type="text" id="fn" name="fn"><br>
     <!--<label for="uni">Университет</label>-->
     <!--<input type="text" id="university" name="university"><br>-->
-    <select id="university-dropdown" name="uni">
+    <select id="university-dropdown" name="university">
     </select><br>
     <label for="faculty">Факултет</label>
     <select id="faculty-dropdown" name="faculty">
@@ -27,13 +33,65 @@
     <select id="degree-dropdown" name="degree">
         <option selected="true" disabled>Изберете факултет първо</option>
     </select><br>
-    <label for="password">Парола</label><br>
-    <input type="password" id="password" name="password"><br>
-    <label for="confirm-password">Повторете парола</label><br>
-    <input type="password" id="confirm-password" name="confirm-password"><br>
+    <br>
     <label for="image-fn">Снимка на документ от университета с факултетен номер</label><br>
     <input type="file" id="image-fn" name="image-fn" accept="image/png, image/jpeg"><br><br>
     <input type="submit" value="Submit">
 </form>
+<script>
+    //we need to fetch data from server for dropdown menus
+    //Post
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Collect form data
+        const formData = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            fn: document.getElementById('fn').value,
+            university: document.getElementById('university-dropdown').value,
+            faculty: document.getElementById('faculty-dropdown').value,
+            degree: document.getElementById('degree-dropdown').value,
+            image: getBase64(document.getElementById('image-fn').files[0])
+        };
+
+       // const imageFileInput = document.getElementById('image-fn');
+        //const imageFile = imageFileInput.files[0];
+
+        //formData.append('image',getBase64(imageFile));
+        // Send data to the server as JSON using Fetch API
+        fetch('/server-endpoint', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Handle success
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+    });
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+                if ((encoded.length % 4) > 0) {
+                    encoded += '='.repeat(4 - (encoded.length % 4));
+                }
+                resolve(encoded);
+            };
+            reader.onerror = error => reject(error);
+        });
+    }
+</script>
 </body>
 </html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+<form action="" id="loginForm">
+    <label for="username">Потрбителско име</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Парола</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Submit">
+</form>
+<script>
+    const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // (replace with authentication logic)
+        if (username === 'user' && password === 'password') {
+            sessionStorage.setItem('authenticated', 'true');
+            alert('Login successful!');
+        } else {
+            alert('Invalid username or password!');
+        }
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+    if (isAuthenticated) {
+        document.getElementById('loginForm').style.display = 'none';
+        alert('User is already authenticated!');
+    }
+</script>
+</body>
+</html>

@@ -17,9 +17,9 @@ $(document).ready(function () {
     degreeDropdown.append('<option selected="true" disabled>Дисциплина</option>');
     degreeDropdown.prop('selectedIndex', 0);
 
-    const universityUrl = '/universities.json'; // Replace with the actual URL for universities JSON
-    const facultyUrl = '/faculties.json'; // Replace with the actual URL for faculties JSON
-    const degreeURL = '/degrees.json'
+    const universityUrl = '/ex_json/universities.json'; // Replace with the actual URL for universities JSON
+    const facultyUrl = '/ex_json/faculties.json'; // Replace with the actual URL for faculties JSON
+    const degreeURL = '/ex_json/degrees.json'
 // Populate university dropdown
     $.getJSON(universityUrl)
         .done(function (data) {
