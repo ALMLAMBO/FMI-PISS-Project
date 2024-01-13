@@ -2,22 +2,14 @@ package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.Degree;
 import com.rateuni.backend.models.base_models.Discipline;
-import com.rateuni.backend.models.base_models.Faculty;
 import com.rateuni.backend.models.link_models.DegreeDiscipline;
 import com.rateuni.backend.models.link_models.FacultyDegree;
-import com.rateuni.backend.repositories.base_repos.DegreeRepository;
-import com.rateuni.backend.repositories.link_repos.DegreeDisciplineRepository;
-import com.rateuni.backend.repositories.link_repos.FacultyDegreeRepository;
-import com.rateuni.backend.repositories.link_repos.UniversityFacultyRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 @Service
 public class DegreeService extends BaseService {

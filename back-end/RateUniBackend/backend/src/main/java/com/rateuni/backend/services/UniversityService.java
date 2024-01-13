@@ -3,10 +3,6 @@ package com.rateuni.backend.services;
 import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.base_models.University;
 import com.rateuni.backend.models.link_models.UniversityUser;
-import com.rateuni.backend.repositories.base_repos.UniversityRepository;
-import jakarta.transaction.Transactional;
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,7 +59,7 @@ public class UniversityService extends BaseService {
         University uni = getUniversity(university.getId());
 
         if(uni != null) {
-            throw new IllegalIdentifierException("University Service create uni: University already exists");
+            throw new IllegalArgumentException("University Service create uni: University already exists");
         }
 
         firestore.runAsyncTransaction(x -> {
