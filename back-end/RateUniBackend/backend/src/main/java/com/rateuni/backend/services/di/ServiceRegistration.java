@@ -12,6 +12,7 @@ public class ServiceRegistration {
         diContainer = new SimpleDIContainer();
 
         diContainer.register(DegreeService.class, new DegreeService());
+        diContainer.register(DisciplineService.class, new DisciplineService());
         diContainer.register(FacultyService.class, new FacultyService());
         diContainer.register(RequestService.class, new RequestService());
         diContainer.register(ReviewService.class, new ReviewService());
@@ -22,6 +23,11 @@ public class ServiceRegistration {
     @Bean
     public DegreeService degreeService() {
         return diContainer.resolve(DegreeService.class);
+    }
+
+    @Bean
+    public DisciplineService disciplineService() {
+        return diContainer.resolve(DisciplineService.class);
     }
 
     @Bean
