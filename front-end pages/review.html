@@ -12,15 +12,21 @@
         <input hidden="true" type="date" id="publishedAt" name="publishedAt">
 
         <!--оценки-->
+        <label for="courseName">Име на курса</label>
+        <input type="text" id="courseName" name="courseName" value="Pesho" disabled>
         <label for="courseRating">Оценка на курса</label>
         <input type="number" min="0.0" max="5"  step="0.01" value="0" id="courseRating" name="courseRating"><br>
+        <label for="lecturerName">Име на преподавател</label>
+        <input type="text" id="lecturerName" name="lecturerName" value="Pesho" disabled>
         <label for="lecturerRating">Оценка на преподавател</label>
         <input type="number" min="0.0" max="5" step="0.01" value="0" id="lecturerRating" name="lecturerRating"><br>
         <!--да се показва само като има асистент на курса-->
+        <label for="assistantsName">Име на асистент</label>
+        <input type="text" id="assistantsName" name="assistantsName">       
         <label for="assistantsRating">Оценка на асистент</label>
         <input type="number" min="0.0" max="5" step="0.01" value="0" id="assistantsRating" name="assistantsRating"><br>
 
-        <p>Oценки за:</p>
+        <h3>Oценки за:</h3>
         <label for="difficulty">Сложност</label>
         <input type="number" min="0" step="1" max="5" value="0" id="difficulty" name="difficulty"><br>
         <label for="work_load">Заетост</label>
@@ -31,7 +37,7 @@
         <input type="number" min="0" max="5" value="0" id="lecturerRating" name="lecturerRating"><br>-->
 
         <!--true or false-->
-        <p>Има:</p>
+        <h3>Има:</h3>
         <label for="exam">Изпит</label>
         <input type="checkbox" value="1" id="exam" name="exam"><br>
         <label for="project">Проект</label>

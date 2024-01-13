@@ -1,0 +1,99 @@
+{
+  "faculty_degrees": [
+    {
+      "faculty_id": 1,
+      "degree_id": 1,
+      "degree_title": "Софтуерно инженерство"
+    },
+    {
+      "faculty_id": 1,
+      "degree_id": 2,
+      "degree_title": "Информационни системи"
+    },
+    {
+      "faculty_id": 2,
+      "degree_id": 3,
+      "degree_title": "Химия"
+    },
+    {
+      "faculty_id": 3,
+      "degree_id": 4,
+      "degree_title": "Компютърно инженерство"
+    },
+    {
+      "faculty_id": 3,
+      "degree_id": 5,
+      "degree_title": "Ядрена техника и ядрена енергетика"
+    },
+    {
+      "faculty_id": 4,
+      "degree_id": 6,
+      "degree_title": "Телекомуникации"
+    },
+    {
+      "faculty_id": 5,
+      "degree_id": 7,
+      "degree_title": "Компютърни науки и инженерство"
+    },
+    {
+      "faculty_id": 5,
+      "degree_id": 8,
+      "degree_title": "Информационни технологии в индустрията"
+    },
+    {
+      "faculty_id": 6,
+      "degree_id": 9,
+      "degree_title": "Фармация"
+    },
+    {
+      "faculty_id": 7,
+      "degree_id": 10,
+      "degree_title": "Дентална медицина"
+    },
+    {
+      "faculty_id": 8,
+      "degree_id": 11,
+      "degree_title": "Медицина"
+    },
+    {
+      "faculty_id": 9,
+      "degree_id": 12,
+      "degree_title": "Геодезия"
+    },
+    {
+      "faculty_id": 9,
+      "degree_id": 13,
+      "degree_title": "Устройство и управление на земи и имоти"
+    },
+    {
+      "faculty_id": 10,
+      "degree_id": 14,
+      "degree_title": "Архитектура"
+    },
+    {
+      "faculty_id": 10,
+      "degree_id": 15,
+      "degree_title": "Урбанизъм"
+    },
+    {
+      "faculty_id": 11,
+      "degree_id": 16,
+      "degree_title": "Анимационно кино"
+    },
+    {
+      "faculty_id": 11,
+      "degree_id": 17,
+      "degree_title": "МУЛТИМЕДИЯ И КОМПЮТЪРНА ГРАФИКА"
+    },
+    {
+      "faculty_id": 12,
+      "degree_id": 18,
+      "degree_title": "Мода, стайлинг и бизнес стратегии"
+    },
+    {
+      "faculty_id": 12,
+      "degree_id": 19,
+      "degree_title": "УПРАВЛЕНИЕ НА ПРОЕКТИ ПО ИНФОРМАЦИОННИ ТЕХНОЛОГИИ"
+    }
+  ]
+}

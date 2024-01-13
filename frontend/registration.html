@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="dropdown_menues.js"></script>
+    <title>Registration</title>
+</head>
+<body>
+<form action="">
+    <label for="username">Потрбителско име</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="email">Имейл</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="fn">Факултетен номер</label><br>
+    <input type="text" id="fn" name="fn"><br>
+    <!--<label for="uni">Университет</label>-->
+    <!--<input type="text" id="university" name="university"><br>-->
+    <select id="university-dropdown" name="uni">
+    </select><br>
+    <label for="faculty">Факултет</label>
+    <select id="faculty-dropdown" name="faculty">
+        <option selected="true" disabled>Изберете университет първо</option>
+    </select><br>
+    <label for="degree">Дисциплина</label>
+    <select id="degree-dropdown" name="degree">
+        <option selected="true" disabled>Изберете факултет първо</option>
+    </select><br>
+    <label for="password">Парола</label><br>
+    <input type="password" id="password" name="password"><br>
+    <label for="confirm-password">Повторете парола</label><br>
+    <input type="password" id="confirm-password" name="confirm-password"><br>
+    <label for="image-fn">Снимка на документ от университета с факултетен номер</label><br>
+    <input type="file" id="image-fn" name="image-fn" accept="image/png, image/jpeg"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
