@@ -10,69 +10,75 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
-public class FacultyService {
+public class FacultyService extends BaseService {
     @Autowired
-    private final FacultyRepository facultyRepository;
+    private UniversityService universityService;
 
-    @Autowired
-    private final UniversityFacultyRepository universityFacultyRepository;
+    public List<Faculty> getAllFacultiesForUniversity(int universityId) throws ExecutionException, InterruptedException {
+        List<Faculty> faculties = new ArrayList<>();
 
-    @Autowired
-    private final UniversityRepository universityRepository;
+        List<UniversityFaculty> universityFaculties = firestore
+                .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
+                .whereEqualTo("university_id", universityId)
+                .get()
+                .get()
+                .toObjects(UniversityFaculty.class);
 
-    public FacultyService(FacultyRepository facultyRepository,
-                          UniversityFacultyRepository universityFacultyRepository,
-                          UniversityRepository universityRepository) {
+        for (UniversityFaculty universityFaculty : universityFaculties) {
+            Faculty faculty = firestore
+                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                    .whereEqualTo("id", universityFaculty.getfacultyId())
+                    .get()
+                    .get()
+                    .toObjects(Faculty.class)
+                    .get(0);
 
-        this.facultyRepository = facultyRepository;
-        this.universityFacultyRepository = universityFacultyRepository;
-        this.universityRepository = universityRepository;
-    }
-
-    public List<Faculty> getAllFacultiesForUniversity(int universityId) {
-        return universityFacultyRepository
-                .findAllById(List.of(universityId))
-                .stream()
-                .map(UniversityFaculty::getfaculty)
-                .collect(Collectors.toList());
-    }
-
-    public Faculty getFaculty(int facultyId) {
-        return facultyRepository
-                .findById(facultyId)
-                .get();
-    }
-
-    @Transactional
-    public void createUpdateFaculty(int universityId, Faculty faculty, boolean create) {
-        University university = universityRepository
-                .findById(universityId)
-                .get();
-
-        if(university == null || faculty == null) {
-            throw new IllegalArgumentException("Faculty service create faculty: Invalid university id");
+            faculties.add(faculty);
         }
 
-        if(!create) {
-            UniversityFaculty universityFaculty = universityFacultyRepository
-                    .findAllById(List.of(universityId))
-                    .stream()
-                    .filter(x -> x.getfaculty().getId() == faculty.getId())
-                    .findFirst()
-                    .get();
+        return faculties;
+    }
 
-            if(universityFaculty != null) {
-                throw new IllegalArgumentException("Faculty service create faculty: faculty already exists");
+    public Faculty getFaculty(int facultyId) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                .whereEqualTo("id", facultyId)
+                .get()
+                .get()
+                .toObjects(Faculty.class)
+                .get(0);
+    }
+
+
+    public void createFaculty(int universityId, Faculty faculty) {
+        try {
+            universityService.getUniversity(universityId);
+        }
+        catch (ExecutionException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        firestore.runAsyncTransaction(x -> {
+            firestore
+                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                    .add(faculty);
+
+            try {
+                updateId(CollectionsNames.FACULTIES_COLLECTION_NAME);
             }
-        }
+            catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-        facultyRepository.save(faculty);
-        if(create) {
-            universityFacultyRepository.save(new UniversityFaculty(university, faculty));
-        }
+            return firestore
+                    .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
+                    .add(new UniversityFaculty(universityId, faculty.getId()));
+        });
     }
 }
