@@ -77,18 +77,15 @@
             width: 100px;
         }
 
-
-        .register_container {
+        .main-container {
             display: flex;
             flex-direction: column;
             width: 70%;
-            height: 75vh;
-
             justify-content: space-between;
             align-items: center;
         }
 
-        .register_title {
+        .page-title {
             display: flex;
             flex-direction: column;
             height: 80px;
@@ -97,127 +94,151 @@
             align-items: center;
         }
 
-        .register_text {
+        .page-text {
             font-size: 30px;
             text-align: center;
         }
-
-        .register_description {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            color: var(--gray);
-            width: 60%;
-        }
-
-        .content_container_1 {
-            display: flex;
-            flex-direction: column;
-
-            background-color: var(--pink);
-            width: 40%;
-            height: 250px;
-            border-radius: 20px;
-        }
         
-        .content_container_2 {
+        .container {
+            margin-top: 40px;
             display: flex;
+            background-color: var(--blue);
             flex-direction: column;
-
-            background-color: var(--pink);
-            width: 40%;
-            height: 450px;
-            border-radius: 20px;
+            width: 100vh;
         }
 
-
-        .content_title {
+        .container-row {
             display: flex;
-            text-align: center;
-            font-size: 20px;
-            height: 100px;
-
-            justify-content: center;
-            align-items: center;
-        }
-
-        .content_inputs {
-            display: flex;
-            flex-direction: column;
+            flex-direction: row;
 
             justify-content: space-around;
             align-items: center;
-
-            height: 70%;
         }
 
-        .checkbox_inputs {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .inputs {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .register_input {
-            margin-bottom: 2vh;
-            width: 80%;
-            height: 30px;
-            background-color: var(--grayish);
-            border-radius: 5px;
-        }
-        
-
-
-        .upload_field {
-            width: 70%;
-            height: 10vh;
-
-            background-color: aliceblue;
-        }
-
-
-        .register_final {
-            display: flex;
-            flex-direction: column;
-
-            width: 40%;
-            height: 7vh;
-
-            justify-content: center;
-            align-items: center;
-        }
-
-        .terms_and_conditions {
+        .eval_scores {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
-            width: 80%;
+            align-items: center;
+
+            width: 45%;
         }
 
-        #Terms_button {
+        .eval_score {
             width: 30px;
             height: 30px;
-
-            background-color: red;
-        }
-
-
-        .terms_text {
-            width: 63%;
-        }
-
-
-        #Register_button {
-            background-color: var(--blue);
-            color: white;
-            font-size: 18px;
-            border-radius: 5px;
-            width: 10vh;
             text-align: center;
+
+            background-color: var(--grayish);
+        }
+
+        .eval-input {
+            background-color: var(--grayish);
+            border-radius: 5px;
+            height: 40px;
+
+            width: 35%;
+        }
+
+        .evaluation {
+            display: flex;
+
+            flex-direction: row;
+
+            width: 40%;
+
+            justify-content: space-between;
+        }
+
+        .eval_name {
+            font-size: 20px;
+            color: white;
+        }
+
+        #course-container {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .container-column {
+            width: 25%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .course-eval-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .course-eval_scores {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            width: 100%;
+
+        }
+
+        .evaluation {
+            justify-content: space-between;
+        }
+
+        .container-title {
+            justify-content: center;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            width: 100%;
+        }
+
+
+        .container-inputs {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .container-row {
+            display: flex;
+            flex-direction: row;
+            height: 75px;
+        }
+
+        .extras-container {
+            border: black 1px solid;
+            display: flex;
+            font-size: 15px;
+            font-weight: bold;
+
+            background-color: var(--grayish);
+            width: 100px;
+            height: 40px;
+            text-align: center;
+            border-radius: 8px;
+            
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container-extras {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-comment {
+            width: 100%;
+            height: 200px;
+        }
+
+        .input-section {
+            width: 70%;
+            border-radius: 3px;
         }
 
         .footer {
@@ -274,86 +295,110 @@
         </div>
     </div>
 
-    <div class="register_container">
-        <div class="register_title">
-            <div class="register_text">Нова рецензия</div>
+    <div class="main-container">
+        <div class="page-title">
+            <div class="page-text">Нова рецензия</div>
         </div>
 
-
-        <div class="content_container_1">
-            <div class="dropdown_container">
-                <label id="universityLabel" for="university">University:</label>
-                <select id="university" name="university" onchange="updateLabel(this, 'universityLabel')">
-                  <option value="" disabled selected>Select your option</option>
-                  <option value="university1">University 1</option>
-                  <option value="university2">University 2</option>
-                </select>
-            </div>
-            <div class="content_inputs">
-                <input class="register_input" type="text" name="username" placeholder ="Име и Фамилия на Професор">
-                <input class="register_input" type="text" name="username" placeholder ="Име и Фамилия на Ассистент">
-                <input class="register_input" type="password" name="password_repeat" placeholder ="Коментар" style="height: 400px;">
-            </div>
-        </div>
-
-        
-        <div class="content_container_1">
-            <div class="content_title">Дисциплината има:</div>
-            <div class="checkbox_inputs">
-                <div class="inputs">
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="final_exam">
-                        <div class="checkbox_text">Изпит</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="project">
-                        <div class="checkbox_text">Проект</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="regular_exams">
-                        <div class="checkbox_text">Контролни</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="homework">
-                        <div class="checkbox_text">Домашни работи</div>
+        <div class="container" id="teacher-container">
+            <div class="container-row">
+                <input class="eval-input" type="text" name="course-name" placeholder ="Име на Курс">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на курса:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
                     </div>
                 </div>
-                <div class="inputs">
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="online_study">
-                        <div class="checkbox_text">Онлайн часове</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="book_name">
-                        <div class="checkbox_text">Учебник</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="presentations">
-                        <div class="checkbox_text">Презентации</div>
-                    </div>
-                    <div class="register_input">
-                        <input class="register_input" type="checkbox" name="bonus_material">
-                        <div class="checkbox_text">Допълнителни материали</div>
+            </div>
+            <div class="container-row">
+                <input class="eval-input" type="text" name="teacher-name" placeholder ="Име на Преподавател">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на преподавател:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
                     </div>
                 </div>
-
+            </div>
+            <div class="container-row">
+                <input class="eval-input" type="text" name="assistant-name" placeholder ="Име на Асистент">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на асистент:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
+                    </div>
+                </div>
             </div>
         </div>
-
         
-        <div class="content_container_1">
-            <div class="content_title">Данни за профила ви</div>
-            <div class="content_inputs">
-                <input class="register_input" type="text" name="username" placeholder ="Потребителско име">
-                <input class="register_input" type="text" name="email" placeholder ="Имейл">
-                <input class="register_input" type="password" name="password" placeholder ="Парола">
-                <input class="register_input" type="password" name="password_repeat" placeholder ="Поветорете паролата">
+
+        <div class="container" id="course-container">
+            <div class="container-column">
+                <div class="course-eval-name">Сложност</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
+            </div>
+            <div class="container-column">
+                <div class="course-eval-name">Полезност</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
+            </div>
+            <div class="container-column">
+                <div class="course-eval-name">Заетост</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
             </div>
         </div>
-
+        
+        <div class="container" id="container-extras">
+            <div class="container-title">Дисциплината има:</div>
+            <div class="container-inputs">
+                <div class="container-row">
+                    <div class="extras-container">Изпит</div>
+                    <div class="extras-container">Проект</div>
+                    <div class="extras-container">Контролни</div>
+                    <div class="extras-container">Домашни</div>
+                </div>
+                <div class="container-row">
+                    <div class="extras-container">Онлайн часове</div>
+                    <div class="extras-container">Учебници</div>
+                    <div class="extras-container">Презентации</div>
+                    <div class="extras-container">Допълнителни материали</div>
+                </div>
+            </div>
+            <div class="input-section">
+                <textarea class="input-comment" name="text" placeholder="Коментар"></textarea>
+            </div>
+        </div>
         
         <div class="register_final">
-            <div id="Register_button">Регистрация</div>
+            <div id="Register_button">Качване на реценция</div>
 
         </div>
 
