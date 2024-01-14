@@ -2,8 +2,11 @@ package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.Degree;
 import com.rateuni.backend.models.base_models.Discipline;
+import com.rateuni.backend.models.base_models.Faculty;
 import com.rateuni.backend.models.link_models.DegreeDiscipline;
 import com.rateuni.backend.models.link_models.FacultyDegree;
+import com.rateuni.backend.models.link_models.FacultyUser;
+import com.rateuni.backend.models.link_models.UserDegree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +42,20 @@ public class DegreeService extends BaseService {
         }
 
         return degrees;
+    }
+
+    public Degree getDegreeForUser(int userId, int degreeId) throws ExecutionException, InterruptedException {
+        Faculty faculty = facultyService.getFacultyOfUser(userId);
+        FacultyDegree facultyDegree = firestore
+                .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
+                .whereEqualTo("facultyId", faculty.getId())
+                .whereEqualTo("degreeId", degreeId)
+                .get()
+                .get()
+                .toObjects(FacultyDegree.class)
+                .get(0);
+
+        return getDegree(degreeId);
     }
 
     public Degree getDegree(int degreeId) throws ExecutionException, InterruptedException {

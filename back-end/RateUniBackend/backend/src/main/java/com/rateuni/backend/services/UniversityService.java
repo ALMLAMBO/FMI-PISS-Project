@@ -20,6 +20,18 @@ public class UniversityService extends BaseService {
                 .toObjects(University.class);
     }
 
+    public University getUniversityForUser(int userId) throws ExecutionException, InterruptedException {
+        UniversityUser universityUser = firestore
+                .collection(CollectionsNames.UNIVERSITIES_USERS_COLLECTION_NAME)
+                .whereEqualTo("userId", userId)
+                .get()
+                .get()
+                .toObjects(UniversityUser.class)
+                .get(0);
+
+        return getUniversity(universityUser.getUniversityId());
+    }
+
     public University getUniversity(int universityId) throws ExecutionException, InterruptedException {
         return firestore
                 .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)

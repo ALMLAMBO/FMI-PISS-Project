@@ -1,6 +1,7 @@
 package com.rateuni.backend.services;
 
 import com.rateuni.backend.models.base_models.Faculty;
+import com.rateuni.backend.models.link_models.FacultyUser;
 import com.rateuni.backend.models.link_models.UniversityFaculty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,17 @@ public class FacultyService extends BaseService {
                 .get(0);
     }
 
+    public Faculty getFacultyOfUser(int userId) throws ExecutionException, InterruptedException {
+        FacultyUser facultyUser = firestore
+                .collection(CollectionsNames.FACULTIES_USERS_COLLECTION_NAME)
+                .whereEqualTo("userId", userId)
+                .get()
+                .get()
+                .toObjects(FacultyUser.class)
+                .get(0);
+
+        return getFaculty(facultyUser.getFacultyId());
+    }
 
     public void createFaculty(int universityId, Faculty faculty) {
         try {

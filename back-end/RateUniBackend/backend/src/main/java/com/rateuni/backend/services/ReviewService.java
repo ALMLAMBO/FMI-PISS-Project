@@ -14,6 +14,14 @@ public class ReviewService extends BaseService {
     @Autowired
     private DisciplineService disciplineService;
 
+    public List<Review> getAllReviews() throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                .get()
+                .get()
+                .toObjects(Review.class);
+    }
+
     public List<Review> getAllReviewsForDiscipline(int disciplineId) throws ExecutionException, InterruptedException {
         List<Review> reviews = new ArrayList<>();
 
