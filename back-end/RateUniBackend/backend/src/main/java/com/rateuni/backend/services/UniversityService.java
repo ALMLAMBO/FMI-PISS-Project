@@ -56,25 +56,16 @@ public class UniversityService extends BaseService {
     }
 
     public void createUniversity(University university) throws ExecutionException, InterruptedException {
-        University uni = getUniversity(university.getId());
-
-        if(uni != null) {
-            throw new IllegalArgumentException("University Service create uni: University already exists");
+        try {
+            long prevId = getId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
+            university.setId((int) prevId);
+            updateId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
+        } catch (ExecutionException | InterruptedException e) {
+            System.out.println(e.getMessage());
         }
 
-        firestore.runAsyncTransaction(x -> {
-            try {
-                int prevId = getId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
-                university.setId(prevId + 1);
-                updateId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
-            }
-            catch (ExecutionException | InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-
-            return firestore
-                    .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)
-                    .add(university);
-        });
+        firestore
+                .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)
+                .add(university);
     }
 }
