@@ -108,24 +108,24 @@ public class RequestService extends BaseService {
         }
     }
 
-    public List<UserRequestProcess> getAllUsersRequests() throws ExecutionException, InterruptedException {
+    public List<UserRequest> getAllUsersRequests() throws ExecutionException, InterruptedException {
         return firestore
                 .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
                 .whereEqualTo("approved", false)
                 .whereEqualTo("status", "pending")
                 .get()
                 .get()
-                .toObjects(UserRequestProcess.class);
+                .toObjects(UserRequest.class);
     }
 
-    public List<ReviewRequestProcess> getAllReviewRequests() throws ExecutionException, InterruptedException {
+    public List<ReviewRequest> getAllReviewRequests() throws ExecutionException, InterruptedException {
         return firestore
                 .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
                 .whereEqualTo("approved", false)
                 .whereEqualTo("status", "pending")
                 .get()
                 .get()
-                .toObjects(ReviewRequestProcess.class);
+                .toObjects(ReviewRequest.class);
     }
 
     private void addUniDataForUser() {
