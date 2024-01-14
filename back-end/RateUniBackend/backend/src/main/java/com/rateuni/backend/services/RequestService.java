@@ -25,10 +25,11 @@ public class RequestService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
+                int prevId = getId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
+                userRequest.setRequestId(prevId + 1);
                 updateId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
                 userRequest.setStatus("pending");
-            }
-            catch (ExecutionException | InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 System.out.println(e.getMessage());
             }
 
@@ -43,10 +44,11 @@ public class RequestService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
+                int prevId = getId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
+                reviewRequest.setRequestId(prevId + 1);
                 updateId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
                 reviewRequest.setStatus("pending");
-            }
-            catch (ExecutionException | InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
@@ -61,17 +63,16 @@ public class RequestService extends BaseService {
             UserRequest userRequest = firestore
                     .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
                     .whereEqualTo("id", userRequestProcess.getRequestId())
-                    .whereEqualTo("user_id", userRequestProcess.getUserId())
+                    .whereEqualTo("userId", userRequestProcess.getUserId())
                     .get()
                     .get()
                     .toObjects(UserRequest.class)
                     .get(0);
 
-            if(Objects.equals(userRequestProcess.getStatus(), "approved")) {
+            if (Objects.equals(userRequestProcess.getStatus(), "approved")) {
                 userRequest.setApproved(true);
                 userRequest.setStatus(userRequestProcess.getStatus());
-            }
-            else if(Objects.equals(userRequestProcess.getStatus(), "rejected")) {
+            } else if (Objects.equals(userRequestProcess.getStatus(), "rejected")) {
                 userRequest.setApproved(false);
                 userRequest.setStatus(userRequestProcess.getStatus());
             }
@@ -87,17 +88,16 @@ public class RequestService extends BaseService {
             ReviewRequest reviewRequest = firestore
                     .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
                     .whereEqualTo("id", reviewRequestProcess.getRequestId())
-                    .whereEqualTo("review_id", reviewRequestProcess.getReviewId())
+                    .whereEqualTo("reviewId", reviewRequestProcess.getReviewId())
                     .get()
                     .get()
                     .toObjects(ReviewRequest.class)
                     .get(0);
 
-            if(Objects.equals(reviewRequestProcess.getStatus(), "approved")) {
+            if (Objects.equals(reviewRequestProcess.getStatus(), "approved")) {
                 reviewRequest.setApproved(true);
                 reviewRequest.setStatus(reviewRequestProcess.getStatus());
-            }
-            else if(Objects.equals(reviewRequestProcess.getStatus(), "rejected")) {
+            } else if (Objects.equals(reviewRequestProcess.getStatus(), "rejected")) {
                 reviewRequest.setApproved(false);
                 reviewRequest.setStatus(reviewRequestProcess.getStatus());
             }
@@ -105,8 +105,8 @@ public class RequestService extends BaseService {
             firestore.runAsyncTransaction(x -> firestore
                     .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
                     .add(reviewRequest));
-    }
         }
+    }
 
     public List<UserRequestProcess> getAllUsersRequests() throws ExecutionException, InterruptedException {
         return firestore
@@ -126,5 +126,9 @@ public class RequestService extends BaseService {
                 .get()
                 .get()
                 .toObjects(ReviewRequestProcess.class);
+    }
+
+    private void addUniDataForUser() {
+
     }
 }

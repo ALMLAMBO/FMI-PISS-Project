@@ -16,7 +16,7 @@ public class FacultyService extends BaseService {
 
     public List<Faculty> getAllFacultiesForUniversity(int universityId) throws ExecutionException, InterruptedException {
         List<Faculty> faculties = new ArrayList<>();
-
+                
         List<UniversityFaculty> universityFaculties = firestore
                 .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
                 .whereEqualTo("universityId", universityId)
@@ -25,13 +25,7 @@ public class FacultyService extends BaseService {
                 .toObjects(UniversityFaculty.class);
 
         for (UniversityFaculty universityFaculty : universityFaculties) {
-            Faculty faculty = firestore
-                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
-                    .whereEqualTo("id", universityFaculty.getfacultyId())
-                    .get()
-                    .get()
-                    .toObjects(Faculty.class)
-                    .get(0);
+            Faculty faculty = getFaculty(universityFaculty.getfacultyId());
 
             faculties.add(faculty);
         }

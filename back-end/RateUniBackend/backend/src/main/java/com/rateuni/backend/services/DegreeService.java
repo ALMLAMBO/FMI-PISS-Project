@@ -19,6 +19,9 @@ public class DegreeService extends BaseService {
     @Autowired
     private FacultyService facultyService;
 
+    @Autowired
+    private DisciplineService disciplineService;
+
     public List<Degree> getAllDegreesForFaculty(int facultyId) throws ExecutionException, InterruptedException {
         List<Degree> degrees = new ArrayList<>();
 
@@ -30,13 +33,7 @@ public class DegreeService extends BaseService {
                 .toObjects(FacultyDegree.class);
 
         for (FacultyDegree facultyDegree : facultyDegrees) {
-            Degree degree = firestore
-                    .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
-                    .whereEqualTo("id", facultyDegree.getDegreeId())
-                    .get()
-                    .get()
-                    .toObjects(Degree.class)
-                    .get(0);
+            Degree degree = getDegree(facultyDegree.getDegreeId());
 
             degrees.add(degree);
         }
@@ -65,13 +62,8 @@ public class DegreeService extends BaseService {
                 .toObjects(DegreeDiscipline.class);
 
         for (DegreeDiscipline degreeDiscipline : degreeDisciplines) {
-            Discipline discipline = firestore
-                    .collection(CollectionsNames.DISCIPLINES_COLLECTION_NAME)
-                    .whereEqualTo("id", degreeDiscipline.getDisciplineId())
-                    .get()
-                    .get()
-                    .toObjects(Discipline.class)
-                    .get(0);
+            Discipline discipline = disciplineService
+                    .getDiscipline(degreeDiscipline.getDisciplineId());
 
             disciplines.add(discipline);
         }
