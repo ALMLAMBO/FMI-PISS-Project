@@ -11,12 +11,15 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class FacultyService extends BaseService {
-    @Autowired
-    private UniversityService universityService;
+    private final UniversityService universityService;
+
+    public FacultyService() {
+        universityService = new UniversityService();
+    }
 
     public List<Faculty> getAllFacultiesForUniversity(int universityId) throws ExecutionException, InterruptedException {
         List<Faculty> faculties = new ArrayList<>();
-                
+
         List<UniversityFaculty> universityFaculties = firestore
                 .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
                 .whereEqualTo("universityId", universityId)
@@ -52,23 +55,20 @@ public class FacultyService extends BaseService {
             System.out.println(e.getMessage());
         }
 
-        firestore.runAsyncTransaction(x -> {
-            try {
-                int prevId = getId(CollectionsNames.FACULTIES_COLLECTION_NAME);
-                faculty.setId(prevId + 1);
-                updateId(CollectionsNames.FACULTIES_COLLECTION_NAME);
-            }
-            catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            long prevId = getId(CollectionsNames.FACULTIES_COLLECTION_NAME);
+            faculty.setId((int) prevId);
+            updateId(CollectionsNames.FACULTIES_COLLECTION_NAME);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-            firestore
-                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
-                    .add(faculty);
+        firestore
+                .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                .add(faculty);
 
-            return firestore
-                    .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
-                    .add(new UniversityFaculty(universityId, faculty.getId()));
-        });
+        firestore
+                .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
+                .add(new UniversityFaculty(universityId, faculty.getId()));
     }
 }
