@@ -15,4 +15,12 @@ public class ReviewServletRegistration {
         srb.setUrlMappings(List.of("/api/get-all-reviews"));
         return srb;
     }
+
+    @Bean
+    ServletRegistrationBean<GetReviewServlet> getReviewServlet() {
+        ServletRegistrationBean<GetReviewServlet> srb = new ServletRegistrationBean<>();
+        srb.setServlet(new GetReviewServlet());
+        srb.setUrlMappings(List.of("/api/get-review"));
+        return srb;
+    }
 }
