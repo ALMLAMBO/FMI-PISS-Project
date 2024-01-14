@@ -4,6 +4,8 @@ import com.rateuni.backend.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 public class ServiceRegistration {
     private SimpleDIContainer diContainer;
@@ -21,34 +23,43 @@ public class ServiceRegistration {
     }
 
     @Bean
+    @PostConstruct
     public DegreeService degreeService() {
         return diContainer.resolve(DegreeService.class);
     }
 
     @Bean
+    @PostConstruct
     public DisciplineService disciplineService() {
         return diContainer.resolve(DisciplineService.class);
     }
 
     @Bean
+    @PostConstruct
     public FacultyService facultyService() {
         return diContainer.resolve(FacultyService.class);
     }
 
     @Bean
+    @PostConstruct
     public RequestService requestService() {
         return diContainer.resolve(RequestService.class);
     }
 
     @Bean
+    @PostConstruct
     public ReviewService reviewService() {
         return diContainer.resolve(ReviewService.class);
     }
 
+    @Bean
+    @PostConstruct
     public UniversityService universityService() {
         return diContainer.resolve(UniversityService.class);
     }
 
+    @Bean
+    @PostConstruct
     public UserService userService() {
         return diContainer.resolve(UserService.class);
     }

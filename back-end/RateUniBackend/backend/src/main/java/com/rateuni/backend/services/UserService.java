@@ -116,8 +116,8 @@ public class UserService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
-                int prevId = getId(CollectionsNames.USERS_COLLECTION_NAME);
-                user.setId(prevId + 1);
+                long prevId = getId(CollectionsNames.USERS_COLLECTION_NAME);
+                user.setId((int)prevId);
                 updateId(CollectionsNames.USERS_COLLECTION_NAME);
             }
             catch (ExecutionException | InterruptedException e) {
@@ -130,8 +130,8 @@ public class UserService extends BaseService {
 
             UserRequest userRequest = new UserRequest();
             try {
-                int requestPrevId = getId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
-                userRequest.setRequestId(requestPrevId + 1);
+                long requestPrevId = getId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
+                userRequest.setRequestId((int)requestPrevId);
                 updateId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
 
                 userRequest.setUsername(user.getUsername());
@@ -172,14 +172,14 @@ public class UserService extends BaseService {
         firestore.runAsyncTransaction(x -> {
             ReviewRequest reviewRequest = new ReviewRequest();
             try {
-                int prevReviewId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
-                review.setId(prevReviewId + 1);
+                long prevReviewId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+                review.setId((int)prevReviewId);
                 updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
                 review.setVisible(false);
                 review.setStatus("pending");
 
-                int prevRequestId = getId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
-                reviewRequest.setRequestId(prevRequestId + 1);
+                long prevRequestId = getId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
+                reviewRequest.setRequestId((int)prevRequestId);
                 updateId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
 
                 reviewRequest.setReviewId(review.getId());

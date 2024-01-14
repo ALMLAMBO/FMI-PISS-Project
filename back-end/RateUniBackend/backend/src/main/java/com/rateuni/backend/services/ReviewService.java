@@ -53,8 +53,8 @@ public class ReviewService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
-                int prevId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
-                review.setId(prevId + 1);
+                long prevId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+                review.setId((int)prevId);
                 updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
                 review.setVisible(false);
             }

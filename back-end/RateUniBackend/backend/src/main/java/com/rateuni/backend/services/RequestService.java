@@ -25,8 +25,8 @@ public class RequestService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
-                int prevId = getId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
-                userRequest.setRequestId(prevId + 1);
+                long prevId = getId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
+                userRequest.setRequestId((int)prevId);
                 updateId(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME);
                 userRequest.setStatus("pending");
             } catch (ExecutionException | InterruptedException e) {
@@ -44,8 +44,8 @@ public class RequestService extends BaseService {
 
         firestore.runAsyncTransaction(x -> {
             try {
-                int prevId = getId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
-                reviewRequest.setRequestId(prevId + 1);
+                long prevId = getId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
+                reviewRequest.setRequestId((int)prevId);
                 updateId(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME);
                 reviewRequest.setStatus("pending");
             } catch (ExecutionException | InterruptedException e) {
