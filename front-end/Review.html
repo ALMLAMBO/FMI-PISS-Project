@@ -407,7 +407,7 @@
         </div>
         
         <div class="register_final">
-            <div id="Register_button">Качване на рецензия</div>
+            <div id="sendReview">Качване на рецензия</div>
         </div>
     </div>
 
@@ -431,85 +431,120 @@
     </script>
 
     <script>
-        let username, email, password, passwordRepeat, realName, facultyNumber, university, specialty;
+        let course_name = "", teacher_name = "", assistant_name = "", course_score = 0, teacher_score = 0, assitant_score = 0, difficulty = 0, usefullness = 0, busyness = 0;
+        const selectionStatus = {
+            "extra-exam": false,
+            "extra-project": false,
+            "extra-exams": false,
+            "extra-homeworks": false,
+            "extra-online-classes": false,
+            "extra-books": false,
+            "extra-presentations": false,
+            "extra-more-materials": false
+        };
 
-        // Add event listener to the register button
-        document.getElementById('Register_button').addEventListener('click', function() {
-            // Store the values in global variables
-            username = document.getElementsByName('username')[0].value;
-            email = document.getElementsByName('email')[0].value;
-            password = document.getElementsByName('password')[0].value;
-            passwordRepeat = document.getElementsByName('password_repeat')[0].value;
-            realName = document.getElementsByName('real_name')[0].value;
-            facultyNumber = document.getElementsByName('facculty_number')[0].value;
-            university = document.getElementById('university').value;
-            specialty = document.getElementById('specialty').value;
+        document.getElementById("sendReview").addEventListener('click', function() {
+            course_name = document.getElementsByName('course-name')[0].value;
+            teacher_name = document.getElementsByName('teacher-name')[0].value;
+            assistant_name = document.getElementsByName('assistant-name')[0].value;
 
-            // Log the variables to the console (for debugging purposes, remove in production)
-            console.log(username, email, password, passwordRepeat, realName, facultyNumber, university, specialty);
+            console.log(course_name + " - " + course_score + "\n" + teacher_name + " - " + teacher_score + "\n" + assistant_name + " - " + assitant_score + "\n" + "Difficilty: " + difficulty + "\nUsefullness: " + usefullness + "\nBusyness: " + busyness + "\n");
+            
         });
 
         document.addEventListener("DOMContentLoaded", function() {
-        const selectedScores = {
-            evalScores: {},
-            courseEvalScores: {}
-        };
+            const selectedScores = {
+                evalScores: {},
+                courseEvalScores: {}
+            };
 
-        function updateSelection(container, selectedElement) {
-            const prevSelected = container.querySelector('.eval_score.selected');
-            if (prevSelected) {
-                prevSelected.classList.remove('selected');
+            function updateSelection(container, selectedElement) {
+                const prevSelected = container.querySelector('.eval_score.selected');
+                if (prevSelected) {
+                    prevSelected.classList.remove('selected');
+                }
+
+                selectedElement.classList.add('selected');
+
+                const containerType = container.classList.contains('eval_scores') ? 'evalScores' : 'courseEvalScores';
+                const selectedNumber = selectedElement.textContent.trim();
+                selectedScores[containerType][container.getAttribute('id')] = selectedNumber;
             }
 
-            selectedElement.classList.add('selected');
-
-            const containerType = container.classList.contains('eval_scores') ? 'evalScores' : 'courseEvalScores';
-            const selectedNumber = selectedElement.textContent.trim();
-            selectedScores[containerType][container.getAttribute('id')] = selectedNumber;
-        }
-
-        // Add click event listeners to each eval_score element
-        document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
-            element.addEventListener('click', function() {
-                const container = this.closest('.eval_scores, .course-eval_scores');
-                updateSelection(container, this);
+            // Add click event listeners to each eval_score element
+            document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
+                element.addEventListener('click', function() {
+                    const container = this.closest('.eval_scores, .course-eval_scores');
+                    updateSelection(container, this);
+                });
             });
         });
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-    // Object to store the selection status of each ID
-    const selectionStatus = {
-        "extra-exam": false,
-        "extra-project": false,
-        "extra-exams": false,
-        "extra-homeworks": false,
-        "extra-online-classes": false,
-        "extra-books": false,
-        "extra-presentations": false,
-        "extra-more-materials": false
-    };
+        document.addEventListener('DOMContentLoaded', function() {
+            function toggleSelection(element) {
+                const id = element.id;
+                if (selectionStatus[id]) {
+                    element.classList.remove('selected');
+                } else {
+                    element.classList.add('selected');
+                }
+                selectionStatus[id] = !selectionStatus[id];
+            }
 
-    function toggleSelection(element) {
-        const id = element.id;
-        if (selectionStatus[id]) {
-            element.classList.remove('selected');
-        } else {
-            element.classList.add('selected');
-        }
-        selectionStatus[id] = !selectionStatus[id];
-    }
-
-    const extras = document.querySelectorAll('.extras-container');
-    extras.forEach(extra => {
-        extra.addEventListener('click', function() {
-            toggleSelection(this);
+            const extras = document.querySelectorAll('.extras-container');
+            extras.forEach(extra => {
+                extra.addEventListener('click', function() {
+                    toggleSelection(this);
+                });
+            });
         });
-    });
-});
 
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to update the score variables based on selection
+            function updateScore(type, score) {
+                switch (type) {
+                    case 'course':
+                        course_score = score;
+                        break;
+                    case 'teacher':
+                        teacher_score = score;
+                        break;
+                    case 'assistant':
+                        assitant_score = score;
+                        break;
+                    case 'difficulty':
+                        difficulty = score;
+                        break;
+                    case 'usefulness':
+                        usefullness = score;
+                        break;
+                    case 'busyness':
+                        busyness = score;
+                        break;
+                }
+            }
 
-
+            // Add click event listeners to each eval_score element
+            document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
+                element.addEventListener('click', function() {
+                    const container = this.closest('.container-row, .container-column');
+                    const score = parseInt(this.textContent.trim());
+                    
+                    // Determine the type of evaluation based on the container's class or id
+                    if (container.classList.contains('container-row')) {
+                        const inputName = container.querySelector('.eval-input').name;
+                        if (inputName.includes('course')) updateScore('course', score);
+                        else if (inputName.includes('teacher')) updateScore('teacher', score);
+                        else if (inputName.includes('assistant')) updateScore('assistant', score);
+                    } else if (container.classList.contains('container-column')) {
+                        const evalName = container.querySelector('.course-eval-name').textContent.trim();
+                        if (evalName === 'Сложност') updateScore('difficulty', score);
+                        else if (evalName === 'Полезност') updateScore('usefulness', score);
+                        else if (evalName === 'Заетост') updateScore('busyness', score);
+                    }
+                });
+            });
+        });
 
 
     </script>
