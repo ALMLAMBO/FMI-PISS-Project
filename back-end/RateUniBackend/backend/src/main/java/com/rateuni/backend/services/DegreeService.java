@@ -13,14 +13,14 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class DegreeService extends BaseService {
-    @Autowired
-    private UniversityService universityService;
+    private final FacultyService facultyService;
 
-    @Autowired
-    private FacultyService facultyService;
+    private final DisciplineService disciplineService;
 
-    @Autowired
-    private DisciplineService disciplineService;
+    public DegreeService() {
+        facultyService = new FacultyService();
+        disciplineService = new DisciplineService();
+    }
 
     public List<Degree> getAllDegreesForFaculty(int facultyId) throws ExecutionException, InterruptedException {
         List<Degree> degrees = new ArrayList<>();
@@ -71,32 +71,27 @@ public class DegreeService extends BaseService {
         return disciplines;
     }
 
-    public void addDegree(int universityId, int facultyId, Degree degree) {
+    public void addDegree(int facultyId, Degree degree) {
         try {
-            universityService.getUniversity(universityId);
             facultyService.getFaculty(facultyId);
-        }
-        catch (ExecutionException | InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        firestore.runAsyncTransaction(x -> {
-            try {
-                int prevId = getId(CollectionsNames.DEGREES_COLLECTION_NAME);
-                degree.setId(prevId + 1);
-                updateId(CollectionsNames.DEGREES_COLLECTION_NAME);
-            }
-            catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            long prevId = getId(CollectionsNames.DEGREES_COLLECTION_NAME);
+            degree.setId((int) prevId);
+            updateId(CollectionsNames.DEGREES_COLLECTION_NAME);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-            firestore
-                    .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
-                    .add(degree);
+        firestore
+                .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
+                .add(degree);
 
-            return firestore
-                    .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
-                    .add(new FacultyDegree(facultyId, degree.getId()));
-        });
+        firestore
+                .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
+                .add(new FacultyDegree(facultyId, degree.getId()));
     }
 }
