@@ -24,22 +24,20 @@ public class BaseService {
                 .collection(collectionName)
                 .document("Id");
 
-        int prevId = (int) idResult
+        long prevId = (long) idResult
                 .get()
                 .get()
                 .get("next_id");
 
-        Map<String, Integer> data = new HashMap<>();
+        Map<String, Long> data = new HashMap<>();
         data.put("next_id", prevId + 1);
         idResult.set(data);
     }
 
-    public int getId(String collectionName) throws ExecutionException, InterruptedException {
-        DocumentReference idResult = firestore
+    public long getId(String collectionName) throws ExecutionException, InterruptedException {
+        return (long) firestore
                 .collection(collectionName)
-                .document("Id");
-
-        return (int) idResult
+                .document("Id")
                 .get()
                 .get()
                 .get("next_id");
