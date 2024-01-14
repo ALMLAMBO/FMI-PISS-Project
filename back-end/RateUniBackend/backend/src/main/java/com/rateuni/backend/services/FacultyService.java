@@ -19,7 +19,7 @@ public class FacultyService extends BaseService {
 
         List<UniversityFaculty> universityFaculties = firestore
                 .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)
-                .whereEqualTo("university_id", universityId)
+                .whereEqualTo("universityId", universityId)
                 .get()
                 .get()
                 .toObjects(UniversityFaculty.class);
@@ -59,16 +59,18 @@ public class FacultyService extends BaseService {
         }
 
         firestore.runAsyncTransaction(x -> {
-            firestore
-                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
-                    .add(faculty);
-
             try {
+                int prevId = getId(CollectionsNames.FACULTIES_COLLECTION_NAME);
+                faculty.setId(prevId + 1);
                 updateId(CollectionsNames.FACULTIES_COLLECTION_NAME);
             }
             catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+            firestore
+                    .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                    .add(faculty);
 
             return firestore
                     .collection(CollectionsNames.UNIVERSITIES_FACULTIES_COLLECTION_NAME)

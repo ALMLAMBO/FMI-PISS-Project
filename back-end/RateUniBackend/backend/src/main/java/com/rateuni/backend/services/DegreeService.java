@@ -24,7 +24,7 @@ public class DegreeService extends BaseService {
 
         List<FacultyDegree> facultyDegrees = firestore
                 .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
-                .whereEqualTo("faculty_id", facultyId)
+                .whereEqualTo("facultyId", facultyId)
                 .get()
                 .get()
                 .toObjects(FacultyDegree.class);

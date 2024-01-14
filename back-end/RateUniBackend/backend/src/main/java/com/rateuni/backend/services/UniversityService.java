@@ -35,7 +35,7 @@ public class UniversityService extends BaseService {
 
         List<UniversityUser> universityUsers = firestore
                 .collection(CollectionsNames.UNIVERSITIES_USERS_COLLECTION_NAME)
-                .whereEqualTo("university_id", universityId)
+                .whereEqualTo("universityId", universityId)
                 .get()
                 .get()
                 .toObjects(UniversityUser.class);
@@ -67,15 +67,14 @@ public class UniversityService extends BaseService {
                 int prevId = getId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
                 university.setId(prevId + 1);
                 updateId(CollectionsNames.UNIVERSITIES_COLLECTION_NAME);
-
-                return firestore
-                        .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)
-                        .add(university);
             }
             catch (ExecutionException | InterruptedException e) {
                 System.out.println(e.getMessage());
-                return null;
             }
+
+            return firestore
+                    .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)
+                    .add(university);
         });
     }
 }

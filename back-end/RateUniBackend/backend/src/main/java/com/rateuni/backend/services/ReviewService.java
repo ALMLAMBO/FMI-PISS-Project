@@ -62,6 +62,10 @@ public class ReviewService extends BaseService {
                 throw new RuntimeException(e);
             }
 
+            firestore
+                    .collection(CollectionsNames.REVIEWS_DISCIPLINES_COLLECTION_NAME)
+                    .add(new ReviewDiscipline(review.getId(), disciplineId));
+
             return firestore
                     .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
                     .add(review);
