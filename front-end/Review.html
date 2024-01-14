@@ -12,6 +12,7 @@
             --gray: #A1A1A1;
             --pink: #B4B7FC;
             --grayish: #D8D8DB;
+            --selected: #d8d8dba7;
         }
 
         body {
@@ -217,8 +218,8 @@
             font-weight: bold;
 
             background-color: var(--grayish);
-            width: 100px;
-            height: 40px;
+            width: 150px;
+            height: 50px;
             text-align: center;
             border-radius: 8px;
             
@@ -280,6 +281,14 @@
             margin-right: 20px;
 
             color: white;
+        }
+
+        .eval_score.selected {
+            background-color: var(--selected);
+        }
+
+        .selected {
+            background-color: var(--selected);
         }
 
     </style>
@@ -380,16 +389,16 @@
             <div class="container-title">Дисциплината има:</div>
             <div class="container-inputs">
                 <div class="container-row">
-                    <div class="extras-container">Изпит</div>
-                    <div class="extras-container">Проект</div>
-                    <div class="extras-container">Контролни</div>
-                    <div class="extras-container">Домашни</div>
+                    <div class="extras-container" id="extra-exam">Изпит</div>
+                    <div class="extras-container" id="extra-project">Проект</div>
+                    <div class="extras-container" id="extra-exams">Контролни</div>
+                    <div class="extras-container" id="extra-homeworks">Домашни</div>
                 </div>
                 <div class="container-row">
-                    <div class="extras-container">Онлайн часове</div>
-                    <div class="extras-container">Учебници</div>
-                    <div class="extras-container">Презентации</div>
-                    <div class="extras-container">Допълнителни материали</div>
+                    <div class="extras-container" id="extra-online-classes">Онлайн часове</div>
+                    <div class="extras-container" id="extra-books">Учебници</div>
+                    <div class="extras-container" id="extra-presentations">Презентации</div>
+                    <div class="extras-container" id="extra-more-materials">Допълнителни материали</div>
                 </div>
             </div>
             <div class="input-section">
@@ -398,10 +407,8 @@
         </div>
         
         <div class="register_final">
-            <div id="Register_button">Качване на реценция</div>
-
+            <div id="Register_button">Качване на рецензия</div>
         </div>
-
     </div>
 
     <footer class="footer">
@@ -428,18 +435,82 @@
 
         // Add event listener to the register button
         document.getElementById('Register_button').addEventListener('click', function() {
-        // Store the values in global variables
-        username = document.getElementsByName('username')[0].value;
-        email = document.getElementsByName('email')[0].value;
-        password = document.getElementsByName('password')[0].value;
-        passwordRepeat = document.getElementsByName('password_repeat')[0].value;
-        realName = document.getElementsByName('real_name')[0].value;
-        facultyNumber = document.getElementsByName('facculty_number')[0].value;
-        university = document.getElementById('university').value;
-        specialty = document.getElementById('specialty').value;
+            // Store the values in global variables
+            username = document.getElementsByName('username')[0].value;
+            email = document.getElementsByName('email')[0].value;
+            password = document.getElementsByName('password')[0].value;
+            passwordRepeat = document.getElementsByName('password_repeat')[0].value;
+            realName = document.getElementsByName('real_name')[0].value;
+            facultyNumber = document.getElementsByName('facculty_number')[0].value;
+            university = document.getElementById('university').value;
+            specialty = document.getElementById('specialty').value;
 
-        // Log the variables to the console (for debugging purposes, remove in production)
-        console.log(username, email, password, passwordRepeat, realName, facultyNumber, university, specialty);
+            // Log the variables to the console (for debugging purposes, remove in production)
+            console.log(username, email, password, passwordRepeat, realName, facultyNumber, university, specialty);
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const selectedScores = {
+            evalScores: {},
+            courseEvalScores: {}
+        };
+
+        function updateSelection(container, selectedElement) {
+            const prevSelected = container.querySelector('.eval_score.selected');
+            if (prevSelected) {
+                prevSelected.classList.remove('selected');
+            }
+
+            selectedElement.classList.add('selected');
+
+            const containerType = container.classList.contains('eval_scores') ? 'evalScores' : 'courseEvalScores';
+            const selectedNumber = selectedElement.textContent.trim();
+            selectedScores[containerType][container.getAttribute('id')] = selectedNumber;
+        }
+
+        // Add click event listeners to each eval_score element
+        document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
+            element.addEventListener('click', function() {
+                const container = this.closest('.eval_scores, .course-eval_scores');
+                updateSelection(container, this);
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Object to store the selection status of each ID
+    const selectionStatus = {
+        "extra-exam": false,
+        "extra-project": false,
+        "extra-exams": false,
+        "extra-homeworks": false,
+        "extra-online-classes": false,
+        "extra-books": false,
+        "extra-presentations": false,
+        "extra-more-materials": false
+    };
+
+    function toggleSelection(element) {
+        const id = element.id;
+        if (selectionStatus[id]) {
+            element.classList.remove('selected');
+        } else {
+            element.classList.add('selected');
+        }
+        selectionStatus[id] = !selectionStatus[id];
+    }
+
+    const extras = document.querySelectorAll('.extras-container');
+    extras.forEach(extra => {
+        extra.addEventListener('click', function() {
+            toggleSelection(this);
+        });
+    });
+});
+
+
+
+
+
     </script>
 </body>
