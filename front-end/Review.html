@@ -15,6 +15,10 @@
             --selected: #d8d8dba7;
         }
 
+        div {
+            cursor: default;
+        }
+
         body {
             margin: 0;
             width: 100%;
@@ -51,7 +55,6 @@
         .upper_buttons {
             display: flex;
             flex-direction: row;
-
         }
 
         .upper_button {
@@ -68,14 +71,17 @@
 
         #NewReview_Button {
             width: 125px;
+            cursor: pointer;
         }
 
         #Profile_Button{
             width: 100px;
+            cursor: pointer;
         }
 
         #Exit_Button{
             width: 100px;
+            cursor: pointer;
         }
 
         .main-container {
@@ -242,6 +248,23 @@
             border-radius: 3px;
         }
 
+
+        .register_final {
+            width: 250px;
+            height: 30px;
+            background-color: var(--blue);
+            border-radius: 4px;
+            color: white;
+            font-size: 25px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sendReview{
+            cursor: pointer;
+        }
+
         .footer {
             width: 100%;
 
@@ -281,6 +304,7 @@
             margin-right: 20px;
 
             color: white;
+            cursor: pointer;
         }
 
         .eval_score.selected {

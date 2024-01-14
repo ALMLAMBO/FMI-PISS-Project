@@ -58,6 +58,7 @@
 
             width: 50px;
             height: 50px;
+            cursor: pointer;
         }
 
         .register_container {
@@ -181,7 +182,9 @@
         .terms_text {
             width: 63%;
         }
-
+        div {
+            cursor: default;
+        }
 
         #Register_button {
             background-color: var(--blue);
@@ -190,6 +193,8 @@
             border-radius: 5px;
             width: 10vh;
             text-align: center;
+
+            cursor: pointer;
         }
 
         .footer {
@@ -224,6 +229,7 @@
 
             justify-content: center;
             height: 50px;
+
         }
 
         .footer_link {
@@ -231,6 +237,7 @@
             margin-right: 20px;
 
             color: white;
+            cursor: pointer;
         }
 
     </style>
@@ -327,22 +334,55 @@
     </script>
 
     <script>
-        let username, email, password, passwordRepeat, realName, facultyNumber, university, facculty, specialty;
+        let username, email, password, passwordRepeat, realName, fn, university, faculty, degree;
 
-        // Add event listener to the register button
         document.getElementById('Register_button').addEventListener('click', function() {
-        // Store the values in global variables
-        username = document.getElementsByName('username')[0].value;
-        email = document.getElementsByName('email')[0].value;
-        password = document.getElementsByName('password')[0].value;
-        passwordRepeat = document.getElementsByName('password_repeat')[0].value;
-        facultyNumber = document.getElementsByName('facculty_number')[0].value;
-        university = document.getElementById('university').value;
-        facculty = document.getElementById('facculty').value;
-        specialty = document.getElementById('specialty').value;
+            event.preventDefault();
 
-        // Log the variables to the console (for debugging purposes, remove in production)
-        console.log(username, email, password, passwordRepeat, facultyNumber, university, facculty, specialty);
+            const formData = {
+                username: document.getElementsByName('username')[0].value,
+                email: document.getElementsByName('email')[0].value,
+                password: document.getElementsByName('password')[0].value,
+                fn: document.getElementsByName('facculty_number')[0].value,
+                university: document.getElementById('university').value,
+                faculty: document.getElementById('facculty').value,
+                degree: document.getElementById('specialty').value,
+                image: getBase64(document.getElementById('image-fn').files[0])
+            }
+
+            fetch('/server-endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Handle success
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+
         });
+
+        function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+                if ((encoded.length % 4) > 0) {
+                    encoded += '='.repeat(4 - (encoded.length % 4));
+                }
+                resolve(encoded);
+            };
+            reader.onerror = error => reject(error);
+        });
+    }
+    
     </script>
 </body>

@@ -45,7 +45,7 @@
             background-size:contain;
             background-position: center center;
             background-repeat: no-repeat;
-            
+            cursor: default;
         }
 
         #Login_Button {
@@ -58,6 +58,7 @@
 
             width: 50px;
             height: 50px;
+            cursor:pointer;
         }
 
         .login_container {
@@ -82,6 +83,7 @@
         .login_text {
             font-size: 30px;
             text-align: center;
+            cursor: default;
         }
 
         .login_description {
@@ -91,6 +93,8 @@
             font-size: 14px;
             color: var(--gray);
             width: 60%;
+            
+            cursor:default;
         }
 
         .content_container_1 {
@@ -101,6 +105,7 @@
             width: 40%;
             height: 250px;
             border-radius: 20px;
+            cursor: default;
         }
         
         .content_container_2 {
@@ -190,6 +195,7 @@
             border-radius: 5px;
             width: 10vh;
             text-align: center;
+            cursor:pointer;
         }
 
         .footer {
@@ -224,6 +230,7 @@
 
             justify-content: center;
             height: 50px;
+            cursor: pointer;
         }
 
         .footer_link {
@@ -283,11 +290,26 @@
     </script>
 
     <script>
+        const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+
+        if (isAuthenticated) {
+            document.getElementById('loginForm').style.display = 'none';
+            alert('User is already authenticated!');
+        }
+
+        let userName = "", userPass = "";
+
         document.getElementById('login_button').addEventListener('click', function() {
             username = document.getElementsByName('username')[0].value;
             password = document.getElementsByName('password')[0].value;
 
-            console.log(username, password);
+            if(username === 'test' && password === 'test')
+            {
+                sessionStorage.setItem('authenticated', 'true');
+                alert('Login successful!');
+            }
+            else 
+                alert('Invalid username or password!');
         });
     </script>
 </body>
