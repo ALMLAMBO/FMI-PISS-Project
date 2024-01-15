@@ -51,32 +51,21 @@ public class ReviewService extends BaseService {
                 .get(0);
     }
 
-    public void createReviewForDiscipline(int disciplineId, Review review) {
+    public void createReview(Review review) {
         try {
-            disciplineService.getDiscipline(disciplineId);
+            long prevId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+            review.setId((int) prevId);
+            updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
+            review.setVisible(false);
         }
         catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        firestore.runAsyncTransaction(x -> {
-            try {
-                long prevId = getId(CollectionsNames.REVIEWS_COLLECTION_NAME);
-                review.setId((int)prevId);
-                updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
-                review.setVisible(false);
-            }
-            catch (ExecutionException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        review.setPublishedAt();
 
-            firestore
-                    .collection(CollectionsNames.REVIEWS_DISCIPLINES_COLLECTION_NAME)
-                    .add(new ReviewDiscipline(review.getId(), disciplineId));
-
-            return firestore
-                    .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
-                    .add(review);
-        });
+        firestore
+                .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                .add(review);
     }
 }

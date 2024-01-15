@@ -1,5 +1,6 @@
 package com.rateuni.backend.models.base_models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ public class Review {
 
     private String comment;
 
-    private Date publishedAt;
+    private String publishedAt;
 
     private String status;
 
@@ -45,7 +46,7 @@ public class Review {
     public Review() {
     }
 
-    public Review(int id, String comment, Date publishedAt, String status,
+    public Review(int id, String comment, String publishedAt, String status,
                   double courseRating, double lecturerRating, double assistantsRating,
                   int difficulty, int usefulness, int workLoad, boolean hasExam,
                   boolean hasProject, boolean hasMidChecks, boolean hasHomeworks,
@@ -89,12 +90,12 @@ public class Review {
         this.comment = comment;
     }
 
-    public Date getPublishedAt() {
+    public String getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
-        this.publishedAt = publishedAt;
+    public void setPublishedAt() {
+        this.publishedAt = LocalDateTime.now().toString();
     }
 
     public String getStatus() {
