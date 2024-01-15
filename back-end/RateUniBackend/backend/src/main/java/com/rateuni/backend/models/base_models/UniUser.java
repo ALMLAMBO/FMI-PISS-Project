@@ -15,15 +15,18 @@ public class UniUser {
 
     private String password;
 
+    public String image;
+
     public UniUser() {
     }
 
-    public UniUser(int id, String facultyNumber, String email, String username, String password) {
+    public UniUser(int id, String facultyNumber, String email, String username, String password, String image) {
         this.id = id;
         this.facultyNumber = facultyNumber;
         this.email = email;
         this.username = username;
         this.password = hashPassword(password);
+        this.image = image;
     }
 
     public int getId() {
@@ -63,7 +66,15 @@ public class UniUser {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = hashPassword(password);
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
