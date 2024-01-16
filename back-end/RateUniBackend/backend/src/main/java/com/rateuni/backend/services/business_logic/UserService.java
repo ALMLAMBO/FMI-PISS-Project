@@ -4,7 +4,9 @@ import com.rateuni.backend.models.base_models.*;
 import com.rateuni.backend.models.link_models.UserDiscipline;
 import com.rateuni.backend.models.link_models.UserRequest;
 import com.rateuni.backend.models.link_models.UserReview;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,20 +15,19 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService extends BaseService {
-    @Autowired
     private ReviewService reviewService;
-
-    @Autowired
     private UniversityService universityService;
-
-    @Autowired
     private FacultyService facultyService;
-
-    @Autowired
     private DegreeService degreeService;
-
-    @Autowired
     private DisciplineService disciplineService;
+
+    public UserService() {
+        universityService = new UniversityService();
+        facultyService = new FacultyService();
+        degreeService = new DegreeService();
+        disciplineService = new DisciplineService();
+        reviewService = new ReviewService();
+    }
 
     public List<Review> getAllReviewForUser(int userId) throws ExecutionException, InterruptedException {
         List<Review> reviews = new ArrayList<>();
@@ -76,7 +77,27 @@ public class UserService extends BaseService {
                 .get(0);
     }
 
-    public void createUser(int universityId, int facultyId, int degreeId, UniUser user) {
+    public UserDetails getUserByUsername(String username) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.USERS_COLLECTION_NAME)
+                .whereEqualTo("username", username)
+                .get()
+                .get()
+                .toObjects(UniUser.class)
+                .get(0);
+    }
+
+    public UserDetails getUserByEmail(String email) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.USERS_COLLECTION_NAME)
+                .whereEqualTo("email", email)
+                .get()
+                .get()
+                .toObjects(UniUser.class)
+                .get(0);
+    }
+
+    public UniUser createUser(int universityId, int facultyId, int degreeId, UniUser user) {
         University university;
         Faculty faculty;
         Degree degree;
@@ -121,5 +142,25 @@ public class UserService extends BaseService {
         firestore
                 .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
                 .add(userRequest);
+
+        return user;
+    }
+
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                try {
+                    UserDetails user1 = getUserByEmail(username);
+                    if(user1 == null) {
+                        return getUserByUsername(username);
+                    }
+                    return user1;
+                }
+                catch (ExecutionException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
     }
 }
