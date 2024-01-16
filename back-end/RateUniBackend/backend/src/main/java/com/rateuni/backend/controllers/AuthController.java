@@ -1,6 +1,5 @@
-package com.rateuni.backend.servlets.test;
+package com.rateuni.backend.controllers;
 
-import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.request_response.request.LoginRequest;
 import com.rateuni.backend.models.request_response.request.RefreshTokenRequest;
 import com.rateuni.backend.models.request_response.request.RegisterRequest;
@@ -22,7 +21,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UniUser> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         return ResponseEntity.ok(authenticationService.register(registerRequest));
     }
 
