@@ -1,19 +1,11 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
-import com.google.firebase.cloud.FirestoreClient;
-import com.rateuni.backend.models.base_models.Review;
 import com.rateuni.backend.models.link_models.ReviewRequest;
 import com.rateuni.backend.models.link_models.UserRequest;
 import com.rateuni.backend.models.request_response.request.ReviewRequestProcess;
 import com.rateuni.backend.models.request_response.request.UserRequestProcess;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -87,7 +79,6 @@ public class RequestService extends BaseService {
         for (ReviewRequestProcess reviewRequestProcess : reviewRequestProcesses) {
             ReviewRequest reviewRequest = firestore
                     .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
-                    .whereEqualTo("id", reviewRequestProcess.getRequestId())
                     .whereEqualTo("reviewId", reviewRequestProcess.getReviewId())
                     .get()
                     .get()

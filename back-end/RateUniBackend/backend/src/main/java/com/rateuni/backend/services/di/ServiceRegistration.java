@@ -1,6 +1,6 @@
 package com.rateuni.backend.services.di;
 
-import com.rateuni.backend.services.*;
+import com.rateuni.backend.services.business_logic.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

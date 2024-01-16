@@ -2,7 +2,7 @@ package com.rateuni.backend.servlets.production.requests;
 
 import com.google.gson.Gson;
 import com.rateuni.backend.models.link_models.UserRequest;
-import com.rateuni.backend.services.RequestService;
+import com.rateuni.backend.services.business_logic.RequestService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

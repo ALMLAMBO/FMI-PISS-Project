@@ -1,4 +1,4 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
 import com.rateuni.backend.models.base_models.Review;
 import com.rateuni.backend.models.link_models.ReviewDiscipline;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -62,7 +63,7 @@ public class ReviewService extends BaseService {
             throw new RuntimeException(e);
         }
 
-        review.setPublishedAt();
+        review.setPublishedAt(new Date(System.currentTimeMillis()).toString());
 
         firestore
                 .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)

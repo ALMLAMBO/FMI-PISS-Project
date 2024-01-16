@@ -1,4 +1,4 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
 
 import com.fasterxml.jackson.databind.ser.Serializers;

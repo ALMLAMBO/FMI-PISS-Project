@@ -2,10 +2,8 @@ package com.rateuni.backend.servlets.production.review;
 
 import com.google.gson.Gson;
 import com.rateuni.backend.models.base_models.Review;
-import com.rateuni.backend.models.base_models.University;
 import com.rateuni.backend.models.request_response.request.UniversityIdRequest;
-import com.rateuni.backend.services.ReviewService;
-import com.rateuni.backend.services.UniversityService;
+import com.rateuni.backend.services.business_logic.ReviewService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

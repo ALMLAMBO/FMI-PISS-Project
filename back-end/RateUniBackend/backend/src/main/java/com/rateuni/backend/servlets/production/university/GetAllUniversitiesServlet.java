@@ -2,13 +2,12 @@ package com.rateuni.backend.servlets.production.university;
 
 import com.google.gson.Gson;
 import com.rateuni.backend.models.base_models.University;
-import com.rateuni.backend.services.UniversityService;
+import com.rateuni.backend.services.business_logic.UniversityService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;

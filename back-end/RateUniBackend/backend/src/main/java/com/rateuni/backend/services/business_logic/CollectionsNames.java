@@ -1,4 +1,4 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
 public class CollectionsNames {
     public static final String DEGREES_COLLECTION_NAME = "degrees";

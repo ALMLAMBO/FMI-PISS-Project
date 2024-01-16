@@ -1,13 +1,10 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
 import com.rateuni.backend.models.base_models.Degree;
 import com.rateuni.backend.models.base_models.Discipline;
 import com.rateuni.backend.models.base_models.Faculty;
 import com.rateuni.backend.models.link_models.DegreeDiscipline;
 import com.rateuni.backend.models.link_models.FacultyDegree;
-import com.rateuni.backend.models.link_models.FacultyUser;
-import com.rateuni.backend.models.link_models.UserDegree;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

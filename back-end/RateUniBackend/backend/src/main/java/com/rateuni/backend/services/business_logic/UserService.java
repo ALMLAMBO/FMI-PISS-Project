@@ -1,10 +1,9 @@
-package com.rateuni.backend.services;
+package com.rateuni.backend.services.business_logic;
 
 import com.rateuni.backend.models.base_models.*;
 import com.rateuni.backend.models.link_models.UserDiscipline;
 import com.rateuni.backend.models.link_models.UserRequest;
 import com.rateuni.backend.models.link_models.UserReview;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

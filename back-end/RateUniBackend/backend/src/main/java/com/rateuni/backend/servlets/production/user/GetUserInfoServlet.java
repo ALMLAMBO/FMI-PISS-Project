@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.rateuni.backend.models.base_models.*;
 import com.rateuni.backend.models.request_response.request.UserInfoRequest;
 import com.rateuni.backend.models.request_response.response.UniUserInfo;
-import com.rateuni.backend.services.DegreeService;
-import com.rateuni.backend.services.FacultyService;
-import com.rateuni.backend.services.UniversityService;
-import com.rateuni.backend.services.UserService;
+import com.rateuni.backend.services.business_logic.DegreeService;
+import com.rateuni.backend.services.business_logic.FacultyService;
+import com.rateuni.backend.services.business_logic.UniversityService;
+import com.rateuni.backend.services.business_logic.UserService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,7 +57,7 @@ public class GetUserInfoServlet extends HttpServlet {
 
             UniUserInfo userInfo = new UniUserInfo();
             userInfo.setUniversity(university.getName());
-            userInfo.setFaculty(faculty.getfacultyName());
+            userInfo.setFaculty(faculty.getFacultyName());
             userInfo.setUsername(user.getUsername());
             userInfo.setUserId(user.getId());
             userInfo.setDegree(degree.getTitle());
