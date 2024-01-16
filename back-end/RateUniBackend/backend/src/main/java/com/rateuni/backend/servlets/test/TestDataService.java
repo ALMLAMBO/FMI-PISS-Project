@@ -1,4 +1,4 @@
-package com.rateuni.backend.servlets;
+package com.rateuni.backend.servlets.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

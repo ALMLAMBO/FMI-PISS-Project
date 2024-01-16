@@ -1,4 +1,4 @@
-package com.rateuni.backend.servlets;
+package com.rateuni.backend.servlets.test;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletConfig;

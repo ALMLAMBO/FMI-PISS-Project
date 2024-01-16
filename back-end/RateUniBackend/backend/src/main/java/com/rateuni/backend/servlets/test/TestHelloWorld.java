@@ -1,4 +1,4 @@
-package com.rateuni.backend.servlets;
+package com.rateuni.backend.servlets.test;
 
 public class TestHelloWorld {
     private String data;
