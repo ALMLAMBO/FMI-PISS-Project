@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="menu.js"></script>
+</head>
+<body>
+<nav id="menu">
+    <ul id="menuList"></ul>
+</nav>
+<form action="" id="loginForm">
+    <label for="email">Имейл</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Парола</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Влез">
+</form>
+<p>Ако нямате профил се <a href="/registration.html">регистирайте</a></p>
+<script>
+    const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // (replace with authentication logic)
+        if (email === 'user@bg.th' && password === 'password') {
+            sessionStorage.setItem('authenticated', 'true');
+            //check if admin and sessionStorage.setItem('isAdmin', 'true');
+            sessionStorage.setItem('isAdmin', 'false');
+            //save tokens
+            //alert('Login successful!');
+            window.location.href = "/home.html";
+        } else {
+            alert('Invalid email or password!');
+        }
+    };
+
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+    if (isAuthenticated) {
+        document.getElementById('loginForm').style.display = 'none';
+        alert('User is already authenticated!');
+    }
+</script>
+</body>
+</html>
