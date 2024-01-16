@@ -1,6 +1,7 @@
 package com.rateuni.backend.services.di;
 
 import com.rateuni.backend.services.business_logic.*;
+import com.rateuni.backend.services.jwt.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -39,5 +40,10 @@ public class ServiceRegistration {
     @Bean
     public UserService userService() {
         return new UserService();
+    }
+
+    @Bean
+    public JwtService jwtService() {
+        return new JwtService();
     }
 }
