@@ -5,7 +5,6 @@ public class CollectionsNames {
     public static final String DISCIPLINES_COLLECTION_NAME = "disciplines";
     public static final String FACULTIES_COLLECTION_NAME = "faculties";
     public static final String REVIEWS_COLLECTION_NAME = "reviews";
-    public static final String ROLES_COLLECTION_NAME = "roles";
     public static final String USERS_COLLECTION_NAME = "users";
     public static final String UNIVERSITIES_COLLECTION_NAME = "universities";
 
@@ -19,5 +18,4 @@ public class CollectionsNames {
     public static final String USERS_DISCIPLINES_COLLECTION_NAME = "users_disciplines";
     public static final String USERS_REQUESTS_COLLECTION_NAME = "users_requests";
     public static final String USERS_REVIEWS_COLLECTION_NAME = "users_reviews";
-    public static final String USERS_ROLES_COLLECTION_NAME = "users_roles";
 }

@@ -1,57 +1,21 @@
 package com.rateuni.backend.models.base_models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Faculty {
     private int id;
-
     private String facultyName;
-
     private String address;
-
     private String dean;
-
-    public Faculty() {
-    }
-
-    public Faculty(int id, String facultyName, String address, String dean) {
-        this.id = id;
-        this.facultyName = facultyName;
-        this.address = address;
-        this.dean = dean;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getfacultyName() {
-        return facultyName;
-    }
-
-    public void setfacultyName(String facultyName) {
-        this.facultyName = facultyName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDean() {
-        return dean;
-    }
-
-    public void setDean(String dean) {
-        this.dean = dean;
-    }
 
     @Override
     public boolean equals(Object o) {
