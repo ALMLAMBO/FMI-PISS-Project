@@ -1,36 +1,20 @@
 package com.rateuni.backend.models.link_models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDiscipline implements Serializable {
     private int userId;
-
     private int disciplineId;
-
-    public UserDiscipline() {
-    }
-
-    public UserDiscipline(int userId, int disciplineId) {
-        this.userId = userId;
-        this.disciplineId = disciplineId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getDisciplineId() {
-        return disciplineId;
-    }
-
-    public void setDisciplineId(int disciplineId) {
-        this.disciplineId = disciplineId;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,36 +1,20 @@
 package com.rateuni.backend.models.link_models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReviewDiscipline implements Serializable {
     private int reviewId;
-
     private int disciplineId;
-
-    public ReviewDiscipline() {
-    }
-
-    public ReviewDiscipline(int reviewId, int disciplineId) {
-        this.reviewId = reviewId;
-        this.disciplineId = disciplineId;
-    }
-
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    public int getDisciplineId() {
-        return disciplineId;
-    }
-
-    public void setDisciplineId(int disciplineId) {
-        this.disciplineId = disciplineId;
-    }
 
     @Override
     public boolean equals(Object o) {

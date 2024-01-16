@@ -1,36 +1,20 @@
 package com.rateuni.backend.models.link_models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class FacultyDegree implements Serializable {
     private int facultyId;
-
     private int degreeId;
-
-    public FacultyDegree() {
-    }
-
-    public FacultyDegree(int facultyId, int degreeId) {
-        this.facultyId = facultyId;
-        this.degreeId = degreeId;
-    }
-
-    public int getFacultyId() {
-        return facultyId;
-    }
-
-    public void setFacultyId(int facultyId) {
-        this.facultyId = facultyId;
-    }
-
-    public int getDegreeId() {
-        return degreeId;
-    }
-
-    public void setDegreeId(int degreeId) {
-        this.degreeId = degreeId;
-    }
 
     @Override
     public boolean equals(Object o) {
