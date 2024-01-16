@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/auth/**")
                         .permitAll()
-                        .requestMatchers("/api/test/**")
+                        .requestMatchers("/api/home/**")
                         .permitAll()
                         .requestMatchers("/api/user/**")
                         .hasAnyAuthority("Student")

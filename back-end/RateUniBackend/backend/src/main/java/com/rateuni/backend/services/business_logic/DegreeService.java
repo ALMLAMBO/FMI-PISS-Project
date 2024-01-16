@@ -13,9 +13,8 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class DegreeService extends BaseService {
-    private final FacultyService facultyService;
-
-    private final DisciplineService disciplineService;
+    private FacultyService facultyService;
+    private DisciplineService disciplineService;
 
     public DegreeService() {
         facultyService = new FacultyService();
@@ -41,24 +40,33 @@ public class DegreeService extends BaseService {
         return degrees;
     }
 
-    public Degree getDegreeForUser(int userId, int degreeId) throws ExecutionException, InterruptedException {
+    public Degree getDegreeForUser(int userId) throws ExecutionException, InterruptedException {
         Faculty faculty = facultyService.getFacultyOfUser(userId);
         FacultyDegree facultyDegree = firestore
                 .collection(CollectionsNames.FACULTIES_DEGREES_COLLECTION_NAME)
                 .whereEqualTo("facultyId", faculty.getId())
-                .whereEqualTo("degreeId", degreeId)
                 .get()
                 .get()
                 .toObjects(FacultyDegree.class)
                 .get(0);
 
-        return getDegree(degreeId);
+        return getDegree(facultyDegree.getDegreeId());
     }
 
     public Degree getDegree(int degreeId) throws ExecutionException, InterruptedException {
         return firestore
                 .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
                 .whereEqualTo("id", degreeId)
+                .get()
+                .get()
+                .toObjects(Degree.class)
+                .get(0);
+    }
+
+    public Degree getDegree(String title) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.DEGREES_COLLECTION_NAME)
+                .whereEqualTo("title", title)
                 .get()
                 .get()
                 .toObjects(Degree.class)

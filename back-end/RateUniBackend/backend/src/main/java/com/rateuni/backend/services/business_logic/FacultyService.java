@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class FacultyService extends BaseService {
-    private final UniversityService universityService;
+    private UniversityService universityService;
 
     public FacultyService() {
         universityService = new UniversityService();
@@ -40,6 +40,16 @@ public class FacultyService extends BaseService {
         return firestore
                 .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
                 .whereEqualTo("id", facultyId)
+                .get()
+                .get()
+                .toObjects(Faculty.class)
+                .get(0);
+    }
+
+    public Faculty getFaculty(String faculty) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.FACULTIES_COLLECTION_NAME)
+                .whereEqualTo("facultyName", faculty)
                 .get()
                 .get()
                 .toObjects(Faculty.class)

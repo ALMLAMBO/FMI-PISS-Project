@@ -42,6 +42,16 @@ public class UniversityService extends BaseService {
                 .get(0);
     }
 
+    public University getUniversity(String university) throws ExecutionException, InterruptedException {
+        return firestore
+                .collection(CollectionsNames.UNIVERSITIES_COLLECTION_NAME)
+                .whereEqualTo("name", university)
+                .get()
+                .get()
+                .toObjects(University.class)
+                .get(0);
+    }
+
     public List<UniUser> getAllUsersForUniversity(int universityId) throws ExecutionException, InterruptedException {
         List<UniUser> uniUsers = new ArrayList<>();
 

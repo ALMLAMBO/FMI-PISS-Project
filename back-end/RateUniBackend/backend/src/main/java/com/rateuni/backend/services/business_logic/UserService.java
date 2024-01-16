@@ -1,9 +1,10 @@
 package com.rateuni.backend.services.business_logic;
 
 import com.rateuni.backend.models.base_models.*;
-import com.rateuni.backend.models.link_models.UserDiscipline;
-import com.rateuni.backend.models.link_models.UserRequest;
-import com.rateuni.backend.models.link_models.UserReview;
+import com.rateuni.backend.models.link_models.*;
+import com.rateuni.backend.models.request_response.request.UserInfoRequest;
+import com.rateuni.backend.models.request_response.response.UniUserInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService extends BaseService {
@@ -22,11 +25,11 @@ public class UserService extends BaseService {
     private DisciplineService disciplineService;
 
     public UserService() {
+        reviewService = new ReviewService();
         universityService = new UniversityService();
         facultyService = new FacultyService();
         degreeService = new DegreeService();
         disciplineService = new DisciplineService();
-        reviewService = new ReviewService();
     }
 
     public List<Review> getAllReviewForUser(int userId) throws ExecutionException, InterruptedException {
@@ -97,7 +100,27 @@ public class UserService extends BaseService {
                 .get(0);
     }
 
-    public UniUser createUser(int universityId, int facultyId, int degreeId, UniUser user) {
+    public UniUserInfo getUserInfo(UserInfoRequest userInfoRequest) throws ExecutionException, InterruptedException {
+        University university = universityService.getUniversityForUser(userInfoRequest.getUserId());
+        Faculty faculty = facultyService.getFacultyOfUser(userInfoRequest.getUserId());
+        UniUser user = getUser(userInfoRequest.getUserId());
+        Degree degree = degreeService.getDegreeForUser(userInfoRequest.getUserId());
+        List<Discipline> disciplines = degreeService.getAllDisciplinesForDegree(degree.getId());
+        List<Review> reviews = getAllReviewForUser(userInfoRequest.getUserId());
+
+        UniUserInfo userInfo = new UniUserInfo();
+        userInfo.setUniversity(university.getName());
+        userInfo.setFaculty(faculty.getFacultyName());
+        userInfo.setUsername(user.getUsername());
+        userInfo.setUserId(user.getId());
+        userInfo.setDegree(degree.getTitle());
+        userInfo.setReviews(reviews);
+        userInfo.setDisciplines(disciplines);
+
+        return userInfo;
+    }
+
+    public String createUser(int universityId, int facultyId, int degreeId, UniUser user) {
         University university;
         Faculty faculty;
         Degree degree;
@@ -118,6 +141,7 @@ public class UserService extends BaseService {
             throw new RuntimeException(e);
         }
 
+        user.setApproved(false);
         firestore
                 .collection(CollectionsNames.USERS_COLLECTION_NAME)
                 .add(user);
@@ -143,7 +167,38 @@ public class UserService extends BaseService {
                 .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
                 .add(userRequest);
 
-        return user;
+        return "User sent for approval";
+    }
+
+    public void createUniDataForUser(int userId, String university, String faculty, String degree) throws ExecutionException, InterruptedException {
+        int universityId = universityService.getUniversity(university).getId();
+        int facultyId = facultyService.getFaculty(faculty).getId();
+        int degreeId = degreeService.getDegree(degree).getId();
+
+        firestore
+                .collection(CollectionsNames.UNIVERSITIES_USERS_COLLECTION_NAME)
+                .add(new UniversityUser(universityId, userId));
+
+        firestore
+                .collection(CollectionsNames.FACULTIES_USERS_COLLECTION_NAME)
+                .add(new FacultyUser(facultyId, userId));
+
+        firestore
+                .collection(CollectionsNames.USERS_DEGREES_COLLECTION_NAME)
+                .add(new UserDegree(userId, degreeId));
+
+        List<Integer> disciplineIds = degreeService
+                .getAllDisciplinesForDegree(degreeId)
+                .stream()
+                .filter(x -> Objects.equals(x.getType(), "R"))
+                .map(Discipline::getId)
+                .toList();
+
+        for (Integer disciplineId : disciplineIds) {
+            firestore
+                    .collection(CollectionsNames.USERS_DISCIPLINES_COLLECTION_NAME)
+                    .add(new UserDiscipline(userId, disciplineId));
+        }
     }
 
     public UserDetailsService userDetailsService() {

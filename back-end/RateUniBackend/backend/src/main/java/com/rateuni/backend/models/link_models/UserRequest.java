@@ -17,5 +17,6 @@ public class UserRequest {
     private String degree;
     private String facultyNumber;
     private String status;
+    private String image;
     private boolean approved;
 }

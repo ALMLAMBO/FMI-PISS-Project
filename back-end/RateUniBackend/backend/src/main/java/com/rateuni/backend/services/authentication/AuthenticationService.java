@@ -1,6 +1,5 @@
 package com.rateuni.backend.services.authentication;
 
-import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.request_response.request.LoginRequest;
 import com.rateuni.backend.models.request_response.request.RefreshTokenRequest;
 import com.rateuni.backend.models.request_response.request.RegisterRequest;
@@ -26,15 +25,17 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public UniUser register(RegisterRequest registerRequest) {
+    public String register(RegisterRequest registerRequest) {
         registerRequest.getUser()
                 .setPassword(passwordEncoder.encode(
                         registerRequest.getUser().getPassword()));
 
         registerRequest.getUser().setRole("Student");
 
-        return userService.createUser(registerRequest.getUniversityId(),
+        userService.createUser(registerRequest.getUniversityId(),
                 registerRequest.getFacultyId(), registerRequest.getDegreeId(), registerRequest.getUser());
+
+        return "User created successfully";
     }
 
     public JwtTokenResponse login(LoginRequest loginRequest) {

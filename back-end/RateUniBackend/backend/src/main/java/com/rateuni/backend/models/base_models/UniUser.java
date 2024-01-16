@@ -26,6 +26,7 @@ public class UniUser implements UserDetails {
     private String password;
     private String image;
     private String role;
+    private boolean approved;
 
     @Override
     public boolean equals(Object o) {
