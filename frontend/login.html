@@ -18,7 +18,7 @@
     <input type="password" id="password" name="password"><br><br>
     <input type="submit" value="Влез">
 </form>
-<p>Ако нямате профил се <a href="registration.html">регистирайте</a></p>
+<p>Ако нямате профил се <a href="/registration.html">регистирайте</a></p>
 <script>
     const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
 
@@ -30,7 +30,10 @@
         // (replace with authentication logic)
         if (username === 'user' && password === 'password') {
             sessionStorage.setItem('authenticated', 'true');
-            alert('Login successful!');
+            //check if admin and sessionStorage.setItem('isAdmin', 'true');
+            sessionStorage.setItem('isAdmin', 'false');
+            //alert('Login successful!');
+            window.location.href = "/home.html";
         } else {
             alert('Invalid username or password!');
         }
