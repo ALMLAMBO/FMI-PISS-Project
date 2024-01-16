@@ -9,6 +9,8 @@ public class CollectionsNames {
     public static final String UNIVERSITIES_COLLECTION_NAME = "universities";
 
     public static final String DEGREES_DISCIPLINES_COLLECTION_NAME = "degrees_disciplines";
+
+    public static final String USERS_DEGREES_COLLECTION_NAME = "users_degrees";
     public static final String FACULTIES_DEGREES_COLLECTION_NAME = "faculties_degrees";
     public static final String FACULTIES_USERS_COLLECTION_NAME = "faculties_users";
     public static final String REVIEWS_DISCIPLINES_COLLECTION_NAME = "reviews_disciplines";
