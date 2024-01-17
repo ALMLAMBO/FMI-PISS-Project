@@ -1,60 +1,31 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Review;
-import com.rateuni.backend.models.base_models.UniUser;
-import com.rateuni.backend.models.composite_keys.UserReviewKey;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "users_reviews")
-public class UserReview {
-    @EmbeddedId
-    private UserReviewKey id;
-
-    @ManyToOne
-    @MapsId("user_id")
-    private UniUser user;
-
-    @ManyToOne
-    @MapsId("review_id")
-    private Review review;
-
-    public UserReview() {
-
-    }
-
-    public UserReview(UniUser user, Review review) {
-        this.user = user;
-        this.review = review;
-    }
-
-    public UniUser getUser() {
-        return user;
-    }
-
-    public void setUser(UniUser user) {
-        this.user = user;
-    }
-
-    public Review getReview() {
-        return review;
-    }
-
-    public void setReview(Review review) {
-        this.review = review;
-    }
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserReview implements Serializable {
+    int userId;
+    int reviewId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserReview that = (UserReview) o;
-        return Objects.equals(id, that.id) && Objects.equals(user, that.user) && Objects.equals(review, that.review);
+        return userId == that.userId && reviewId == that.reviewId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, review);
+        return Objects.hash(userId, reviewId);
     }
 }
