@@ -1,5 +1,6 @@
 package com.rateuni.backend.services.business_logic;
 
+import com.google.cloud.firestore.DocumentReference;
 import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.link_models.ReviewRequest;
 import com.rateuni.backend.models.link_models.UserRequest;
@@ -8,7 +9,9 @@ import com.rateuni.backend.models.request_response.request.UserRequestProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -63,26 +66,39 @@ public class RequestService extends BaseService {
                     .toObjects(UserRequest.class)
                     .get(0);
 
-            if (Objects.equals(userRequestProcess.getStatus(), "approved")) {
-                userRequest.setApproved(true);
-                userRequest.setStatus("approved");
-                UniUser user = userService.getUser(userRequestProcess.getUserId());
-                user.setApproved(true);
-                firestore
-                        .collection(CollectionsNames.USERS_COLLECTION_NAME)
-                        .add(user);
+            DocumentReference userRequestDocumentReference = firestore
+                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
+                    .whereEqualTo("requestId", userRequestProcess.getRequestId())
+                    .get()
+                    .get()
+                    .getDocuments()
+                    .getFirst()
+                    .getReference();
+
+            DocumentReference userDocumentReference = firestore
+                    .collection(CollectionsNames.USERS_COLLECTION_NAME)
+                    .whereEqualTo("id", userRequestProcess.getUserId())
+                    .get()
+                    .get()
+                    .getDocuments()
+                    .getFirst()
+                    .getReference();
+
+            if (Objects.equals(userRequestProcess.getStatus(), "потвърди")) {
+                Map<String, Object> status = new HashMap<>();
+                status.put("approved", true);
+                userDocumentReference.set(status);
+                userRequestDocumentReference.set(status);
 
                 userService.createUniDataForUser(userRequestProcess.getUserId(),
                         userRequest.getUniversity(), userRequest.getFaculty(), userRequest.getDegree());
             }
-            else if (Objects.equals(userRequestProcess.getStatus(), "rejected")) {
-                userRequest.setApproved(false);
-                userRequest.setStatus("rejected");
+            else if (Objects.equals(userRequestProcess.getStatus(), "отхвърли")) {
+                Map<String, Object> status = new HashMap<>();
+                status.put("approved", false);
+                userDocumentReference.set(status);
+                userRequestDocumentReference.set(status);
             }
-
-            firestore
-                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
-                    .add(userRequest);
         }
 
         return "Requests processed successfully";
@@ -98,18 +114,42 @@ public class RequestService extends BaseService {
                     .toObjects(ReviewRequest.class)
                     .get(0);
 
-            if (Objects.equals(reviewRequestProcess.getStatus(), "approved")) {
-                reviewRequest.setApproved(true);
-                reviewRequest.setStatus(reviewRequestProcess.getStatus());
-            }
-            else if (Objects.equals(reviewRequestProcess.getStatus(), "rejected")) {
-                reviewRequest.setApproved(false);
-                reviewRequest.setStatus(reviewRequestProcess.getStatus());
-            }
+            DocumentReference reviewRequestDocumentReference = firestore
+                    .collection(CollectionsNames.REVIEWS_REQUESTS_COLLECTION_NAME)
+                    .whereEqualTo("reviewId", reviewRequestProcess.getReviewId())
+                    .get()
+                    .get()
+                    .getDocuments()
+                    .getFirst()
+                    .getReference();
 
-            firestore
-                    .collection(CollectionsNames.USERS_REQUESTS_COLLECTION_NAME)
-                    .add(reviewRequest);
+            DocumentReference reivewDocumentReference = firestore
+                    .collection(CollectionsNames.REVIEWS_COLLECTION_NAME)
+                    .whereEqualTo("id", reviewRequestProcess.getReviewId())
+                    .get()
+                    .get()
+                    .getDocuments()
+                    .getFirst()
+                    .getReference();
+
+            if (Objects.equals(reviewRequestProcess.getStatus(), "потвърди")) {
+                Map<String, Object> status = new HashMap<>();
+                status.put("approved", true);
+                reviewRequestDocumentReference.set(status);
+
+                status.remove("approved");
+                status.put("visible", true);
+                reivewDocumentReference.set(status);
+            }
+            else if (Objects.equals(reviewRequestProcess.getStatus(), "отхвърли")) {
+                Map<String, Object> status = new HashMap<>();
+                status.put("approved", false);
+                reviewRequestDocumentReference.set(status);
+
+                status.remove("approved");
+                status.put("visible", false);
+                reivewDocumentReference.set(status);
+            }
         }
 
         return "Review requests processed successfully";

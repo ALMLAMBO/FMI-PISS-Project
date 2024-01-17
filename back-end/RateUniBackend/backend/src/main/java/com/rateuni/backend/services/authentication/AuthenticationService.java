@@ -1,5 +1,6 @@
 package com.rateuni.backend.services.authentication;
 
+import com.rateuni.backend.models.base_models.UniUser;
 import com.rateuni.backend.models.request_response.request.LoginRequest;
 import com.rateuni.backend.models.request_response.request.RefreshTokenRequest;
 import com.rateuni.backend.models.request_response.request.RegisterRequest;
@@ -47,7 +48,10 @@ public class AuthenticationService {
         );
 
         try {
-            UserDetails user = userService.getUserByEmail(loginRequest.getEmail());
+            UniUser user = (UniUser) userService.getUserByEmail(loginRequest.getEmail());
+            if(!user.isApproved()) {
+                return new JwtTokenResponse();
+            }
             String jwtToken = jwtService.generateToken(user);
             String jwtRefreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
