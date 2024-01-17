@@ -5,6 +5,7 @@ import com.rateuni.backend.models.base_models.Review;
 import com.rateuni.backend.models.link_models.ReviewDiscipline;
 import com.rateuni.backend.models.link_models.UserReview;
 import com.rateuni.backend.models.request_response.request.CreateReviewRequest;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,6 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class ReviewService extends BaseService {
     private DisciplineService disciplineService;
-
     public ReviewService() {
         disciplineService = new DisciplineService();
     }
@@ -66,6 +66,8 @@ public class ReviewService extends BaseService {
             request.getReview().setId((int) prevId);
             updateId(CollectionsNames.REVIEWS_COLLECTION_NAME);
             request.getReview().setVisible(false);
+            new UserService().getUser(request.getUserId());
+            disciplineService.getDiscipline(request.getDisciplineId());
         }
         catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
