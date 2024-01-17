@@ -6,19 +6,40 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="admin_page_requests.js"></script>
     <link rel="stylesheet" type="text/css" href="/style_tegu.css"/>
+    <link rel="stylesheet" type="text/css" href="admin_page.css"/>
 </head>
 <body>
-<nav id="menu">
-    <ul id="menuList"></ul>
-</nav>
-<div id="users_column">
-    <div id="users_pending"></div>
-    <input type="submit" value="Потвърди" id="user_statuses">
-</div>
+    <div class="header">
+        <div id="Header_Icon"></div>
+        <div class="upper_buttons">
+            <div class="upper_button" id="NewReview_Button">Нова рецензия</div>
+            <div class="upper_button" id="Profile_Button">Профил</div>
+            <div class="upper_button" id="Exit_Button">Изход</div>
+        </div>
+    </div>
 
-<div id="reviews_column">
-    <div id="reviews_pending"></div>
-    <input type="submit" value="Потвърди" id="review_statuses">
-</div>
+    <div class="main-container">
+        <div id="users_column">
+            <div id="users_pending"></div>
+            <input type="submit" value="Потвърди" id="user_statuses">
+        </div>
+    
+        <div id="reviews_column">
+            <div id="reviews_pending"></div>
+            <input type="submit" value="Потвърди" id="review_statuses">
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="icon_Container">
+            <div id="Footer_Icon"></div>
+        </div>
+        <div class="footer_links">
+            <div class="footer_link">>> За нас</div>
+            <div class="footer_link">>> Информация за Университета</div>
+            <div class="footer_link">>> Включване на Университет</div>
+        </div>
+    </footer>
 </body>
 </html>

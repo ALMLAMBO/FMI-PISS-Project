@@ -1,0 +1,159 @@
+:root {
+    --blue: #2B32FB;
+    --gray: #A1A1A1;
+    --pink: #B4B7FC;
+    --pinkish: rgba(180, 182, 252, 0.646);
+    --grayish: #D8D8DB;
+    --selected: #d8d8dba7;
+}
+
+div {
+    cursor: default;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--blue);
+
+    width: 100%;
+    height: fit-content;
+}
+
+#Header_Icon {
+    width: 70px;
+    height: 50px;
+    
+    background-color: white;
+    background-image: url(logo.png);
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+}
+.upper_buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.upper_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    border: 1px solid white;
+
+    width: fit-content;
+    height: 50px;
+}
+
+#NewReview_Button {
+    width: 125px;
+    cursor: pointer;
+}
+
+#Profile_Button{
+    width: 100px;
+    cursor: pointer;
+}
+
+#Exit_Button{
+    width: 100px;
+    cursor: pointer;
+}
+
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.user-card {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--blue);
+
+    border-radius: 10px;
+
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-card p {
+    width: 70%;
+
+    justify-content: start;
+
+    background-color: var(--grayish);
+
+    border-radius: 8px;
+}
+
+
+
+
+
+
+.footer {
+    width: 100%;
+
+    background-color: var(--blue);
+
+}
+
+.icon_Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#Footer_Icon {
+    width: 100px;
+    height: 71px;
+    
+    background-color: white;
+    background-image: url(logo.png);
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+}
+
+.footer_links {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    height: 50px;
+}
+
+.footer_link {
+    margin-left: 20px;
+    margin-right: 20px;
+
+    color: white;
+    cursor: pointer;
+}
+
