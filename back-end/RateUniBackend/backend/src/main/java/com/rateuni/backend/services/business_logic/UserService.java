@@ -156,6 +156,7 @@ public class UserService extends BaseService {
             userRequest.setUniversity(university.getName());
             userRequest.setFaculty(faculty.getFacultyName());
             userRequest.setDegree(degree.getTitle());
+            userRequest.setFacultyNumber(user.getFacultyNumber());
             userRequest.setStatus("pending");
             userRequest.setApproved(false);
         }

@@ -49,10 +49,13 @@ public class AuthenticationService {
 
         try {
             UniUser user = (UniUser) userService.getUserByEmail(loginRequest.getEmail());
+            if(!user.isApproved()) {
+                return new JwtTokenResponse();
+            }
             String jwtToken = jwtService.generateToken(user);
             String jwtRefreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
-            return new JwtTokenResponse(jwtToken, jwtRefreshToken, user.getId());
+            return new JwtTokenResponse(jwtToken, jwtRefreshToken);
         }
         catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
