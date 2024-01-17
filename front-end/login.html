@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <style>
         :root {
@@ -246,7 +246,6 @@
 <body>
     <div class="header">
         <div id="Header_Icon"></div>
-        <div id="Login_Button">Вход</div>
     </div>
 
     <div class="login_container">
@@ -300,16 +299,34 @@
         let userName = "", userPass = "";
 
         document.getElementById('login_button').addEventListener('click', function() {
-            username = document.getElementsByName('username')[0].value;
+            email = document.getElementsByName('username')[0].value;
             password = document.getElementsByName('password')[0].value;
-
-            if(username === 'test' && password === 'test')
-            {
-                sessionStorage.setItem('authenticated', 'true');
-                alert('Login successful!');
+            const formData={
+                email:email,
+                password:password
             }
-            else 
-                alert('Invalid username or password!');
+            var succsecfull =false;
+            var token1="",token2="";
+            $.ajax({
+                url: 'http://localhost:8080/api/auth/login',
+                type: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+                data: JSON.stringify(formData),
+                success:function (data){
+                    sessionStorage.setItem('authenticated', 'true');
+                    sessionStorage.setItem('token', data.token);
+                    sessionStorage.setItem('refreshToken',data.refreshToken);
+                    if(email==='admin@admin.com') sessionStorage.setItem('admin',true);
+                    else sessionStorage.setItem('admin',false);
+                }
+            });
+
+            if(sessionStorage.getItem('admin')){
+                window.location.href = "admin_page.html";
+            }
         });
     </script>
 </body>

@@ -11,16 +11,14 @@ import com.rateuni.backend.services.business_logic.ReviewService;
 import com.rateuni.backend.services.business_logic.UniversityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/home")
+@CrossOrigin
 @RequiredArgsConstructor
 public class HomeController {
     private final ReviewService reviewService;
@@ -38,13 +36,13 @@ public class HomeController {
         return ResponseEntity.ok(universityService.getAllUniversities());
     }
 
-    @GetMapping("/get-faculties")
-    public ResponseEntity<List<Faculty>> getFacultiesForUniversity(@RequestBody UniversityIdRequest request) throws ExecutionException, InterruptedException {
-        return ResponseEntity.ok(facultyService.getAllFacultiesForUniversity(request.getId()));
+    @GetMapping("/get-faculties/{id}")
+    public ResponseEntity<List<Faculty>> getFacultiesForUniversity(@PathVariable int id) throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok(facultyService.getAllFacultiesForUniversity(id));
     }
 
-    @GetMapping("/get-degrees")
-    public ResponseEntity<List<Degree>> getDegreesForFaculty(@RequestBody UniversityIdRequest request) throws ExecutionException, InterruptedException {
-        return ResponseEntity.ok(degreeService.getAllDegreesForFaculty(request.getId()));
+    @GetMapping("/get-degrees/{id}")
+    public ResponseEntity<List<Degree>> getDegreesForFaculty(@PathVariable int id) throws ExecutionException, InterruptedException {
+        return ResponseEntity.ok(degreeService.getAllDegreesForFaculty(id));
     }
 }

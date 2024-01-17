@@ -9,13 +9,11 @@ import com.rateuni.backend.services.authentication.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthenticationService authenticationService;
@@ -25,13 +23,13 @@ public class AuthController {
         return ResponseEntity.ok(authenticationService.register(registerRequest));
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<JwtTokenResponse> register(@RequestBody LoginRequest loginRequest) {
+    @PostMapping("/login")
+    public ResponseEntity<JwtTokenResponse> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(authenticationService.login(loginRequest));
     }
 
     @GetMapping("/refresh")
-    public ResponseEntity<JwtAuthenticationResponse> register(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
     }
 }

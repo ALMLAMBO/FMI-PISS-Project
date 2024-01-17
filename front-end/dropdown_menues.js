@@ -1,6 +1,5 @@
 $(document).ready(function () {
     let universityDropdown = $('#university-dropdown');
-
     let facultyDropdown = $('#faculty-dropdown');
     let degreeDropdown = $('#degree-dropdown');
 
@@ -18,12 +17,11 @@ $(document).ready(function () {
     degreeDropdown.prop('selectedIndex', 0);
 
     const universityUrl = 'http://localhost:8080/api/home/get-universities'; // Replace with the actual URL for universities JSON
-    const facultyUrl = 'http://localhost:8080/api/home/get-faculties'; // Replace with the actual URL for faculties JSON
-    const degreeURL = 'http://localhost:8080/api/home/get-degrees';
+
 // Populate university dropdown
     $.getJSON(universityUrl)
         .done(function (data) {
-            $.each(data.universities, function (key, entry) {
+            $.each(data, function (key, entry) {
                 universityDropdown.append($('<option></option>').attr('value', entry.id).text(entry.name));
             });
         })
@@ -35,34 +33,28 @@ $(document).ready(function () {
 // Handle university dropdown change event
     universityDropdown.change(function () {
         const selectedUniversityId = $(this).val();
+        const facultyUrl = 'http://localhost:8080/api/home/get-faculties'; // Replace with the actual URL for faculties JSON
 
-        // Clear faculty and degree dropdowns
-        facultyDropdown.empty();
-        degreeDropdown.empty();
-
-        facultyDropdown.append('<option selected="true" disabled>Факултет</option>');
-        facultyDropdown.prop('selectedIndex', 0);
-
-        degreeDropdown.append('<option selected="true" disabled>Дисциплина</option>');
-        degreeDropdown.prop('selectedIndex', 0);
-
-        // Populate faculty dropdown based on selected university
-        $.getJSON(facultyUrl)
+        const facultyJson=JSON.stringify({id: parseInt(selectedUniversityId)});
+        //console.log(facultyJson);
+        $.get(facultyUrl + '/' + selectedUniversityId)
             .done(function (data) {
-                const faculties = data.faculties.filter(faculty => faculty.uni_id == selectedUniversityId);
+                console.log('Success:', data);
+                const faculties = data;
+                faculties.sort(entry=>entry.id);
                 $.each(faculties, function (key, entry) {
                     facultyDropdown.append($('<option></option>').attr('value', entry.id).text(entry.facultyName));
                 });
             })
             .fail(function (jqxhr, textStatus, error) {
-                const err = textStatus + ', ' + error;
-                console.error('Error loading faculty JSON file: ' + err);
+                console.error('Error:', error);
             });
     });
 
 // Handle faculty dropdown change event
     facultyDropdown.change(function () {
         const selectedFacultyId = $(this).val();
+        const degreeURL = 'http://localhost:8080/api/home/get-degrees';
 
         // Clear degree dropdown
         degreeDropdown.empty();
@@ -70,17 +62,17 @@ $(document).ready(function () {
         degreeDropdown.append('<option selected="true" disabled>Дисциплина</option>');
         degreeDropdown.prop('selectedIndex', 0);
 
-        // Populate degree dropdown based on selected faculty
-        $.getJSON(degreeURL) // Replace with the actual URL for degrees JSON
+
+        $.get(degreeURL + '/' + selectedFacultyId)
             .done(function (data) {
-                const degrees = data.faculty_degrees.filter(item => item.faculty_id == selectedFacultyId);
+                console.log('Success:', data);
+                const degrees = data;
                 $.each(degrees, function (key, entry) {
                     degreeDropdown.append($('<option></option>').attr('value', entry.id).text(entry.title));
                 });
             })
             .fail(function (jqxhr, textStatus, error) {
-                const err = textStatus + ', ' + error;
-                console.error('Error loading degree JSON file: ' + err);
+                console.error('Error:', error);
             });
     });
 });

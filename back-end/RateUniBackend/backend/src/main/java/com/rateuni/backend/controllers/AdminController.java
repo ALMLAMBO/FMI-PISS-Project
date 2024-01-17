@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AdminController {
     private final RequestService requestService;
 
