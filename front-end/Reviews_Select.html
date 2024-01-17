@@ -150,6 +150,48 @@
                 3,
                 1
             ),
+            new Review(
+                "Софт Уни2",
+                "Темпорару2",
+                4,
+                "Божани2",
+                4,
+                "София2",
+                4,
+                "Very helpful course2",
+                { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
+                2,
+                3,
+                1
+            ),
+            new Review(
+                "Софт Уни3",
+                "Темпорару3",
+                4,
+                "Божани3",
+                4,
+                "София3",
+                4,
+                "Very helpful course3",
+                { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
+                2,
+                3,
+                1
+            ),
+            new Review(
+                "Софт Уни4",
+                "Темпорару4",
+                4,
+                "Божани4",
+                4,
+                "София4",
+                4,
+                "Very helpful course4",
+                { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
+                2,
+                3,
+                1
+            ),
         ];
 
         function generateReviewHTML(review) {
@@ -222,17 +264,20 @@
                     </div>
                     </div>`;
         }
+        
         function addReviewsToDOM() {
-            const reviewsContainer = document.querySelector('.reviews'); // Make sure this element exists in your HTML
+            const reviewsContainer = document.querySelector('.reviews');
+            reviewsContainer.innerHTML = '';
+             // Make sure this element exists in your HTML
             reviews.forEach(review => {
             const reviewHTML = generateReviewHTML(review);
             reviewsContainer.innerHTML += reviewHTML;
             });
         }
 
-        addReviewsToDOM();
-        addReviewsToDOM();
-        addReviewsToDOM();
-
+        document.addEventListener('DOMContentLoaded', () => 
+        {
+            addReviewsToDOM();
+        });
     </script>
 </body>
