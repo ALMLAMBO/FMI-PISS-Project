@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+
+
+    <style>
+        :root {
+            --blue: #2B32FB;
+            --gray: #A1A1A1;
+            --pink: #B4B7FC;
+            --grayish: #D8D8DB;
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: var(--blue);
+
+            width: 100%;
+            height: fit-content;
+        }
+
+        #Header_Icon {
+            width: 70px;
+            height: 50px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            cursor: default;
+        }
+
+        #Login_Button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+
+            border: 1px solid white;
+
+            width: 50px;
+            height: 50px;
+            cursor:pointer;
+        }
+
+        .login_container {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            height: 75vh;
+
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .login_title {
+            display: flex;
+            flex-direction: column;
+            height: 80px;
+
+            justify-content:space-evenly;
+            align-items: center;
+        }
+
+        .login_text {
+            font-size: 30px;
+            text-align: center;
+            cursor: default;
+        }
+
+        .login_description {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray);
+            width: 60%;
+            
+            cursor:default;
+        }
+
+        .content_container_1 {
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--pink);
+            width: 40%;
+            height: 250px;
+            border-radius: 20px;
+            cursor: default;
+        }
+        
+        .content_container_2 {
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--pink);
+            width: 40%;
+            height: 450px;
+            border-radius: 20px;
+        }
+
+
+        .content_title {
+            display: flex;
+            text-align: center;
+            font-size: 20px;
+            height: 100px;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content_inputs {
+            display: flex;
+            flex-direction: column;
+
+            justify-content: space-around;
+            align-items: center;
+
+            height: 70%;
+        }
+
+        .login_input {
+            margin-bottom: 2vh;
+            width: 80%;
+            height: 30px;
+            background-color: var(--grayish);
+            border-radius: 5px;
+        }
+        
+
+
+        .upload_field {
+            width: 70%;
+            height: 10vh;
+
+            background-color: aliceblue;
+        }
+
+
+        .login_final {
+            display: flex;
+            flex-direction: column;
+
+            width: 40%;
+            height: 7vh;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .terms_and_conditions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 80%;
+        }
+
+        #Terms_button {
+            width: 30px;
+            height: 30px;
+
+            background-color: red;
+        }
+
+
+        .terms_text {
+            width: 63%;
+        }
+
+
+        #login_button {
+            background-color: var(--blue);
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 10vh;
+            text-align: center;
+            cursor:pointer;
+        }
+
+        .footer {
+            width: 100%;
+
+            background-color: var(--blue);
+
+        }
+
+        .icon_Container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #Footer_Icon {
+            width: 100px;
+            height: 71px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
+
+        .footer_links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .footer_link {
+            margin-left: 20px;
+            margin-right: 20px;
+
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div id="Header_Icon"></div>
+        <div id="Login_Button">Вход</div>
+    </div>
+
+    <div class="login_container">
+        <div class="login_title">
+            <div class="login_text">Влез в профила си</div>
+            <div class="login_description">Влез в системата и си качи мнението като твоите колеги!</div>
+        </div>
+
+
+        <div class="content_container_1">
+            <div class="content_title">Входни данни</div>
+            <div class="content_inputs">
+                <input class="login_input" type="text" name="username" placeholder ="Потребителско име">
+                <input class="login_input" type="password" name="password" placeholder ="Парола">
+            </div>
+        </div>
+        
+        <div class="login_final">
+            <div id="login_button">Вход</div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="icon_Container">
+            <div id="Footer_Icon"></div>
+        </div>
+        <div class="footer_links">
+            <div class="footer_link">>> За нас</div>
+            <div class="footer_link">>> Информация за Университета</div>
+            <div class="footer_link">>> Включване на Университет</div>            
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        function updateLabel(dropdown, labelId) {
+          var selectedOption = dropdown.options[dropdown.selectedIndex].text;
+          document.getElementById(labelId).innerText = selectedOption + ':';
+        }
+    </script>
+
+    <script>
+        const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+
+        if (isAuthenticated) {
+            document.getElementById('loginForm').style.display = 'none';
+            alert('User is already authenticated!');
+        }
+
+        let userName = "", userPass = "";
+
+        document.getElementById('login_button').addEventListener('click', function() {
+            username = document.getElementsByName('username')[0].value;
+            password = document.getElementsByName('password')[0].value;
+
+            if(username === 'test' && password === 'test')
+            {
+                sessionStorage.setItem('authenticated', 'true');
+                alert('Login successful!');
+            }
+            else 
+                alert('Invalid username or password!');
+        });
+    </script>
+</body>

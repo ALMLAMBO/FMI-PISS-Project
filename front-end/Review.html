@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нова рецензия</title>
+
+
+    <style>
+        :root {
+            --blue: #2B32FB;
+            --gray: #A1A1A1;
+            --pink: #B4B7FC;
+            --grayish: #D8D8DB;
+            --selected: #d8d8dba7;
+        }
+
+        div {
+            cursor: default;
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: var(--blue);
+
+            width: 100%;
+            height: fit-content;
+        }
+
+        #Header_Icon {
+            width: 70px;
+            height: 50px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
+        .upper_buttons {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .upper_button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+
+            border: 1px solid white;
+
+            width: fit-content;
+            height: 50px;
+        }
+
+        #NewReview_Button {
+            width: 125px;
+            cursor: pointer;
+        }
+
+        #Profile_Button{
+            width: 100px;
+            cursor: pointer;
+        }
+
+        #Exit_Button{
+            width: 100px;
+            cursor: pointer;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+            height: 80px;
+
+            justify-content:space-evenly;
+            align-items: center;
+        }
+
+        .page-text {
+            font-size: 30px;
+            text-align: center;
+        }
+        
+        .container {
+            margin-top: 40px;
+            display: flex;
+            background-color: var(--blue);
+            flex-direction: column;
+            width: 100vh;
+        }
+
+        .container-row {
+            display: flex;
+            flex-direction: row;
+
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .eval_scores {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            width: 45%;
+        }
+
+        .eval_score {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+
+            background-color: var(--grayish);
+        }
+
+        .eval-input {
+            background-color: var(--grayish);
+            border-radius: 5px;
+            height: 40px;
+
+            width: 35%;
+        }
+
+        .evaluation {
+            display: flex;
+
+            flex-direction: row;
+
+            width: 40%;
+
+            justify-content: space-between;
+        }
+
+        .eval_name {
+            font-size: 20px;
+            color: white;
+        }
+
+        #course-container {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .container-column {
+            width: 25%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .course-eval-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .course-eval_scores {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            width: 100%;
+
+        }
+
+        .evaluation {
+            justify-content: space-between;
+        }
+
+        .container-title {
+            justify-content: center;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            width: 100%;
+        }
+
+
+        .container-inputs {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .container-row {
+            display: flex;
+            flex-direction: row;
+            height: 75px;
+        }
+
+        .extras-container {
+            border: black 1px solid;
+            display: flex;
+            font-size: 15px;
+            font-weight: bold;
+
+            background-color: var(--grayish);
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            border-radius: 8px;
+            
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container-extras {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-comment {
+            width: 100%;
+            height: 200px;
+        }
+
+        .input-section {
+            width: 70%;
+            border-radius: 3px;
+        }
+
+
+        .register_final {
+            width: 250px;
+            height: 30px;
+            background-color: var(--blue);
+            border-radius: 4px;
+            color: white;
+            font-size: 25px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #sendReview{
+            cursor: pointer;
+        }
+
+        .footer {
+            width: 100%;
+
+            background-color: var(--blue);
+
+        }
+
+        .icon_Container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #Footer_Icon {
+            width: 100px;
+            height: 71px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
+
+        .footer_links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+            height: 50px;
+        }
+
+        .footer_link {
+            margin-left: 20px;
+            margin-right: 20px;
+
+            color: white;
+            cursor: pointer;
+        }
+
+        .eval_score.selected {
+            background-color: var(--selected);
+        }
+
+        .selected {
+            background-color: var(--selected);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div id="Header_Icon"></div>
+        <div class="upper_buttons">
+            <div class="upper_button" id="NewReview_Button">Нова рецензия</div>
+            <div class="upper_button" id="Profile_Button">Профил</div>
+            <div class="upper_button" id="Exit_Button">Изход</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="page-title">
+            <div class="page-text">Нова рецензия</div>
+        </div>
+
+        <div class="container" id="teacher-container">
+            <div class="container-row">
+                <input class="eval-input" type="text" name="course-name" placeholder ="Име на Курс">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на курса:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-row">
+                <input class="eval-input" type="text" name="teacher-name" placeholder ="Име на Преподавател">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на преподавател:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-row">
+                <input class="eval-input" type="text" name="assistant-name" placeholder ="Име на Асистент">
+                <div class="evaluation">
+                    <div class="eval_name">Оценка на асистент:</div>
+                    <div class="eval_scores">
+                        <div class="eval_score">1</div>
+                        <div class="eval_score">2</div>
+                        <div class="eval_score">3</div>
+                        <div class="eval_score">4</div>
+                        <div class="eval_score">5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="container" id="course-container">
+            <div class="container-column">
+                <div class="course-eval-name">Сложност</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
+            </div>
+            <div class="container-column">
+                <div class="course-eval-name">Полезност</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
+            </div>
+            <div class="container-column">
+                <div class="course-eval-name">Заетост</div>
+                <div class="course-eval_scores">
+                    <div class="eval_score">1</div>
+                    <div class="eval_score">2</div>
+                    <div class="eval_score">3</div>
+                    <div class="eval_score">4</div>
+                    <div class="eval_score">5</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container" id="container-extras">
+            <div class="container-title">Дисциплината има:</div>
+            <div class="container-inputs">
+                <div class="container-row">
+                    <div class="extras-container" id="extra-exam">Изпит</div>
+                    <div class="extras-container" id="extra-project">Проект</div>
+                    <div class="extras-container" id="extra-exams">Контролни</div>
+                    <div class="extras-container" id="extra-homeworks">Домашни</div>
+                </div>
+                <div class="container-row">
+                    <div class="extras-container" id="extra-online-classes">Онлайн часове</div>
+                    <div class="extras-container" id="extra-books">Учебници</div>
+                    <div class="extras-container" id="extra-presentations">Презентации</div>
+                    <div class="extras-container" id="extra-more-materials">Допълнителни материали</div>
+                </div>
+            </div>
+            <div class="input-section">
+                <textarea class="input-comment" name="text" placeholder="Коментар"></textarea>
+            </div>
+        </div>
+        
+        <div class="register_final">
+            <div id="sendReview">Качване на рецензия</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="icon_Container">
+            <div id="Footer_Icon"></div>
+        </div>
+        <div class="footer_links">
+            <div class="footer_link">>> За нас</div>
+            <div class="footer_link">>> Информация за Университета</div>
+            <div class="footer_link">>> Включване на Университет</div>            
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        function updateLabel(dropdown, labelId) {
+          var selectedOption = dropdown.options[dropdown.selectedIndex].text;
+          document.getElementById(labelId).innerText = selectedOption + ':';
+        }
+    </script>
+
+    <script>
+        let course_name = "", teacher_name = "", assistant_name = "", course_score = 0, teacher_score = 0, assitant_score = 0, difficulty = 0, usefullness = 0, busyness = 0;
+        const selectionStatus = {
+            "extra-exam": false,
+            "extra-project": false,
+            "extra-exams": false,
+            "extra-homeworks": false,
+            "extra-online-classes": false,
+            "extra-books": false,
+            "extra-presentations": false,
+            "extra-more-materials": false
+        };
+
+        document.getElementById("sendReview").addEventListener('click', function() {
+            course_name = document.getElementsByName('course-name')[0].value;
+            teacher_name = document.getElementsByName('teacher-name')[0].value;
+            assistant_name = document.getElementsByName('assistant-name')[0].value;
+
+            console.log(course_name + " - " + course_score + "\n" + teacher_name + " - " + teacher_score + "\n" + assistant_name + " - " + assitant_score + "\n" + "Difficilty: " + difficulty + "\nUsefullness: " + usefullness + "\nBusyness: " + busyness + "\n");
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectedScores = {
+                evalScores: {},
+                courseEvalScores: {}
+            };
+
+            function updateSelection(container, selectedElement) {
+                const prevSelected = container.querySelector('.eval_score.selected');
+                if (prevSelected) {
+                    prevSelected.classList.remove('selected');
+                }
+
+                selectedElement.classList.add('selected');
+
+                const containerType = container.classList.contains('eval_scores') ? 'evalScores' : 'courseEvalScores';
+                const selectedNumber = selectedElement.textContent.trim();
+                selectedScores[containerType][container.getAttribute('id')] = selectedNumber;
+            }
+
+            // Add click event listeners to each eval_score element
+            document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
+                element.addEventListener('click', function() {
+                    const container = this.closest('.eval_scores, .course-eval_scores');
+                    updateSelection(container, this);
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function toggleSelection(element) {
+                const id = element.id;
+                if (selectionStatus[id]) {
+                    element.classList.remove('selected');
+                } else {
+                    element.classList.add('selected');
+                }
+                selectionStatus[id] = !selectionStatus[id];
+            }
+
+            const extras = document.querySelectorAll('.extras-container');
+            extras.forEach(extra => {
+                extra.addEventListener('click', function() {
+                    toggleSelection(this);
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to update the score variables based on selection
+            function updateScore(type, score) {
+                switch (type) {
+                    case 'course':
+                        course_score = score;
+                        break;
+                    case 'teacher':
+                        teacher_score = score;
+                        break;
+                    case 'assistant':
+                        assitant_score = score;
+                        break;
+                    case 'difficulty':
+                        difficulty = score;
+                        break;
+                    case 'usefulness':
+                        usefullness = score;
+                        break;
+                    case 'busyness':
+                        busyness = score;
+                        break;
+                }
+            }
+
+            // Add click event listeners to each eval_score element
+            document.querySelectorAll('.eval_scores .eval_score, .course-eval_scores .eval_score').forEach(element => {
+                element.addEventListener('click', function() {
+                    const container = this.closest('.container-row, .container-column');
+                    const score = parseInt(this.textContent.trim());
+                    
+                    // Determine the type of evaluation based on the container's class or id
+                    if (container.classList.contains('container-row')) {
+                        const inputName = container.querySelector('.eval-input').name;
+                        if (inputName.includes('course')) updateScore('course', score);
+                        else if (inputName.includes('teacher')) updateScore('teacher', score);
+                        else if (inputName.includes('assistant')) updateScore('assistant', score);
+                    } else if (container.classList.contains('container-column')) {
+                        const evalName = container.querySelector('.course-eval-name').textContent.trim();
+                        if (evalName === 'Сложност') updateScore('difficulty', score);
+                        else if (evalName === 'Полезност') updateScore('usefulness', score);
+                        else if (evalName === 'Заетост') updateScore('busyness', score);
+                    }
+                });
+            });
+        });
+
+
+
+
+
+
+    </script>
+</body>

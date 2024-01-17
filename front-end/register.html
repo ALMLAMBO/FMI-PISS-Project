@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+
+
+    <style>
+        :root {
+            --blue: #2B32FB;
+            --gray: #A1A1A1;
+            --pink: #B4B7FC;
+            --grayish: #D8D8DB;
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        .header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: var(--blue);
+
+            width: 100%;
+            height: fit-content;
+        }
+
+        #Header_Icon {
+            width: 70px;
+            height: 50px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
+
+        #Login_Button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+
+            border: 1px solid white;
+
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .register_container {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            height: 75vh;
+
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .register_title {
+            display: flex;
+            flex-direction: column;
+            height: 80px;
+
+            justify-content:space-evenly;
+            align-items: center;
+        }
+
+        .register_text {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .register_description {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray);
+            width: 60%;
+        }
+
+        .content_container_1 {
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--pink);
+            width: 40%;
+            height: 250px;
+            border-radius: 20px;
+        }
+        
+        .content_container_2 {
+            display: flex;
+            flex-direction: column;
+
+            background-color: var(--pink);
+            width: 40%;
+            height: 450px;
+            border-radius: 20px;
+        }
+
+
+        .content_title {
+            display: flex;
+            text-align: center;
+            font-size: 20px;
+            height: 100px;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content_inputs {
+            display: flex;
+            flex-direction: column;
+
+            justify-content: space-around;
+            align-items: center;
+
+            height: 70%;
+        }
+
+        .register_input {
+            margin-bottom: 2vh;
+            width: 80%;
+            height: 30px;
+            background-color: var(--grayish);
+            border-radius: 5px;
+        }
+        
+
+
+        .upload_field {
+            width: 70%;
+            height: 10vh;
+
+            background-color: aliceblue;
+        }
+
+
+        .register_final {
+            display: flex;
+            flex-direction: column;
+
+            width: 40%;
+            height: 7vh;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .terms_and_conditions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 80%;
+        }
+
+        #Terms_button {
+            width: 30px;
+            height: 30px;
+
+            background-color: red;
+        }
+
+
+        .terms_text {
+            width: 63%;
+        }
+        div {
+            cursor: default;
+        }
+
+        #Register_button {
+            background-color: var(--blue);
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 10vh;
+            text-align: center;
+
+            cursor: pointer;
+        }
+
+        .footer {
+            width: 100%;
+
+            background-color: var(--blue);
+
+        }
+
+        .icon_Container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #Footer_Icon {
+            width: 100px;
+            height: 71px;
+            
+            background-color: white;
+            background-image: url(logo.png);
+            background-size:contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            
+        }
+
+        .footer_links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+            height: 50px;
+
+        }
+
+        .footer_link {
+            margin-left: 20px;
+            margin-right: 20px;
+
+            color: white;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div id="Header_Icon"></div>
+        <div id="Login_Button">Вход</div>
+    </div>
+
+    <div class="register_container">
+        <div class="register_title">
+            <div class="register_text">Регистрирай се</div>
+            <div class="register_description">Студенти от всеки университет могат да оставят мнението си за дисциплината в него. Включи се и ти!</div>
+        </div>
+
+
+        <div class="content_container_1">
+            <div class="content_title">Данни за профила ви</div>
+            <div class="content_inputs">
+                <input class="register_input" type="text" name="username" placeholder ="Потребителско име">
+                <input class="register_input" type="text" name="email" placeholder ="Имейл">
+                <input class="register_input" type="password" name="password" placeholder ="Парола">
+                <input class="register_input" type="password" name="password_repeat" placeholder ="Поветорете паролата">
+            </div>
+        </div>
+
+        
+        <div class="content_container_2">
+            <div class="content_title">Данни за университета</div>
+            <div class="content_inputs">
+                <input class="register_input" type="text" name="facculty_number" placeholder ="Факултетен номер">
+                <div class="dropdown_container">
+                    <label id="universityLabel" for="university">University:</label>
+                    <select id="university" name="university" onchange="updateLabel(this, 'universityLabel')">
+                      <option value="" disabled selected>Select your option</option>
+                      <option value="university1">University 1</option>
+                      <option value="university2">University 2</option>
+                      <!-- Add more options here -->
+                    </select>
+                </div>
+                <div class="dropdown_container">
+                    <label id="faccultyLabel" for="facculty">Факултет:</label>
+                    <select id="facculty" name="facculty" onchange="updateLabel(this, 'faccultyLabel')">
+                      <option value="" disabled selected>Select your option</option>
+                      <option value="facculty1">Faculty 1</option>
+                      <option value="facculty2">facculty 2</option>
+                      <!-- Add more options here -->
+                    </select>
+                </div>
+                <div class="dropdown_container">
+                    <label id="specialtyLabel" for="specialty">Specialty:</label>
+                    <select id="specialty" name="specialty" onchange="updateLabel(this, 'specialtyLabel')">
+                      <option value="" disabled selected>Select your option</option>
+                      <option value="specialty1">Specialty 1</option>
+                      <option value="specialty2">Specialty 2</option>
+                      <!-- Add more options here -->
+                    </select>
+                </div>
+                <div class="idk">Снимка на документ от университета с факултетен номер:</div>
+                <input type="file" id="image-fn" name="image-fn" accept="image/png, image/jpeg"><br><br>
+            </div>
+        </div>
+        
+        <div class="register_final">
+            <div class="terms_and_conditions">
+                <input type="checkbox">
+                <div class="terms_text">Съгласен съм с общите условия за ползване, позволявам използването на предоставената информация и прегледа на данните за университета.</div>
+            </div>
+            <div id="Register_button">Регистрация</div>
+
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="icon_Container">
+            <div id="Footer_Icon"></div>
+        </div>
+        <div class="footer_links">
+            <div class="footer_link">>> За нас</div>
+            <div class="footer_link">>> Информация за Университета</div>
+            <div class="footer_link">>> Включване на Университет</div>            
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        function updateLabel(dropdown, labelId) {
+          var selectedOption = dropdown.options[dropdown.selectedIndex].text;
+          document.getElementById(labelId).innerText = selectedOption + ':';
+        }
+    </script>
+
+    <script>
+        let username, email, password, passwordRepeat, realName, fn, university, faculty, degree;
+
+        document.getElementById('Register_button').addEventListener('click', function() {
+            event.preventDefault();
+
+            const formData = {
+                username: document.getElementsByName('username')[0].value,
+                email: document.getElementsByName('email')[0].value,
+                password: document.getElementsByName('password')[0].value,
+                fn: document.getElementsByName('facculty_number')[0].value,
+                university: document.getElementById('university').value,
+                faculty: document.getElementById('facculty').value,
+                degree: document.getElementById('specialty').value,
+                image: getBase64(document.getElementById('image-fn').files[0])
+            }
+
+            fetch('/server-endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Handle success
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+
+        });
+
+        function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+                if ((encoded.length % 4) > 0) {
+                    encoded += '='.repeat(4 - (encoded.length % 4));
+                }
+                resolve(encoded);
+            };
+            reader.onerror = error => reject(error);
+        });
+    }
+    
+    </script>
+</body>
