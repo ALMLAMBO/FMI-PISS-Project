@@ -1,255 +1,38 @@
 package com.rateuni.backend.models.base_models;
 
-import com.rateuni.backend.models.link_models.ReviewDiscipline;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name = "reviews")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-
-    @Column(name = "comment")
     private String comment;
-
-    @Column(name = "published_at")
-    private Date publishedAt;
-
-    @Column(name = "status")
+    private String publishedAt;
     private String status;
-
-    @Column(name = "course_rating")
     private double courseRating;
-
-    @Column(name = "lecturer_rating")
     private double lecturerRating;
-
-    @Column(name = "assistants_rating")
     private double assistantsRating;
-
-    @Column(name = "difficulty")
     private int difficulty;
-
-    @Column(name = "usefulness")
     private int usefulness;
-
-    @Column(name = "work_load")
     private int workLoad;
-
-    @Column(name = "exam")
     private boolean hasExam;
-
-    @Column(name = "project")
     private boolean hasProject;
-
-    @Column(name = "mid_checks")
     private boolean hasMidChecks;
-
-    @Column(name = "homeworks")
     private boolean hasHomeworks;
-
-    @Column(name = "online_classes")
     private boolean hasOnlineClasses;
-
-    @Column(name = "books")
     private boolean hasBooks;
-
-    @Column(name = "presentations")
     private boolean hasPresentations;
-
-    @Column(name = "additional_materials")
     private boolean hasAdditionalMaterials;
-
-    @OneToMany(mappedBy = "review")
-    private Set<ReviewDiscipline> reviewDisciplines;
-
-    public Review() {
-    }
-
-    public Review(int id, String comment, Date publishedAt, String status,
-                  double courseRating, double lecturerRating, double assistantsRating,
-                  int difficulty, int usefulness, int workLoad, boolean hasExam,
-                  boolean hasProject, boolean hasMidChecks, boolean hasHomeworks,
-                  boolean hasOnlineClasses, boolean hasBooks, boolean hasPresentations,
-                  boolean hasAdditionalMaterials) {
-
-        this.id = id;
-        this.comment = comment;
-        this.publishedAt = publishedAt;
-        this.status = status;
-        this.courseRating = courseRating;
-        this.lecturerRating = lecturerRating;
-        this.assistantsRating = assistantsRating;
-        this.difficulty = difficulty;
-        this.usefulness = usefulness;
-        this.workLoad = workLoad;
-        this.hasExam = hasExam;
-        this.hasProject = hasProject;
-        this.hasMidChecks = hasMidChecks;
-        this.hasHomeworks = hasHomeworks;
-        this.hasOnlineClasses = hasOnlineClasses;
-        this.hasBooks = hasBooks;
-        this.hasPresentations = hasPresentations;
-        this.hasAdditionalMaterials = hasAdditionalMaterials;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Date getPublishedAt() {
-        return publishedAt;
-    }
-
-    public void setPublishedAt(Date publishedAt) {
-        this.publishedAt = publishedAt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public double getCourseRating() {
-        return courseRating;
-    }
-
-    public void setCourseRating(double courseRating) {
-        this.courseRating = courseRating;
-    }
-
-    public double getLecturerRating() {
-        return lecturerRating;
-    }
-
-    public void setLecturerRating(double lecturerRating) {
-        this.lecturerRating = lecturerRating;
-    }
-
-    public double getAssistantsRating() {
-        return assistantsRating;
-    }
-
-    public void setAssistantsRating(double assistantsRating) {
-        this.assistantsRating = assistantsRating;
-    }
-
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public int getUsefulness() {
-        return usefulness;
-    }
-
-    public void setUsefulness(int usefulness) {
-        this.usefulness = usefulness;
-    }
-
-    public int getWorkLoad() {
-        return workLoad;
-    }
-
-    public void setWorkLoad(int workLoad) {
-        this.workLoad = workLoad;
-    }
-
-    public boolean isHasExam() {
-        return hasExam;
-    }
-
-    public void setHasExam(boolean hasExam) {
-        this.hasExam = hasExam;
-    }
-
-    public boolean isHasProject() {
-        return hasProject;
-    }
-
-    public void setHasProject(boolean hasProject) {
-        this.hasProject = hasProject;
-    }
-
-    public boolean isHasMidChecks() {
-        return hasMidChecks;
-    }
-
-    public void setHasMidChecks(boolean hasMidChecks) {
-        this.hasMidChecks = hasMidChecks;
-    }
-
-    public boolean isHasHomeworks() {
-        return hasHomeworks;
-    }
-
-    public void setHasHomeworks(boolean hasHomeworks) {
-        this.hasHomeworks = hasHomeworks;
-    }
-
-    public boolean isHasOnlineClasses() {
-        return hasOnlineClasses;
-    }
-
-    public void setHasOnlineClasses(boolean hasOnlineClasses) {
-        this.hasOnlineClasses = hasOnlineClasses;
-    }
-
-    public boolean isHasBooks() {
-        return hasBooks;
-    }
-
-    public void setHasBooks(boolean hasBooks) {
-        this.hasBooks = hasBooks;
-    }
-
-    public boolean isHasPresentations() {
-        return hasPresentations;
-    }
-
-    public void setHasPresentations(boolean hasPresentations) {
-        this.hasPresentations = hasPresentations;
-    }
-
-    public boolean isHasAdditionalMaterials() {
-        return hasAdditionalMaterials;
-    }
-
-    public void setHasAdditionalMaterials(boolean hasAdditionalMaterials) {
-        this.hasAdditionalMaterials = hasAdditionalMaterials;
-    }
-
-    public Set<ReviewDiscipline> getReviewDisciplines() {
-        return reviewDisciplines;
-    }
-
-    public void setReviewDisciplines(Set<ReviewDiscipline> reviewDisciplines) {
-        this.reviewDisciplines = reviewDisciplines;
-    }
+    private boolean visible;
 
     @Override
     public boolean equals(Object o) {

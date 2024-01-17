@@ -1,60 +1,31 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Discipline;
-import com.rateuni.backend.models.base_models.Review;
-import com.rateuni.backend.models.composite_keys.ReviewDisciplineKey;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "reviews_disciplines")
-public class ReviewDiscipline {
-    @EmbeddedId
-    private ReviewDisciplineKey id;
-
-    @ManyToOne
-    @MapsId("discipline_id")
-    private Discipline discipline;
-
-    @ManyToOne
-    @MapsId("review_id")
-    private Review review;
-
-    public ReviewDiscipline() {
-    }
-
-    public ReviewDiscipline(Discipline discipline, Review review) {
-        this.discipline = discipline;
-        this.review = review;
-    }
-
-    public Discipline getDiscipline() {
-        return discipline;
-    }
-
-    public void setDiscipline(Discipline discipline) {
-        this.discipline = discipline;
-    }
-
-    public Review getReview() {
-        return review;
-    }
-
-    public void setReview(Review review) {
-        this.review = review;
-    }
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReviewDiscipline implements Serializable {
+    private int reviewId;
+    private int disciplineId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReviewDiscipline that = (ReviewDiscipline) o;
-        return Objects.equals(id, that.id) && Objects.equals(discipline, that.discipline) && Objects.equals(review, that.review);
+        return reviewId == that.reviewId && disciplineId == that.disciplineId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discipline, review);
+        return Objects.hash(reviewId, disciplineId);
     }
 }

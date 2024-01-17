@@ -1,60 +1,31 @@
 package com.rateuni.backend.models.link_models;
 
-import com.rateuni.backend.models.base_models.Faculty;
-import com.rateuni.backend.models.base_models.University;
-import com.rateuni.backend.models.composite_keys.UniversityFacultyKey;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "universities_faculties")
-public class UniversityFaculty {
-    @EmbeddedId
-    private UniversityFacultyKey id;
-
-    @ManyToOne
-    @MapsId("university_id")
-    private University university;
-
-    @ManyToOne
-    @MapsId("faculty_id")
-    private Faculty faculty;
-
-    public UniversityFaculty() {
-    }
-
-    public UniversityFaculty(University university, Faculty faculty) {
-        this.university = university;
-        this.faculty = faculty;
-    }
-
-    public University getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(University university) {
-        this.university = university;
-    }
-
-    public Faculty getfaculty() {
-        return faculty;
-    }
-
-    public void setfaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UniversityFaculty implements Serializable {
+    private int universityId;
+    private int facultyId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UniversityFaculty that = (UniversityFaculty) o;
-        return Objects.equals(id, that.id) && Objects.equals(university, that.university) && Objects.equals(faculty, that.faculty);
+        return universityId == that.universityId && facultyId == that.facultyId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, university, faculty);
+        return Objects.hash(universityId, facultyId);
     }
 }

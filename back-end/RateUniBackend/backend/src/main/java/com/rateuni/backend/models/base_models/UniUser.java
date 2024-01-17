@@ -1,93 +1,32 @@
 package com.rateuni.backend.models.base_models;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.rateuni.backend.models.link_models.UniversityUser;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table(name = "uni_users")
-public class UniUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UniUser implements UserDetails {
     private int id;
-
-    @Column(name = "fn")
     private String facultyNumber;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "username")
     private String username;
-
-    @Column(name = "password")
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    private Set<UniversityUser> universityUsers;
-
-    public UniUser() {
-    }
-
-    public UniUser(int id, String facultyNumber, String email, String username, String password) {
-        this.id = id;
-        this.facultyNumber = facultyNumber;
-        this.email = email;
-        this.username = username;
-        this.password = hashPassword();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFacultyNumber() {
-        return facultyNumber;
-    }
-
-    public void setFacultyNumber(String facultyNumber) {
-        this.facultyNumber = facultyNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<UniversityUser> getUniversityUsers() {
-        return universityUsers;
-    }
-
-    public void setUniversityUsers(Set<UniversityUser> universityUsers) {
-        this.universityUsers = universityUsers;
-    }
+    private String image;
+    private String role;
+    private boolean approved;
 
     @Override
     public boolean equals(Object o) {
@@ -106,8 +45,30 @@ public class UniUser {
         return Objects.hash(id, facultyNumber, email, username, password);
     }
 
-    private String hashPassword() {
-        return BCrypt.withDefaults()
-                .hashToString(BCrypt.SALT_LENGTH, this.password.toCharArray());
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(role));
+        return roles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
