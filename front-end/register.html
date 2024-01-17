@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="dropdown_menues.js"></script>
     <style>
         :root {
             --blue: #2B32FB;
@@ -270,32 +270,20 @@
         <div class="content_container_2">
             <div class="content_title">Данни за университета</div>
             <div class="content_inputs">
-                <input class="register_input" type="text" name="facculty_number" placeholder ="Факултетен номер">
+                <input class="register_input" type="text" name="faculty_number" placeholder ="Факултетен номер">
                 <div class="dropdown_container">
-                    <label id="universityLabel" for="university">University:</label>
-                    <select id="university" name="university" onchange="updateLabel(this, 'universityLabel')">
-                      <option value="" disabled selected>Select your option</option>
-                      <option value="university1">University 1</option>
-                      <option value="university2">University 2</option>
-                      <!-- Add more options here -->
+                    <label id="universityLabel" for="university-dropdown">Университет:</label>
+                    <select id="university-dropdown" name="university"><!--onchange="updateLabel(this, 'universityLabel')">-->
                     </select>
                 </div>
                 <div class="dropdown_container">
-                    <label id="faccultyLabel" for="facculty">Факултет:</label>
-                    <select id="facculty" name="facculty" onchange="updateLabel(this, 'faccultyLabel')">
-                      <option value="" disabled selected>Select your option</option>
-                      <option value="facculty1">Faculty 1</option>
-                      <option value="facculty2">facculty 2</option>
-                      <!-- Add more options here -->
+                    <label id="facultyLabel" for="faculty-dropdown">Факултет:</label>
+                    <select id="faculty-dropdown" name="faculty"><!-- onchange="updateLabel(this, 'facultyLabel')">-->
                     </select>
                 </div>
                 <div class="dropdown_container">
-                    <label id="specialtyLabel" for="specialty">Specialty:</label>
-                    <select id="specialty" name="specialty" onchange="updateLabel(this, 'specialtyLabel')">
-                      <option value="" disabled selected>Select your option</option>
-                      <option value="specialty1">Specialty 1</option>
-                      <option value="specialty2">Specialty 2</option>
-                      <!-- Add more options here -->
+                    <label id="specialtyLabel" for="degree-dropdown">Специалност:</label>
+                    <select id="degree-dropdown" name="degree" ><!--onchange="updateLabel(this, 'specialtyLabel')">-->
                     </select>
                 </div>
                 <div class="idk">Снимка на документ от университета с факултетен номер:</div>
@@ -350,7 +338,7 @@
                 image: getBase64(document.getElementById('image-fn').files[0])
             }
 
-            fetch('/server-endpoint', {
+            fetch('http://localhost:8080/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
