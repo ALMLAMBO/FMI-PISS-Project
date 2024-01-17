@@ -55,7 +55,7 @@ public class AuthenticationService {
             String jwtToken = jwtService.generateToken(user);
             String jwtRefreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
-            return new JwtTokenResponse(jwtToken, jwtRefreshToken);
+            return new JwtTokenResponse(jwtToken, jwtRefreshToken, user.getId());
         }
         catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
