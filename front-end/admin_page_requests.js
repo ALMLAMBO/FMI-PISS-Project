@@ -146,6 +146,7 @@ $(document).ready(function () {
 
         // Simulate sending the JSON data (replace this with your actual AJAX request)
         console.log(jsonData);
+
     });
 
     document.getElementById('review_statuses').addEventListener('click', function () {
