@@ -2,6 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профил</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="profile.css">
 </head>
 
@@ -18,23 +19,23 @@
 
     <div class="main-container">
         <div class="page-title">
-            <div class="page-title-text" id="userName">Gosho</div>
+            <div class="page-title-text" id="username"></div>
             <div class="page-description">
                 <div class="userInfo" id="userInfo">
                     <div class="infoTitle">Имейл: </div>
-                    <div class="infoElement" id="email">lachezardts@sofia-fmi.com</div>
+                    <div class="infoElement" id="email"></div>
                 </div>
                 <div class="userInfo">
                     <div class="infoTitle">Университет: </div>
-                    <div class="infoElement" id="university">SU</div>
+                    <div class="infoElement" id="university"></div>
                 </div>
                 <div class="userInfo">
                     <div class="infoTitle">Факултет: </div>
-                    <div class="infoElement" id="facculty">ФМИ</div>
+                    <div class="infoElement" id="faculty"></div>
                 </div>
                 <div class="userInfo">
                     <div class="infoTitle">Специалност: </div>
-                    <div class="infoElement" id="speciality">СИ</div>
+                    <div class="infoElement" id="degree"></div>
                 </div>
             </div>
         </div>
@@ -135,7 +136,9 @@
 
     <script>
         class Review {
-            constructor(specialtyName, disciplineName, courseScore, teacherName, teacherScore, assistantName, assistantScore, commentFieldText, extras, busyness, difficulty, usefulness) {
+            constructor(specialtyName, disciplineName, courseScore, teacherName, teacherScore, assistantName, assistantScore, commentFieldText,
+                        hasExam, hasProject, hasMidChecks, hasHomeworks, hasOnlineClasses, hasBooks, hasPresentations, hasAdditionalMaterials,
+                        busyness, difficulty, usefulness) {
                 this.specialtyName = specialtyName;
                 this.disciplineName = disciplineName;
                 this.courseScore = courseScore;
@@ -144,65 +147,37 @@
                 this.assistantName = assistantName;
                 this.assistantScore = assistantScore;
                 this.commentFieldText = commentFieldText;
-                this.extras = extras;
+                this.hasExam = hasExam;
+                this.hasProject = hasProject;
+                this.hasMidChecks = hasMidChecks;
+                this.hasHomeworks = hasHomeworks;
+                this.hasOnlineClasses = hasOnlineClasses;
+                this.hasBooks = hasBooks;
+                this.hasPresentations = hasPresentations;
+                this.hasAdditionalMaterials = hasAdditionalMaterials;
                 this.busyness = busyness;
                 this.difficulty = difficulty;
                 this.usefulness = usefulness;
             }
         }
 
-        const userInfoData = {
-            userName: 'John Doe',
-            email: 'johndoe@example.com',
-            university: 'University Name',
-            faculty: 'Faculty Name',
-            speciality: 'Speciality Name',
-            disciplines: [
-                { id: 1, name: 'Discipline 1' },
-                { id: 2, name: 'Discipline 2' },
-            ],
-            reviews: [
-                new Review(
-                    "Софт Уни",
-                    "Темпорару",
-                    4,
-                    "Божани",
-                    4,
-                    "София",
-                    4,
-                    "Very helpful course",
-                    { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
-                    2,
-                    3,
-                    1
-                ),
-                new Review(
-                    "Софт Уни2",
-                    "Темпорару2",
-                    4,
-                    "Божани2",
-                    4,
-                    "София2",
-                    4,
-                    "Very helpful course2",
-                    { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
-                    2,
-                    3,
-                    1
-                ),
-            ]
-        };
-
         function generateReviewHTML(review) {
+            const extrasMapping = {
+                hasExam: 'Exam',
+                hasProject: 'Project',
+                hasMidChecks: 'Mid Checks',
+                hasHomeworks: 'Homeworks',
+                hasOnlineClasses: 'Online Classes',
+                hasBooks: 'Books',
+                hasPresentations: 'Presentations',
+                hasAdditionalMaterials: 'Additional Materials'
+            };
             let extrasHTML = '';
-            for (const [key, value] of Object.entries(review.extras)) 
-            {
-                if (value) 
-                {
-                    extrasHTML += `<div class="extra-showcase" id="extra-showcase-${key}">${key.charAt(0).toUpperCase() + key.slice(1)}</div>`;
+            for (const [key, value] of Object.entries(extrasMapping)) {
+                if (review[key]) {
+                    extrasHTML += `<div class="extra-showcase" id="extra-showcase-${key}">${value}</div>`;
                 }
             }
-
             return `
                 <div class="review">
                     <div class="main-container">
@@ -267,7 +242,7 @@
                 }
 
 
-        function addReviewsToProfile() {
+        function addReviewsToProfile(userInfoData) {
             const reviewsContainer = document.querySelector('.reviews');
             userInfoData.reviews.forEach(review => {
                 const reviewHTML = generateReviewHTML(review);
@@ -275,12 +250,12 @@
             });
         }
 
-        function populateUserInfo() {
-            document.getElementById('userName').textContent = userInfoData.userName;
+        function populateUserInfo(userInfoData) {
+            document.getElementById('username').textContent = userInfoData.username;
             document.getElementById('email').textContent = userInfoData.email;
             document.getElementById('university').textContent = userInfoData.university;
-            document.getElementById('facculty').textContent = userInfoData.faculty;
-            document.getElementById('speciality').textContent = userInfoData.speciality;
+            document.getElementById('faculty').textContent = userInfoData.faculty;
+            document.getElementById('degree').textContent = userInfoData.degree;
 
             const disciplinesContainer = document.querySelector('.discipline-names');
             disciplinesContainer.innerHTML = ''; 
@@ -289,15 +264,30 @@
                 const disciplineLink = document.createElement('a');
                 disciplineLink.className = 'discipline-name';
                 disciplineLink.href = `/create_review/id=${discipline.id}`;
-                disciplineLink.textContent = discipline.name;
+                disciplineLink.textContent = discipline.courseName;
 
                 disciplinesContainer.appendChild(disciplineLink);
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            populateUserInfo();
-            addReviewsToProfile();
+            const formData={userId:sessionStorage.getItem('userId')};
+            $.ajax({
+                url: 'http://localhost:8080/api/user/get-user-info',
+                type: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                dataType: 'json',
+                data: JSON.stringify(formData),
+                success:function (data){
+                    console.log(data);
+                    populateUserInfo(data);
+                    addReviewsToProfile(data);
+                }
+            });
+
         });
         
     </script>

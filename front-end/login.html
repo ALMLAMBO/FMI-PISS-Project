@@ -319,14 +319,17 @@
                     sessionStorage.setItem('authenticated', 'true');
                     sessionStorage.setItem('token', data.token);
                     sessionStorage.setItem('refreshToken',data.refreshToken);
-                    if(email==='admin@admin.com') sessionStorage.setItem('admin',true);
-                    else sessionStorage.setItem('admin',false);
+                    sessionStorage.setItem('userId',data.userId);
+                    if(email==='admin@admin.com') {
+                        sessionStorage.setItem('admin', true);
+                        window.location.href = "admin_page.html";
+                    }
+                    else {
+                        sessionStorage.setItem('admin', false);
+                        window.location.href = "Reviews_Select.html";
+                    }
                 }
             });
-
-            if(sessionStorage.getItem('admin')){
-                window.location.href = "admin_page.html";
-            }
         });
     </script>
 </body>

@@ -14,11 +14,12 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
     private final UserService userService;
     private final ReviewService reviewService;
 
-    @GetMapping("/get-user-info")
+    @PostMapping("/get-user-info")
     public ResponseEntity<UniUserInfo> getUserInfo(@RequestBody UserInfoRequest userInfoRequest) throws ExecutionException, InterruptedException {
         return ResponseEntity.ok(userService.getUserInfo(userInfoRequest));
     }
