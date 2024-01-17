@@ -1,0 +1,304 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профил</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+
+<body>
+    <div class="header">
+        <div id="Header_Icon"></div>
+        <div class="upper_buttons">
+            <div class="upper_button" id="NewReview_Button">Нова рецензия</div>
+            <div class="upper_button" id="Profile_Button">Профил</div>
+            <div class="upper_button" id="Exit_Button">Изход</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="page-title">
+            <div class="page-title-text" id="userName">Gosho</div>
+            <div class="page-description">
+                <div class="userInfo" id="userInfo">
+                    <div class="infoTitle">Имейл: </div>
+                    <div class="infoElement" id="email">lachezardts@sofia-fmi.com</div>
+                </div>
+                <div class="userInfo">
+                    <div class="infoTitle">Университет: </div>
+                    <div class="infoElement" id="university">SU</div>
+                </div>
+                <div class="userInfo">
+                    <div class="infoTitle">Факултет: </div>
+                    <div class="infoElement" id="facculty">ФМИ</div>
+                </div>
+                <div class="userInfo">
+                    <div class="infoTitle">Специалност: </div>
+                    <div class="infoElement" id="speciality">СИ</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="discipline-container">
+            <div class="discipline-title">Дисциплини</div>
+            <div class="discipline-names">
+                <div class="discipline-name">a</div>
+                <div class="discipline-name">a</div>
+                <div class="discipline-name">a</div>
+            </div>
+        </div>
+
+        <div class="review-title">Рецензии</div>
+        <div class="reviews">
+            <div class="review">
+                <div class="main-container">
+                    <div class="info-row">
+                        <div class="info-name-description">Специалност</div>
+                        <div class="info-name" id="specialty-name">Софт Уни</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-name-description">Дисциплина</div>
+                        <div class="info-name" id="discipline-name">Темпорару</div>
+                        <div class="score">
+                            <div class="score-info" id="course-score">4</div>
+                            <div class="score-star"></div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-name-description">Преподавател</div>
+                        <div class="info-name" id="teacher-name">Божани</div>
+                        <div class="score">
+                            <div class="score-info" id="teacher-score">4</div>
+                            <div class="score-star"></div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-name-description">Асистент</div>
+                        <div class="info-name" id="assistant-name">София</div>
+                        <div class="score">
+                            <div class="score-info" id="assistant-score">4</div>
+                            <div class="score-star"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-container">
+                    <div class="comment-text">Коментар:</div>
+                    <div class="comment-field">
+                        <div class="comment-field-text">texta a aaa aa a a a a a a a a a a a </div>
+                    </div>
+                </div>
+                <div class="final-container">
+                    <div class="extras-container">
+                        <div class="extras-container-row"></div>
+                        <div class="extra-showcase" id="extra-showcase-exam">Изпит</div>
+                        <div class="extra-showcase" id="extra-showcase-project">Проект</div>
+                        <div class="extra-showcase" id="extra-showcase-exams">Контролни</div>
+                        <div class="extra-showcase" id="extra-showcase-homework">Домашни</div>
+                        <div class="extra-showcase" id="extra-showcase-online-classes">Онлайн часове</div>
+                        <div class="extra-showcase" id="extra-showcase-books">Учебници</div>
+                        <div class="extra-showcase" id="extra-showcase-presentations">Презентации</div>
+                        <div class="extra-showcase" id="extra-showcase-more-meterials">Допълнителни материали</div>
+                    </div>
+                    <div class="scores-container">
+                        <div class="score-text">Оценки:</div>
+                        <div class="scores-show">
+                            <div class="score-element-text">Заетост</div>
+                            <div class="score-element-score" id="busyness">2</div>
+                        </div>
+                        <div class="scores-show">
+                            <div class="score-element-text">Сложност</div>
+                            <div class="score-element-score" id="difficulty">3</div>
+                        </div>
+                        <div class="scores-show">
+                            <div class="score-element-text">Полезност</div>
+                            <div class="score-element-score" id="usefulness">1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="icon_Container">
+            <div id="Footer_Icon"></div>
+        </div>
+        <div class="footer_links">
+            <div class="footer_link">>> За нас</div>
+            <div class="footer_link">>> Информация за Университета</div>
+            <div class="footer_link">>> Включване на Университет</div>
+        </div>
+    </footer>
+
+    <script>
+        class Review {
+            constructor(specialtyName, disciplineName, courseScore, teacherName, teacherScore, assistantName, assistantScore, commentFieldText, extras, busyness, difficulty, usefulness) {
+                this.specialtyName = specialtyName;
+                this.disciplineName = disciplineName;
+                this.courseScore = courseScore;
+                this.teacherName = teacherName;
+                this.teacherScore = teacherScore;
+                this.assistantName = assistantName;
+                this.assistantScore = assistantScore;
+                this.commentFieldText = commentFieldText;
+                this.extras = extras;
+                this.busyness = busyness;
+                this.difficulty = difficulty;
+                this.usefulness = usefulness;
+            }
+        }
+
+        const userInfoData = {
+            userName: 'John Doe',
+            email: 'johndoe@example.com',
+            university: 'University Name',
+            faculty: 'Faculty Name',
+            speciality: 'Speciality Name',
+            disciplines: [
+                { id: 1, name: 'Discipline 1' },
+                { id: 2, name: 'Discipline 2' },
+            ],
+            reviews: [
+                new Review(
+                    "Софт Уни",
+                    "Темпорару",
+                    4,
+                    "Божани",
+                    4,
+                    "София",
+                    4,
+                    "Very helpful course",
+                    { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
+                    2,
+                    3,
+                    1
+                ),
+                new Review(
+                    "Софт Уни2",
+                    "Темпорару2",
+                    4,
+                    "Божани2",
+                    4,
+                    "София2",
+                    4,
+                    "Very helpful course2",
+                    { exam: true, project: true, exams: false, homework: true, onlineClasses: false, books: true, presentations: false, moreMaterials: true },
+                    2,
+                    3,
+                    1
+                ),
+            ]
+        };
+
+        function generateReviewHTML(review) {
+            let extrasHTML = '';
+            for (const [key, value] of Object.entries(review.extras)) 
+            {
+                if (value) 
+                {
+                    extrasHTML += `<div class="extra-showcase" id="extra-showcase-${key}">${key.charAt(0).toUpperCase() + key.slice(1)}</div>`;
+                }
+            }
+
+            return `
+                <div class="review">
+                    <div class="main-container">
+                        <div class="info-row">
+                            <div class="info-name-description">Специалност</div>
+                            <div class="info-name" id="specialty-name">${review.specialtyName}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-name-description">Дисциплина</div>
+                            <div class="info-name" id="discipline-name">${review.disciplineName}</div>
+                            <div class="score">
+                                <div class="score-info" id="course-score">${review.courseScore}</div>
+                                <div class="score-star"></div>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-name-description">Преподавател</div>
+                            <div class="info-name" id="teacher-name">${review.teacherName}</div>
+                            <div class="score">
+                                <div class="score-info" id="teacher-score">${review.teacherScore}</div>
+                                <div class="score-star"></div>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-name-description">Асистент</div>
+                            <div class="info-name" id="assistant-name">${review.assistantName}</div>
+                            <div class="score">
+                                <div class="score-info" id="assistant-score">${review.assistantScore}</div>
+                                <div class="score-star"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-container">
+                            <div class="comment-text">Коментар:</div>
+                            <div class="comment-field">
+                            <div class="comment-field-text">${review.commentFieldText}</div>
+                            </div>
+                            </div>
+                            <div class="final-container">
+                            <div class="extras-container">
+                            <div class="extras-container-row">
+                            ${extrasHTML}
+                            </div>
+                            </div>
+                            <div class="scores-container">
+                            <div class="score-text">Оценки:</div>
+                            <div class="scores-show">
+                            <div class="score-element-text">Заетост</div>
+                            <div class="score-element-score" id="busyness">${review.busyness}</div>
+                            </div>
+                            <div class="scores-show">
+                            <div class="score-element-text">Сложност</div>
+                            <div class="score-element-score" id="difficulty">${review.difficulty}</div>
+                            </div>
+                            <div class="scores-show">
+                            <div class="score-element-text">Полезност</div>
+                            <div class="score-element-score" id="usefulness">${review.usefulness}</div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>`;
+                }
+
+
+        function addReviewsToProfile() {
+            const reviewsContainer = document.querySelector('.reviews');
+            userInfoData.reviews.forEach(review => {
+                const reviewHTML = generateReviewHTML(review);
+                reviewsContainer.innerHTML += reviewHTML;
+            });
+        }
+
+        function populateUserInfo() {
+            document.getElementById('userName').textContent = userInfoData.userName;
+            document.getElementById('email').textContent = userInfoData.email;
+            document.getElementById('university').textContent = userInfoData.university;
+            document.getElementById('facculty').textContent = userInfoData.faculty;
+            document.getElementById('speciality').textContent = userInfoData.speciality;
+
+            const disciplinesContainer = document.querySelector('.discipline-names');
+            disciplinesContainer.innerHTML = ''; 
+
+            userInfoData.disciplines.forEach(discipline => {
+                const disciplineLink = document.createElement('a');
+                disciplineLink.className = 'discipline-name';
+                disciplineLink.href = `/create_review/id=${discipline.id}`;
+                disciplineLink.textContent = discipline.name;
+
+                disciplinesContainer.appendChild(disciplineLink);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateUserInfo();
+            addReviewsToProfile();
+        });
+        
+    </script>
+</body>
